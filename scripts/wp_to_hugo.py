@@ -103,8 +103,22 @@ def sc_attr(v):
     return '"' + str(v).replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
+# Local copies of images that posts loaded from other sites (scripts/fetch_external_images.py).
+EXTERNAL = json.loads(Path("migration/external-images.json").read_text()) \
+    if Path("migration/external-images.json").exists() else {}
+
+
+def local_copy(src):
+    local = EXTERNAL.get(html.unescape(src))
+    if local and Path("static" + local).exists():
+        return local
+    if src.startswith("http") and not SITE_RE.match(src):
+        TODOS.append(("(external image)", f"no local copy yet: {src}"))
+    return src
+
+
 def figure_sc(img_src, alt="", link="", caption=""):
-    parts = [f"src={sc_attr(rel(img_src))}"]
+    parts = [f"src={sc_attr(rel(local_copy(img_src)))}"]
     if alt:
         parts.append(f"alt={sc_attr(alt)}")
     if link:
