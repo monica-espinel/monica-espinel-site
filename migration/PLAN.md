@@ -96,6 +96,19 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 - Homepage robots: `max-image-preview:large` (author archives: `noindex`). The new site keeps the same robots values.
 - WordPress 7.1.3, AIOSEO 5.0.4, Site Kit still loading GA4 `G-ZR270JS8ZG` (plus the dead UA ID).
 
+## Open issues
+
+- **5 Brooklyn Rail speaker photos missing** (post `/brooklyn-rail-carmen-herrera/`: Tony Bechara, Odili Donald Odita,
+  Monica Espinel, Raphael Rubinstein, Tyhe Cooper). The post loads them from `brooklynrail.org/media/files/…`,
+  which now redirects to the Brooklyn Rail Contributors page, so they are already broken on the live WordPress site.
+  **Owner decision:** recover the Wayback Machine copies and store them in the repo.
+  **Blocked:** `web.archive.org` is not allowed in this repository's cloud environment (the request to add it was
+  rejected by the environments service). To finish: add `web.archive.org` under the environment's Network access,
+  then run `python3 -I scripts/fetch_external_images.py source/monicaespinel.WordPress.2026-11-11.xml`
+  and `python3 -I scripts/wp_to_hugo.py source/monicaespinel.WordPress.2026-11-11.xml content`, check the five
+  portraits, and commit. Until then the post keeps the original (broken) image addresses.
+- `brooklynrail.org` was allowed in the environment for this and is no longer needed; it can be removed.
+
 ## Open questions for the owner
 1. ~~Contact `mailto:` address~~: resolved, no `mailto:` link; Formspree only (owner decision).
 2. **Nav dropdowns**: the WP menu lists posts under each category. Keep only the six top items as the brief says, or recreate the dropdowns?
