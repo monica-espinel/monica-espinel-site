@@ -30,6 +30,8 @@ NS = {
 }
 SITE_RE = re.compile(r"https?://(?:www\.)?monicaespinel\.com(?=/)")
 BLOCK_RE = re.compile(r"<!--\s+(/)?wp:([a-z0-9/-]+)(?:\s+(\{.*?\}))?\s*(/)?-->", re.S)
+# Podcast platforms that no longer exist; links removed (owner decision, Phase 2).
+DROP_PLATFORMS = {"Google-Podcasts"}  # shut down in 2024
 TODOS = []  # (file, message) for the final report
 
 
@@ -195,6 +197,8 @@ def render_block(name, attrs, children, inner, ctx):
         links = []
         for b in attrs.get("secondline_psb_repeat_subscribe", []):
             platform = b.get("secondline_psb_subscribe_platform", "")
+            if platform in DROP_PLATFORMS:
+                continue
             # The plugin only shows the custom label for its "Custom" platform; otherwise it is a placeholder.
             label = (b.get("secondline_psb_custom_link_label") if platform.lower() == "custom" else "") \
                 or platform.replace("-", " ")
