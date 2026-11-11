@@ -40,7 +40,10 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 - Minimal custom theme in `layouts/` (no redesign; match the current simple blog layout).
 - `<head>`: title, description, canonical, OG and Twitter `summary`, robots, favicon (from WP site icon in uploads), `_internal/google_analytics.html` with `googleAnalytics = "G-ZR270JS8ZG"` (Hugo 0.164 uses `[services.googleAnalytics] ID`, so set both forms or the one 0.164 reads).
 - `robots.txt` (enableRobotsTXT + custom template pointing at `/sitemap.xml`), default sitemap, RSS `/index.xml` with `/feed/` alias.
-- `/contact/`: Formspree form (`https://formspree.io/f/xdegodvq`), `_gotcha` honeypot, `_next` / JS success message, `mailto:` fallback. Which address to use is an **open question**.
+- `/contact/`: Formspree form (`https://formspree.io/f/xdegodvq`), `_gotcha` honeypot, inline success message via JS
+  (`Accept: application/json`); without JS the form still posts and Formspree shows its own thank-you page.
+  **Owner decision: no `mailto:` link** (overrides the brief), so no email address is published on the site.
+  The error message tells the visitor to try again later.
 - `/search/`: Pagefind UI from `/pagefind/`, `data-pagefind-body` on article content.
 - Search Console: owner adds the DNS TXT record (written into the Phase 6 instructions).
 - Checks: Lighthouse (`npx lighthouse`, Chromium in container) on home + one post ≥ 95 SEO; `npx linkinator` or `lychee` against a local server.
@@ -92,7 +95,7 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 - WordPress 7.1.3, AIOSEO 5.0.4, Site Kit still loading GA4 `G-ZR270JS8ZG` (plus the dead UA ID).
 
 ## Open questions for the owner
-1. **Contact `mailto:` address**: which email should the fallback link use? It is not in the brief and I won't guess.
+1. ~~Contact `mailto:` address~~: resolved, no `mailto:` link; Formspree only (owner decision).
 2. **Nav dropdowns**: the WP menu lists posts under each category. Keep only the six top items as the brief says, or recreate the dropdowns?
 3. **Large uploads (177 MB, video/PDF in 2020–2023)**: fine for Pages (limit 1 GB), but should unused size variants be pruned? Default: keep everything referenced plus all variants.
 4. **Attachment pages**: redirect to the parent post (my default) or to the file itself?
