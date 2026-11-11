@@ -70,8 +70,9 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 - Site title `MONICA ESPINEL`, tagline `Curator & Writer`, footer `© <year> MONICA ESPINEL`.
 - Favicon: `wp-content/uploads/2020/03/image.jpg` (served through Jetpack `i0.wp.com`).
 - **Featured images** (`_thumbnail_id`) carry captions and are part of each post, so they go into front matter as `image`.
-- **Bylines are hidden** on the live site by custom CSS (`.post-author { clip: … }`). The brief says to keep both
-  authors; they stay in front matter, and whether to show them is a question for the owner.
+- **Bylines are hidden** on the live site by custom CSS (`.post-author { clip: … }`).
+  **Decision (owner):** keep them hidden the same way. `author` stays in front matter and the byline is rendered
+  in the HTML with a visually-hidden class (readable by screen readers and search engines, not shown on screen).
 - Author archives are `noindex`, so redirecting them to `/` loses no search visibility.
 - **Search Console is currently verified by a meta tag** (`google-site-verification`, probably via Site Kit).
   The brief wants DNS TXT instead. The owner must add the TXT record **before** cutover, or the property loses
