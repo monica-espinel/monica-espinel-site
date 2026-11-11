@@ -1,0 +1,6 @@
+---
+title: Painting
+slug: painting
+---
+
+

@@ -33,7 +33,9 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 - Front matter: `title, date, slug, author, categories, tags, description, aliases`. Description priority: `_aioseo_description` → `_aioseop_description` → none, otherwise left empty (14 posts and pages have none; **owner decision: leave empty**). Never generate one.
 - Block → Markdown: paragraphs/headings/lists/links/italics to Markdown; `wp:image` with caption → `figure` shortcode; `wp:gallery` → a small `gallery` shortcode; `wp:file` → PDF link; `wp:embed` → YouTube/Vimeo shortcode or a plain link; podcast/Jetpack blocks → link to the source and a `TODO:` note.
 - Permalinks: `[permalinks] posts = "/:slug/"`, categories `/category/:slug/`, tags `/tag/:slug/`.
-- Copy `uploads/` to `static/wp-content/uploads/`, **excluding** `aioseo*`, `wpforms/`, logs. Keep the WP size variants (`-300x225` etc.) because old HTML and external sites link to them.
+- Uploads are published at `/wp-content/uploads/` through a Hugo **mount** of `source/wp-content/uploads`
+  (in `hugo.toml`), not a copy into `static/`: same output paths, no second 177 MB copy in git. `aioseo*` and
+  `wpforms/` are excluded. All WP size variants are kept because old HTML and external sites link to them.
 - `scripts/check_urls.py` compares `hugo --renderToMemory`/`public/` against the CSV and prints mismatches.
 
 ### Phase 3: Templates and SEO

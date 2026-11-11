@@ -1,0 +1,4 @@
+{{ define "main" }}
+  <header class="archive-header"><h1 class="archive-title">{{ .Title }}</h1></header>
+  <ul>{{ range .Pages }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}</ul>
+{{ end }}

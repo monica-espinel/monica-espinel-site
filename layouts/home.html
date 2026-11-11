@@ -1,0 +1,4 @@
+{{ define "main" }}
+  {{/* All posts on one page: WordPress /page/N/ URLs redirect to / (Phase 4). */}}
+  {{ range where site.RegularPages "Section" "posts" }}{{ partial "post-summary.html" . }}{{ end }}
+{{ end }}

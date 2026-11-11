@@ -1,0 +1,59 @@
+baseURL = "https://monicaespinel.com/"
+locale = "en-US"
+title = "MONICA ESPINEL"
+# Dates in front matter are WordPress local time (post_date), without offset.
+timeZone = "America/New_York"
+# WordPress had no /category/ or /tag/ index pages; don't create them.
+disableKinds = ["taxonomy"]
+
+[params]
+  tagline = "Curator & Writer"
+  homeTitle = "Monica Espinel - Curator and Writer"
+  description = "Monica Espinel is a curator and writer specialized in Contemporary Art from Latin America. She is currently a Ph.D. candidate at The Graduate Center, City University of New York."
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+# Same URLs as WordPress: /<slug>/, /category/<slug>/, /tag/<slug>/
+[permalinks.page]
+  posts = "/:slug/"
+[permalinks.term]
+  categories = "/category/:slug/"
+  tags = "/tag/:slug/"
+
+[menus]
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 10
+  [[menus.main]]
+    name = "Exhibitions"
+    url = "/category/exhibitions/"
+    weight = 20
+  [[menus.main]]
+    name = "Publications"
+    url = "/category/publications/"
+    weight = 30
+  [[menus.main]]
+    name = "Reviews"
+    url = "/category/reviews/"
+    weight = 40
+  [[menus.main]]
+    name = "Talks"
+    url = "/category/talks/"
+    weight = 50
+  [[menus.main]]
+    name = "Contact"
+    pageRef = "/contact"
+    weight = 60
+
+# WordPress uploads are published at /wp-content/uploads/ straight from source/,
+# without duplicating 177 MB into static/. Plugin folders are left out.
+[[module.mounts]]
+  source = "static"
+  target = "static"
+[[module.mounts]]
+  source = "source/wp-content/uploads"
+  target = "static/wp-content/uploads"
+  files = ["! aioseo/**", "! aioseo-logs/**", "! wpforms/**"]

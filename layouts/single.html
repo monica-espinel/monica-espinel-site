@@ -1,0 +1,17 @@
+{{ define "main" }}
+<article class="post">
+  <header class="entry-header">
+    {{ with .GetTerms "categories" }}<div class="entry-categories">{{ range $i, $c := . }}{{ if $i }}, {{ end }}<a href="{{ $c.RelPermalink }}">{{ $c.LinkTitle }}</a>{{ end }}</div>{{ end }}
+    <h1 class="entry-title">{{ .Title }}</h1>
+    {{ if eq .Section "posts" }}<p class="post-meta"><span class="post-author">By {{ .Params.author }}</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>{{ end }}
+  </header>
+  {{ with .Params.image }}
+  <figure class="featured-media">
+    <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}">
+    {{ with $.Params.image_caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+  </figure>
+  {{ end }}
+  <div class="entry-content">{{ .Content }}</div>
+  {{ with .GetTerms "tags" }}<p class="post-tags">Tags: {{ range $i, $t := . }}{{ if $i }}, {{ end }}<a href="{{ $t.RelPermalink }}" rel="tag">{{ $t.LinkTitle }}</a>{{ end }}</p>{{ end }}
+</article>
+{{ end }}

@@ -1,0 +1,14 @@
+{{/* WordPress embed block for YouTube or Vimeo, keeping the start time. */}}
+{{- $id := .Get "id" -}}
+{{- $start := .Get "start" -}}
+{{- $src := "" -}}
+{{- if eq (.Get "provider") "youtube" -}}
+  {{- $src = printf "https://www.youtube-nocookie.com/embed/%s" $id -}}
+  {{- with $start }}{{ $src = printf "%s?start=%s" $src . }}{{ end -}}
+{{- else -}}
+  {{- $src = printf "https://player.vimeo.com/video/%s" $id -}}
+  {{- with $start }}{{ $src = printf "%s#t=%s" $src . }}{{ end -}}
+{{- end -}}
+<figure class="video-embed">
+  <iframe src="{{ $src }}" title="{{ .Get "provider" | title }} video" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</figure>
