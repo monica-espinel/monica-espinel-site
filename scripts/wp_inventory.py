@@ -97,7 +97,7 @@ def main(src, dst):
         url = path_of(t(i, "link"))
         date = t(i, "wp:post_date")[:10]
         desc = description(m)
-        note = "" if desc else "TODO: no description in export"
+        note = "" if desc else "no description in export; owner decision: leave empty"
         add(url, typ, t(i, "title"), desc, date, note=note)
         for old in sorted(set(m.get("_wp_old_slug", []))):
             if old and old != slug:
