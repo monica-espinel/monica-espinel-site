@@ -23,6 +23,8 @@ NS = {
     "dc": "http://purl.org/dc/elements/1.1/",
 }
 SITE = "https://monicaespinel.com"
+# Homepage <title> as served by the live site (owner-supplied HTML, 2026-10-22).
+HOME_TITLE = "Monica Espinel - Curator and Writer"
 HOME_DESCRIPTION = (
     "Monica Espinel is a curator and writer specialized in Contemporary Art from "
     "Latin America. She is currently a Ph.D. candidate at The Graduate Center, "
@@ -79,7 +81,7 @@ def main(src, dst):
     authors = {t(a, "wp:author_login"): t(a, "wp:author_display_name")
                for a in ch.findall("wp:author", NS)}
 
-    add("/", "home", t(ch, "title"), HOME_DESCRIPTION)
+    add("/", "home", HOME_TITLE, HOME_DESCRIPTION)
     add("/feed/", "feed", "Main RSS feed", action="alias", target="/index.xml")
     add("/comments/feed/", "feed", "Comments feed", action="redirect", target="/index.xml",
         note="no comments in export")

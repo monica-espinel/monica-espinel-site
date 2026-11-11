@@ -80,6 +80,16 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 - The live site refuses automated requests (403) even with network access allowed, so later live checks
   need the owner's browser or a bot-blocker exception.
 
+## Findings from the live homepage (owner-supplied HTML, served 2026-10-22)
+
+- 8 posts per page confirmed on the homepage too (`/page/5/` = 38 posts / 8). The 8 posts shown match the brief's list, in the same order.
+- Homepage `<title>`: `Monica Espinel - Curator and Writer`. Meta description = the brief's text.
+- Homepage `og:description` / `twitter:description` are out of date ("guest curator for Artpace in San Antonio").
+  The new site uses the brief's description for all three.
+- `og:image` / `twitter:image`: `/wp-content/uploads/2020/03/image.jpg`; `twitter:site` = `@monica_espinel`; `twitter:card` = `summary`.
+- Homepage robots: `max-image-preview:large` (author archives: `noindex`). The new site keeps the same robots values.
+- WordPress 7.1.3, AIOSEO 5.0.4, Site Kit still loading GA4 `G-ZR270JS8ZG` (plus the dead UA ID).
+
 ## Open questions for the owner
 1. **Contact `mailto:` address**: which email should the fallback link use? It is not in the brief and I won't guess.
 2. **Nav dropdowns**: the WP menu lists posts under each category. Keep only the six top items as the brief says, or recreate the dropdowns?

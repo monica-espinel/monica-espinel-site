@@ -1,5 +1,5 @@
 old_url,type,title,description,date,action,target,note
-/,home,MONICA ESPINEL,"Monica Espinel is a curator and writer specialized in Contemporary Art from Latin America. She is currently a Ph.D. candidate at The Graduate Center, City University of New York.",,keep,/,
+/,home,Monica Espinel - Curator and Writer,"Monica Espinel is a curator and writer specialized in Contemporary Art from Latin America. She is currently a Ph.D. candidate at The Graduate Center, City University of New York.",,keep,/,
 /feed/,feed,Main RSS feed,,,alias,/index.xml,
 /comments/feed/,feed,Comments feed,,,redirect,/index.xml,no comments in export
 /about/,page,About,Monica Espinel is an independent curator and writer specialized in Modern and Contemporary Art from Latin America. She is a Ph.D. candidate at The Graduate Center.,2014-12-02,keep,/about/,
