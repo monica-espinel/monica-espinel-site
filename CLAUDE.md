@@ -68,7 +68,7 @@ The site's meta description: "Monica Espinel is a curator and writer specialized
 - In `hugo.toml`, set `googleAnalytics = "G-ZR270JS8ZG"` and include `{{ template "_internal/google_analytics.html" . }}` in the head.
 - Generate `sitemap.xml` (Hugo default) and `robots.txt` that points to it.
 - RSS at `/index.xml`. Add an alias so `/feed/` also works.
-- Contact page (`/contact/`): form posts to `https://formspree.io/f/xdegodvq`, includes a honeypot field, shows a success message, and includes a `mailto:` fallback link.
+- Contact page (`/contact/`): form posts to `https://formspree.io/f/xdegodvq`, includes a honeypot field, and shows a success message. No `mailto:` link: the owner decided not to publish an email address on the site.
 - Search page (`/search/`): loads Pagefind UI from `/pagefind/`.
 - Add a Google Search Console verification record as a DNS TXT record. Do not use a meta tag.
 
