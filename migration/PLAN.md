@@ -12,7 +12,7 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 | Published pages | 2: `about`, `contact`. Drafts/private (not migrated): `exhibitions`, `curriculum`, 2× `wpforms-preview`, 1 draft post "Homo Rodans". |
 | Categories | exhibitions, publications, reviews, talks, uncategorized (unused) |
 | Tags | 36 |
-| Authors | `monica.espinel` (Monica Espinel), `simon.letort` (Simon Letort, 7 posts) |
+| Authors | `monica.espinel` (Monica Espinel), `simon.letort` (Simon Letort, 5 posts) |
 | Comments | 0, so nothing to migrate |
 | Attachments | 84 attachment pages (e.g. `/carmen-herrera/carmen-herrera-installation-shot-4/`) |
 | Old slugs | 53 `_wp_old_slug` entries, which become `aliases` |
@@ -62,12 +62,30 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 ### Phase 7: Post-launch checklist
 `migration/POST-LAUNCH.md` lists the brief's checks for the owner.
 
+## Findings from the live author page (owner-supplied HTML, cached 2025-12-10)
+
+- Author slug `/author/monica-espinel/` confirmed. Posts per page = 8 (`/page/5/` = 33 posts / 8).
+- Theme is **Twenty Twenty**: accent `#cd2653`, text `#000`, secondary `#6d6d6d`, borders `#dcd7ca`, Inter font,
+  centered entry headers, a featured image above each post, excerpts on archive pages. Phase 3 matches this look (no redesign).
+- Site title `MONICA ESPINEL`, tagline `Curator & Writer`, footer `© <year> MONICA ESPINEL`.
+- Favicon: `wp-content/uploads/2020/03/image.jpg` (served through Jetpack `i0.wp.com`).
+- **Featured images** (`_thumbnail_id`) carry captions and are part of each post, so they go into front matter as `image`.
+- **Bylines are hidden** on the live site by custom CSS (`.post-author { clip: … }`). The brief says to keep both
+  authors; they stay in front matter, and whether to show them is a question for the owner.
+- Author archives are `noindex`, so redirecting them to `/` loses no search visibility.
+- **Search Console is currently verified by a meta tag** (`google-site-verification`, probably via Site Kit).
+  The brief wants DNS TXT instead. The owner must add the TXT record **before** cutover, or the property loses
+  verification when the meta tag disappears. This goes into the Phase 6 instructions.
+- The site also sends to an old Universal Analytics ID (`UA-10447421-6`). UA stopped processing data in 2024; only GA4 is kept.
+- The live site refuses automated requests (403) even with network access allowed, so later live checks
+  need the owner's browser or a bot-blocker exception.
+
 ## Open questions for the owner
 1. **Contact `mailto:` address**: which email should the fallback link use? It is not in the brief and I won't guess.
 2. **Nav dropdowns**: the WP menu lists posts under each category. Keep only the six top items as the brief says, or recreate the dropdowns?
 3. **Large uploads (177 MB, video/PDF in 2020–2023)**: fine for Pages (limit 1 GB), but should unused size variants be pruned? Default: keep everything referenced plus all variants.
 4. **Attachment pages**: redirect to the parent post (my default) or to the file itself?
-5. **Posts per page** on the old site (for the pagination URL count): default 10 unless known.
+5. ~~Posts per page~~: resolved, 8 (confirmed on the live site).
 6. **Merge strategy**: the brief says PR → `main`; I'll open the PR only when you ask.
 
 ## Tooling

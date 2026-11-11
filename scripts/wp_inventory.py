@@ -28,8 +28,10 @@ HOME_DESCRIPTION = (
     "Latin America. She is currently a Ph.D. candidate at The Graduate Center, "
     "City University of New York."
 )
-# WordPress "Blog pages show at most" is not in the export. WP default is 10.
-PER_PAGE = 10
+# Posts per page is not in the export. Confirmed on the live site: the author archive
+# /author/monica-espinel/ shows 8 posts and its last page is /page/5/ (33 posts / 8).
+PER_PAGE = 8
+PAGE_MARGIN = 0  # extra redirect pages beyond the last computed page
 
 
 def t(el, path):
@@ -107,10 +109,12 @@ def main(src, dst):
                 elif c.get("domain") == "post_tag":
                     tag_posts[c.get("nicename")].append(i)
 
-    def pagination(base, count, title, target):
-        for n in range(2, math.ceil(count / PER_PAGE) + 1):
+    def pagination(base, count, title, target, note=""):
+        last = math.ceil(count / PER_PAGE)
+        for n in range(2, last + PAGE_MARGIN + 1):
+            extra = "; margin page" if n > last else ""
             add(f"{base}page/{n}/", "pagination", f"{title} – page {n}", action="redirect",
-                target=target, note=f"assumes {PER_PAGE} posts per page")
+                target=target, note=f"{PER_PAGE} posts per page{extra}{note}")
 
     pagination("/", len(posts), "Home", "/")
 
@@ -139,12 +143,10 @@ def main(src, dst):
     for login, plist in sorted(author_posts.items()):
         base = f"/author/{nicename(login)}/"
         name = authors.get(login, login)
-        note = "TODO: author slug derived from login, verify on live site"
+        note = "author slug confirmed on live site (/author/monica-espinel/); same rule for all"
         add(base, "author", name, action="redirect", target="/", note=note)
-        for n in range(2, math.ceil(len(plist) / PER_PAGE) + 1):
-            add(f"{base}page/{n}/", "pagination", f"{name} – page {n}", action="redirect",
-                target="/", note=note)
-        add(f"{base}feed/", "feed", f"{name} feed", action="redirect", target="/index.xml", note=note)
+        pagination(base, len(plist), name, "/")
+        add(f"{base}feed/", "feed", f"{name} feed", action="redirect", target="/index.xml")
 
     # Date archives (/YYYY/, /YYYY/MM/) exist on every WordPress site.
     years, months = set(), set()

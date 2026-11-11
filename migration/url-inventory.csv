@@ -51,18 +51,20 @@ old_url,type,title,description,date,action,target,note
 /juan-francisco-elso-por-america/,post,Juan Francisco Elso: Por América,,2023-01-09,keep,/juan-francisco-elso-por-america/,TODO: no description in export
 /burning-with-desire/,post,Burning with Desire,,2022-10-27,keep,/burning-with-desire/,TODO: no description in export
 /beats-of-the-sacred-heart/,post,Beats of the Sacred Heart,,2024-03-13,keep,/beats-of-the-sacred-heart/,TODO: no description in export
-/page/2/,pagination,Home – page 2,,,redirect,/,assumes 10 posts per page
-/page/3/,pagination,Home – page 3,,,redirect,/,assumes 10 posts per page
-/page/4/,pagination,Home – page 4,,,redirect,/,assumes 10 posts per page
+/page/2/,pagination,Home – page 2,,,redirect,/,8 posts per page
+/page/3/,pagination,Home – page 3,,,redirect,/,8 posts per page
+/page/4/,pagination,Home – page 4,,,redirect,/,8 posts per page
+/page/5/,pagination,Home – page 5,,,redirect,/,8 posts per page
 /category/exhibitions/,category,Exhibitions,,,keep,/category/exhibitions/,
-/category/exhibitions/page/2/,pagination,Exhibitions – page 2,,,redirect,/category/exhibitions/,assumes 10 posts per page
+/category/exhibitions/page/2/,pagination,Exhibitions – page 2,,,redirect,/category/exhibitions/,8 posts per page
+/category/exhibitions/page/3/,pagination,Exhibitions – page 3,,,redirect,/category/exhibitions/,8 posts per page
 /category/exhibitions/feed/,feed,Exhibitions feed,,,alias,/category/exhibitions/index.xml,
 /category/publications/,category,Publications,,,keep,/category/publications/,
 /category/publications/feed/,feed,Publications feed,,,alias,/category/publications/index.xml,
 /category/reviews/,category,Reviews,,,keep,/category/reviews/,
 /category/reviews/feed/,feed,Reviews feed,,,alias,/category/reviews/index.xml,
 /category/talks/,category,Talks,,,keep,/category/talks/,
-/category/talks/page/2/,pagination,Talks – page 2,,,redirect,/category/talks/,assumes 10 posts per page
+/category/talks/page/2/,pagination,Talks – page 2,,,redirect,/category/talks/,8 posts per page
 /category/talks/feed/,feed,Talks feed,,,alias,/category/talks/index.xml,
 /category/uncategorized/,category,Uncategorized,,,redirect,/,no published posts
 /tag/an-my-le/,tag,An-My Lê,,,keep,/tag/an-my-le/,
@@ -135,13 +137,14 @@ old_url,type,title,description,date,action,target,note
 /tag/yeguas-del-apocalipsis/feed/,feed,Yeguas del Apocalipsis feed,,,alias,/tag/yeguas-del-apocalipsis/index.xml,
 /tag/yves-klein/,tag,Yves Klein,,,keep,/tag/yves-klein/,
 /tag/yves-klein/feed/,feed,Yves Klein feed,,,alias,/tag/yves-klein/index.xml,
-/author/monica-espinel/,author,Monica Espinel,,,redirect,/,"TODO: author slug derived from login, verify on live site"
-/author/monica-espinel/page/2/,pagination,Monica Espinel – page 2,,,redirect,/,"TODO: author slug derived from login, verify on live site"
-/author/monica-espinel/page/3/,pagination,Monica Espinel – page 3,,,redirect,/,"TODO: author slug derived from login, verify on live site"
-/author/monica-espinel/page/4/,pagination,Monica Espinel – page 4,,,redirect,/,"TODO: author slug derived from login, verify on live site"
-/author/monica-espinel/feed/,feed,Monica Espinel feed,,,redirect,/index.xml,"TODO: author slug derived from login, verify on live site"
-/author/simon-letort/,author,Simon Letort,,,redirect,/,"TODO: author slug derived from login, verify on live site"
-/author/simon-letort/feed/,feed,Simon Letort feed,,,redirect,/index.xml,"TODO: author slug derived from login, verify on live site"
+/author/monica-espinel/,author,Monica Espinel,,,redirect,/,author slug confirmed on live site (/author/monica-espinel/); same rule for all
+/author/monica-espinel/page/2/,pagination,Monica Espinel – page 2,,,redirect,/,8 posts per page
+/author/monica-espinel/page/3/,pagination,Monica Espinel – page 3,,,redirect,/,8 posts per page
+/author/monica-espinel/page/4/,pagination,Monica Espinel – page 4,,,redirect,/,8 posts per page
+/author/monica-espinel/page/5/,pagination,Monica Espinel – page 5,,,redirect,/,8 posts per page
+/author/monica-espinel/feed/,feed,Monica Espinel feed,,,redirect,/index.xml,
+/author/simon-letort/,author,Simon Letort,,,redirect,/,author slug confirmed on live site (/author/monica-espinel/); same rule for all
+/author/simon-letort/feed/,feed,Simon Letort feed,,,redirect,/index.xml,
 /2003/,date,Archive 2003,,,redirect,/,
 /2004/,date,Archive 2004,,,redirect,/,
 /2005/,date,Archive 2005,,,redirect,/,
