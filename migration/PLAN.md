@@ -1,0 +1,75 @@
+# Migration plan: monicaespinel.com → Hugo on GitHub Pages
+
+Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-11).
+
+## What the source material contains
+
+| Item | Found |
+|---|---|
+| Export | `source/monicaespinel.WordPress.2026-11-11.xml` (WXR 1.2). Brief expects `source/wordpress-export.xml`; the scripts will take the path as an argument, no rename needed. |
+| Uploads | `source/wp-content/uploads/`, 384 files, 177 MB, years 2009–2026, plus plugin folders `aioseo/`, `aioseo-logs/`, `wpforms/` |
+| Published posts | 38 (2003-06-10 → 2024-03-13). All 8 homepage posts confirmed. |
+| Published pages | 2: `about`, `contact`. Drafts/private (not migrated): `exhibitions`, `curriculum`, 2× `wpforms-preview`, 1 draft post "Homo Rodans". |
+| Categories | exhibitions, publications, reviews, talks, uncategorized (unused) |
+| Tags | 36 |
+| Authors | `monica.espinel` (Monica Espinel), `simon.letort` (Simon Letort, 7 posts) |
+| Comments | 0, so nothing to migrate |
+| Attachments | 84 attachment pages (e.g. `/carmen-herrera/carmen-herrera-installation-shot-4/`) |
+| Old slugs | 53 `_wp_old_slug` entries, which become `aliases` |
+| Descriptions | `_aioseo_description` (48) and older `_aioseop_description` (29); AIOSEO OG title/description too |
+| Body markup | Gutenberg blocks: paragraph, image, gallery, file (PDF), heading, embed (6), list, video, more, group, plus one each of shortcode (contact form), Jetpack podcast player, podcast-subscribe button |
+| Nav menu | 24 items: 6 top items plus dropdowns listing posts under each category |
+
+## Phase plan (one commit per phase, on branch `claude/peaceful-fermi-lv6a8k`)
+
+### Phase 1: Inventory
+- `scripts/wp_inventory.py` (stdlib only) parses the WXR and writes `migration/url-inventory.csv`:
+  `old_url,type,title,description,date,action,target`.
+- URL sources: published posts/pages, category + tag archives, author archives (`/author/<login>/`), pagination for home/category/tag/author (`/page/N/` from post counts, WP default 10 per page; confirm the setting), `/feed/` + per-category/tag feeds, `_wp_old_slug` URLs, attachment pages.
+- `action` = `keep` | `alias` | `redirect`. Stated defaults: pagination → `/`, author → `/`, attachment → parent post, feeds → `/index.xml` or the taxonomy's `index.xml`.
+
+### Phase 2: Content conversion
+- `scripts/wp_to_hugo.py` writes `content/<slug>.md` for posts and `content/about.md`, `content/contact.md`.
+- Front matter: `title, date, slug, author, categories, tags, description, aliases`. Description priority: `_aioseo_description` → `_aioseop_description` → none, plus a `TODO:` for empty ones (5 posts have none). Never generate one.
+- Block → Markdown: paragraphs/headings/lists/links/italics to Markdown; `wp:image` with caption → `figure` shortcode; `wp:gallery` → a small `gallery` shortcode; `wp:file` → PDF link; `wp:embed` → YouTube/Vimeo shortcode or a plain link; podcast/Jetpack blocks → link to the source and a `TODO:` note.
+- Permalinks: `[permalinks] posts = "/:slug/"`, categories `/category/:slug/`, tags `/tag/:slug/`.
+- Copy `uploads/` to `static/wp-content/uploads/`, **excluding** `aioseo*`, `wpforms/`, logs. Keep the WP size variants (`-300x225` etc.) because old HTML and external sites link to them.
+- `scripts/check_urls.py` compares `hugo --renderToMemory`/`public/` against the CSV and prints mismatches.
+
+### Phase 3: Templates and SEO
+- Minimal custom theme in `layouts/` (no redesign; match the current simple blog layout).
+- `<head>`: title, description, canonical, OG and Twitter `summary`, robots, favicon (from WP site icon in uploads), `_internal/google_analytics.html` with `googleAnalytics = "G-ZR270JS8ZG"` (Hugo 0.164 uses `[services.googleAnalytics] ID`, so set both forms or the one 0.164 reads).
+- `robots.txt` (enableRobotsTXT + custom template pointing at `/sitemap.xml`), default sitemap, RSS `/index.xml` with `/feed/` alias.
+- `/contact/`: Formspree form (`https://formspree.io/f/xdegodvq`), `_gotcha` honeypot, `_next` / JS success message, `mailto:` fallback. Which address to use is an **open question**.
+- `/search/`: Pagefind UI from `/pagefind/`, `data-pagefind-body` on article content.
+- Search Console: owner adds the DNS TXT record (written into the Phase 6 instructions).
+- Checks: Lighthouse (`npx lighthouse`, Chromium in container) on home + one post ≥ 95 SEO; `npx linkinator` or `lychee` against a local server.
+
+### Phase 4: Redirects
+- Aliases cover old slugs and `/feed/`.
+- For the rest (pagination, author, attachment pages, feeds of taxonomies), a generated `content/_redirects/` set or a Hugo template that reads `data/redirects.csv` and emits HTML with canonical + `meta refresh` + visible link. Hugo's built-in alias template is overridden in `layouts/alias.html` so both paths produce identical redirect pages.
+- Re-run `check_urls.py`: every CSV row must give 200 with content or a redirect page.
+
+### Phase 5: Deployment
+- `.github/workflows/pages.yml`: jobs `build` (Hugo extended 0.164.0, `hugo --minify`), `pagefind` (`npx --yes pagefind@latest --site public`, then `actions/upload-pages-artifact`), `deploy` (`actions/deploy-pages`). Trigger: push to `main` (+ `workflow_dispatch`).
+- Pass `public/` between jobs via `actions/upload-artifact`.
+- `static/CNAME` = `monicaespinel.com`.
+- Owner sets Pages source = GitHub Actions. Before the custom domain is set, test on a local server, because root-relative URLs break under `/monica-espinel-site/`.
+
+### Phase 6: DNS instructions
+`migration/DNS-CUTOVER.md`: TTL 300 ≥24 h ahead, four A records, `www` CNAME, the Pages custom domain, Enforce HTTPS, Search Console TXT, leave MX alone, and rollback. I do not change DNS.
+
+### Phase 7: Post-launch checklist
+`migration/POST-LAUNCH.md` lists the brief's checks for the owner.
+
+## Open questions for the owner
+1. **Contact `mailto:` address**: which email should the fallback link use? It is not in the brief and I won't guess.
+2. **Nav dropdowns**: the WP menu lists posts under each category. Keep only the six top items as the brief says, or recreate the dropdowns?
+3. **Large uploads (177 MB, video/PDF in 2020–2023)**: fine for Pages (limit 1 GB), but should unused size variants be pruned? Default: keep everything referenced plus all variants.
+4. **Attachment pages**: redirect to the parent post (my default) or to the file itself?
+5. **Posts per page** on the old site (for the pagination URL count): default 10 unless known.
+6. **Merge strategy**: the brief says PR → `main`; I'll open the PR only when you ask.
+
+## Tooling
+- Hugo is not installed in the container. I'll download extended 0.164.0 from GitHub releases into `~/.local/bin` (not committed).
+- Node 22 is available for Pagefind, Lighthouse and the link checker.
