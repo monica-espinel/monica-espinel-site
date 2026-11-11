@@ -1,0 +1,326 @@
+old_url,type,title,description,date,action,target,note
+/,home,MONICA ESPINEL,"Monica Espinel is a curator and writer specialized in Contemporary Art from Latin America. She is currently a Ph.D. candidate at The Graduate Center, City University of New York.",,keep,/,
+/feed/,feed,Main RSS feed,,,alias,/index.xml,
+/comments/feed/,feed,Comments feed,,,redirect,/index.xml,no comments in export
+/about/,page,About,Monica Espinel is an independent curator and writer specialized in Modern and Contemporary Art from Latin America. She is a Ph.D. candidate at The Graduate Center.,2014-12-02,keep,/about/,
+/black-milk/,post,Black Milk: Theories on Suicide,"Black Milk: Theories on Suicide, a group exhibition curated by Monica Espinel, that brings together young contemporary artists whose work touches on issues related to suicide.",2004-06-30,keep,/black-milk/,
+/sp-arte/,post,The Skin I Live In,"The Skin I Live In presents artists who explore the notion of the body, not only as a physical space, but also as a mental, political and affective space. SP-Arte, Sao Paulo 2013",2013-04-03,keep,/sp-arte/,
+/bruno-miguel/,post,Bruno Miguel: Todos à Mesa,"Bruno Miguel's exhibition Todos as Mesa at Galeria Emma Thomas, São Paulo. Bruno delves into the material and conceptual issues of painting through an innovative use of non-traditional materials.",2014-10-11,keep,/bruno-miguel/,
+/contact/,page,Contact,,2014-12-09,keep,/contact/,TODO: no description in export
+/rituals-of-chaos/,post,The Rituals of Chaos,"The Bronx Museum presents The Rituals of Chaos, an exhibition featuring the work of Mexican photojournalist Enrique Metinides, as part of its ongoing Urban Archives series.",2012-07-19,keep,/rituals-of-chaos/,
+/the-rituals-of-chaos/,post,The Rituals of Chaos,"The Bronx Museum presents The Rituals of Chaos, an exhibition featuring the work of Mexican photojournalist Enrique Metinides, as part of its ongoing Urban Archives series.",2012-07-19,alias,/rituals-of-chaos/,old slug
+/photographic-treasures/,post,Photographic Treasures from the Collection of Alfred Stieglitz,Rarely seen masterpieces from Alfred Stieglitz’s personal collection of photography will be presented at The Metropolitan Museum of Art in the Howard Gilman Gallery.,2011-10-13,keep,/photographic-treasures/,
+/photographic-treasures-from-the-collection-of-alfred-stieglitz/,post,Photographic Treasures from the Collection of Alfred Stieglitz,Rarely seen masterpieces from Alfred Stieglitz’s personal collection of photography will be presented at The Metropolitan Museum of Art in the Howard Gilman Gallery.,2011-10-13,alias,/photographic-treasures/,old slug
+/taking-aim/,post,Taking Aim,Guest curators Marysol Nieves and Mónica Espinel look at the history of the Bronx Museum's Artist in the Marketplace (AIM) program to celebrate the 30th anniversary of this ground-breaking program.,2011-06-26,keep,/taking-aim/,
+/memory-leaks/,post,Memory Leaks,"Memory Leaks is a personally charged show of works that were tattooed in my brain, a subjective momentary ordering of memory, time and meaning.",2010-11-03,keep,/memory-leaks/,
+/then-now/,post,Then & Now: Abstraction in Latin American Art from 1950 to Present,"Then & Now explores the various modes of abstraction that arose in Latin America, ranging from geometric to gestural, kinetic, neo-concrete art and more.",2010-05-24,keep,/then-now/,
+/then-now-abstraction-in-latin-american-art-from-1950-to-present/,post,Then & Now: Abstraction in Latin American Art from 1950 to Present,"Then & Now explores the various modes of abstraction that arose in Latin America, ranging from geometric to gestural, kinetic, neo-concrete art and more.",2010-05-24,alias,/then-now/,old slug
+/geometric-abstract-works/,post,Geometric Abstract Works:,"Geometric Abstract Works: The Latin American vision from the 1950s, 60s and 70s offers a rare opportunity to view seminal works by Latin American artists whose exposure in the United States has been limited.",2009-10-16,keep,/geometric-abstract-works/,
+/geometric-abstract-works-the-latin-american-vision-from-the-1950s-60s-and-70s/,post,Geometric Abstract Works:,"Geometric Abstract Works: The Latin American vision from the 1950s, 60s and 70s offers a rare opportunity to view seminal works by Latin American artists whose exposure in the United States has been limited.",2009-10-16,alias,/geometric-abstract-works/,old slug
+/muhheakantuck/,post,The Muhheakantuck in Focus,"Muhheakantuck, a Lenape word meaning “the river that flows both ways,” was the original name for the estuary now named for Henry Hudson.",2009-08-01,keep,/muhheakantuck/,
+/the-muhheakantuck-in-focus/,post,The Muhheakantuck in Focus,"Muhheakantuck, a Lenape word meaning “the river that flows both ways,” was the original name for the estuary now named for Henry Hudson.",2009-08-01,alias,/muhheakantuck/,old slug
+/ceremonies-of-summer/,post,Ceremonies of Summer,"Ceremonies of Summer, a multimedia exhibition is an homage to Marta Traba and was inspired by her first novel “Las ceremonias del verano” published in 1966.",2008-07-17,keep,/ceremonies-of-summer/,
+/fanny-sanin/,post,"Fanny Sanín: A Chromatic Journey, 1966-2006","A Chromatic Journey, 1966 - 2006 presents Fanny Sanín’s exploration undertaken with color as the thread that links the various phases of her work.",2008-05-01,keep,/fanny-sanin/,
+/fanny-sanin-a-chromatic-journey-1966-2006/,post,"Fanny Sanín: A Chromatic Journey, 1966-2006","A Chromatic Journey, 1966 - 2006 presents Fanny Sanín’s exploration undertaken with color as the thread that links the various phases of her work.",2008-05-01,alias,/fanny-sanin/,old slug
+/crackerfarm/,post,CRACKERFARM,"Gramercy Post is pleased to present Crackerfarm, an artist collective comprised of photographers Mike Beyer and Lindsey Rome.",2005-05-04,keep,/crackerfarm/,
+/crackerfarm0/,post,CRACKERFARM,"Gramercy Post is pleased to present Crackerfarm, an artist collective comprised of photographers Mike Beyer and Lindsey Rome.",2005-05-04,alias,/crackerfarm/,old slug
+/denise-schatz/,post,Denise Schatz – Signal if you Can’t Breathe,"Denise Schatz makes collages and works on paper, using magazine cut-outs, graphite and colored pencils.",2005-02-16,keep,/denise-schatz/,
+/denise-schatz-signal-if-you-cant-breathe/,post,Denise Schatz – Signal if you Can’t Breathe,"Denise Schatz makes collages and works on paper, using magazine cut-outs, graphite and colored pencils.",2005-02-16,alias,/denise-schatz/,old slug
+/works-on-paper/,post,Works on Paper,"Works on Paper is a group exhibition of works on paper or synthetic materials by Andrea Frank, Guy Hindley, Kurt Lightner, Tim Maxwell, Dean Smith and Nicolas Touron.",2003-06-10,keep,/works-on-paper/,
+/works-on-paper-2/,post,Works on Paper,"Works on Paper is a group exhibition of works on paper or synthetic materials by Andrea Frank, Guy Hindley, Kurt Lightner, Tim Maxwell, Dean Smith and Nicolas Touron.",2003-06-10,alias,/works-on-paper/,old slug
+/luis-roldan/,post,Luis Roldan: Umbra,"Press release for Luis Rolan exhibition Umbra at Henrique Faria, New York, February 16 - March 25, 2017",2017-02-13,keep,/luis-roldan/,
+/carmen-herrera/,post,Carmen Herrera's Chronology for Lines of Sight,"Carmen Herrera's chronology for the Whitney Museum exhibition: Lines of Sight. September 16, 2016 - January 9, 2017",2016-09-16,keep,/carmen-herrera/,
+/hybrid-topographies-encounters-latin-america/,post,Hybrid Topographies:  Encounters from Latin America,"Hybrid Topographies presents contemporary artists from Latin America who share an engagement with the landscape, whether urban or rural. 60 Wall Gallery, Deutsche Bank",2018-02-12,keep,/hybrid-topographies-encounters-latin-america/,
+/rosemberg-sandoval-artforum/,post,Rosemberg Sandoval:  ARTFORUM,"Artforum article of Rosemberg Sandoval’s exhibition “Salvaje” (Savage) at Galeria Pilar, Sao Paulo.",2014-09-09,keep,/rosemberg-sandoval-artforum/,
+/mauricio-ianes-artnexus/,post,Maurício Ianês:  ArtNexus,"Artnexus article for Maurício Ianês's exhibition at Galeria Vermelho, Sao Paulo. December 2014-February 2015",2014-12-15,keep,/mauricio-ianes-artnexus/,
+/allora-calzadilla-arte-al-dia/,post,Allora & Calzadilla - Arte al Dia,Review of Allora & Calzadilla's show at Barbara Gladstone in Arte al Dia.,2009-06-01,keep,/allora-calzadilla-arte-al-dia/,
+/artpace-international-artist-in-residence-program/,post,Artpace International Artist-in-residence Program,"Exhibition of Carlos Castro Arias, Milagros de la Torre, and Daniel Ramos for the Spring 2020 International Artist-in-residence program at Artpace, San Antonio",2020-01-27,keep,/artpace-international-artist-in-residence-program/,
+/el-museo-del-barrio-celebrates-carmen-herrera-105-birthday/,post,El Museo del Barrio celebrates Carmen Herrera's birthday,"Celebrating Carmen Herrera's birthday with Tony Bechara, Carolina Ponce de Leon and Monica Espinel; moderator Susanna Temkin, Curator, El Museo del Barrio.",2020-05-26,keep,/el-museo-del-barrio-celebrates-carmen-herrera-105-birthday/,
+/carlos-castro-arias-remorses-and-other-maladies/,post,Carlos Castro Arias - Remorses and Other Maladies,,2021-02-27,keep,/carlos-castro-arias-remorses-and-other-maladies/,TODO: no description in export
+/ana-mercedes-hoyos/,post,Ana Mercedes Hoyos,,2020-10-09,keep,/ana-mercedes-hoyos/,TODO: no description in export
+/spring-2020-international-artists-in-residence-talk/,post,Spring 2020 International Artists-in-Residence Talk,,2020-09-18,keep,/spring-2020-international-artists-in-residence-talk/,TODO: no description in export
+/parcharte/,post,Parcharte,"Parcharte, ”hanging out with art”, is a podcast by independent curator Monica Espinel. She speaks with contemporary artists about their practice.",2021-12-29,keep,/parcharte/,
+/ifa-latam-2022/,post,Symposium of Latin American Art,"Panel with Monica Espinel, Macarena Deij Prado, Aline Hernández moderated by Dr. Claire Bishop and Cathryn Jijón: ""(Re)Enactments: Performance and Public Space"".",2022-04-01,keep,/ifa-latam-2022/,
+/brooklyn-rail-carmen-herrera/,post,The Brooklyn Rail - 1970s: Carmen Herrera at Lisson,,2022-06-07,keep,/brooklyn-rail-carmen-herrera/,TODO: no description in export
+/obra-de-la-artista-carmen-herrera/,post,Obra de la artista Carmen Herrera,,2022-06-21,keep,/obra-de-la-artista-carmen-herrera/,TODO: no description in export
+/remembering-carmen-herrera-whitney-museum/,post,Carmen Herrera memorial Whitney Museum,,2022-09-28,keep,/remembering-carmen-herrera-whitney-museum/,TODO: no description in export
+/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/,post,Duet of Displacement,,2021-11-11,keep,/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/,TODO: no description in export
+/embodying-the-abject-maria-evelia-marmolejos-anonimo-4/,post,Embodying the Abject,,2023-07-01,keep,/embodying-the-abject-maria-evelia-marmolejos-anonimo-4/,TODO: no description in export
+/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/,post,Impending Beauty: Resilience and Resignification in Tatiana Arocha's Forests of the Mind,,2021-01-01,keep,/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/,TODO: no description in export
+/xocomil-vivian-suters-salute-to-the-wind/,post,"Xocomil, Vivian Suter's Salute to the Wind",,2023-02-18,keep,/xocomil-vivian-suters-salute-to-the-wind/,TODO: no description in export
+/juan-francisco-elso-por-america/,post,Juan Francisco Elso: Por América,,2023-01-09,keep,/juan-francisco-elso-por-america/,TODO: no description in export
+/burning-with-desire/,post,Burning with Desire,,2022-10-27,keep,/burning-with-desire/,TODO: no description in export
+/beats-of-the-sacred-heart/,post,Beats of the Sacred Heart,,2024-03-13,keep,/beats-of-the-sacred-heart/,TODO: no description in export
+/page/2/,pagination,Home – page 2,,,redirect,/,assumes 10 posts per page
+/page/3/,pagination,Home – page 3,,,redirect,/,assumes 10 posts per page
+/page/4/,pagination,Home – page 4,,,redirect,/,assumes 10 posts per page
+/category/exhibitions/,category,Exhibitions,,,keep,/category/exhibitions/,
+/category/exhibitions/page/2/,pagination,Exhibitions – page 2,,,redirect,/category/exhibitions/,assumes 10 posts per page
+/category/exhibitions/feed/,feed,Exhibitions feed,,,alias,/category/exhibitions/index.xml,
+/category/publications/,category,Publications,,,keep,/category/publications/,
+/category/publications/feed/,feed,Publications feed,,,alias,/category/publications/index.xml,
+/category/reviews/,category,Reviews,,,keep,/category/reviews/,
+/category/reviews/feed/,feed,Reviews feed,,,alias,/category/reviews/index.xml,
+/category/talks/,category,Talks,,,keep,/category/talks/,
+/category/talks/page/2/,pagination,Talks – page 2,,,redirect,/category/talks/,assumes 10 posts per page
+/category/talks/feed/,feed,Talks feed,,,alias,/category/talks/index.xml,
+/category/uncategorized/,category,Uncategorized,,,redirect,/,no published posts
+/tag/an-my-le/,tag,An-My Lê,,,keep,/tag/an-my-le/,
+/tag/an-my-le/feed/,feed,An-My Lê feed,,,alias,/tag/an-my-le/index.xml,
+/tag/ana-mercedes-hoyos/,tag,Ana Mercedes Hoyos,,,keep,/tag/ana-mercedes-hoyos/,
+/tag/ana-mercedes-hoyos/feed/,feed,Ana Mercedes Hoyos feed,,,alias,/tag/ana-mercedes-hoyos/index.xml,
+/tag/ana-mercedes-hoyos-cecilia-fajardo-hill/,tag,Ana Mercedes Hoyos Cecilia Fajardo-Hill,,,redirect,/,no published posts
+/tag/artspace/,tag,Artspace,,,keep,/tag/artspace/,
+/tag/artspace/feed/,feed,Artspace feed,,,alias,/tag/artspace/index.xml,
+/tag/bread-salt/,tag,Bread & Salt,,,keep,/tag/bread-salt/,
+/tag/bread-salt/feed/,feed,Bread & Salt feed,,,alias,/tag/bread-salt/index.xml,
+/tag/brooklyn-rail/,tag,Brooklyn Rail,,,keep,/tag/brooklyn-rail/,
+/tag/brooklyn-rail/feed/,feed,Brooklyn Rail feed,,,alias,/tag/brooklyn-rail/index.xml,
+/tag/carlos-castro-arias/,tag,Carlos Castro Arias,,,keep,/tag/carlos-castro-arias/,
+/tag/carlos-castro-arias/feed/,feed,Carlos Castro Arias feed,,,alias,/tag/carlos-castro-arias/index.xml,
+/tag/carm/,tag,carm,,,redirect,/,no published posts
+/tag/carmen-herrera/,tag,Carmen Herrera,,,keep,/tag/carmen-herrera/,
+/tag/carmen-herrera/feed/,feed,Carmen Herrera feed,,,alias,/tag/carmen-herrera/index.xml,
+/tag/carolina-rubio-macwright/,tag,Carolina Rubio MacWright,,,keep,/tag/carolina-rubio-macwright/,
+/tag/carolina-rubio-macwright/feed/,feed,Carolina Rubio MacWright feed,,,alias,/tag/carolina-rubio-macwright/index.xml,
+/tag/cecilia-fajardo-hill/,tag,Cecilia Fajardo-Hill,,,keep,/tag/cecilia-fajardo-hill/,
+/tag/cecilia-fajardo-hill/feed/,feed,Cecilia Fajardo-Hill feed,,,alias,/tag/cecilia-fajardo-hill/index.xml,
+/tag/cisneros-institute/,tag,Cisneros Institute,,,keep,/tag/cisneros-institute/,
+/tag/cisneros-institute/feed/,feed,Cisneros Institute feed,,,alias,/tag/cisneros-institute/index.xml,
+/tag/contemporary-art/,tag,Contemporary Art,,,keep,/tag/contemporary-art/,
+/tag/contemporary-art/feed/,feed,Contemporary Art feed,,,alias,/tag/contemporary-art/index.xml,
+/tag/coracao/,tag,Coração,,,keep,/tag/coracao/,
+/tag/coracao/feed/,feed,Coração feed,,,alias,/tag/coracao/index.xml,
+/tag/daniel-ramos/,tag,Daniel Ramos,,,keep,/tag/daniel-ramos/,
+/tag/daniel-ramos/feed/,feed,Daniel Ramos feed,,,alias,/tag/daniel-ramos/index.xml,
+/tag/exhibition-text/,tag,Exhibition text,,,keep,/tag/exhibition-text/,
+/tag/exhibition-text/feed/,feed,Exhibition text feed,,,alias,/tag/exhibition-text/index.xml,
+/tag/fire-in-art/,tag,Fire in art,,,keep,/tag/fire-in-art/,
+/tag/fire-in-art/feed/,feed,Fire in art feed,,,alias,/tag/fire-in-art/index.xml,
+/tag/frieze-masters/,tag,Frieze Masters,,,keep,/tag/frieze-masters/,
+/tag/frieze-masters/feed/,feed,Frieze Masters feed,,,alias,/tag/frieze-masters/index.xml,
+/tag/henrique-faria/,tag,Henrique Faria,,,keep,/tag/henrique-faria/,
+/tag/henrique-faria/feed/,feed,Henrique Faria feed,,,alias,/tag/henrique-faria/index.xml,
+/tag/huguette-caland/,tag,Huguette Caland,,,keep,/tag/huguette-caland/,
+/tag/huguette-caland/feed/,feed,Huguette Caland feed,,,alias,/tag/huguette-caland/index.xml,
+/tag/installation/,tag,Installation,,,keep,/tag/installation/,
+/tag/installation/feed/,feed,Installation feed,,,alias,/tag/installation/index.xml,
+/tag/john-giorno/,tag,John Giorno,,,keep,/tag/john-giorno/,
+/tag/john-giorno/feed/,feed,John Giorno feed,,,alias,/tag/john-giorno/index.xml,
+/tag/las-dos-fridas/,tag,Las dos Fridas,,,keep,/tag/las-dos-fridas/,
+/tag/las-dos-fridas/feed/,feed,Las dos Fridas feed,,,alias,/tag/las-dos-fridas/index.xml,
+/tag/maria-evelia-marmolejo/,tag,Maria Evelia Marmolejo,,,keep,/tag/maria-evelia-marmolejo/,
+/tag/maria-evelia-marmolejo/feed/,feed,Maria Evelia Marmolejo feed,,,alias,/tag/maria-evelia-marmolejo/index.xml,
+/tag/milagros-de-la-torre/,tag,Milagros de la Torre,,,keep,/tag/milagros-de-la-torre/,
+/tag/milagros-de-la-torre/feed/,feed,Milagros de la Torre feed,,,alias,/tag/milagros-de-la-torre/index.xml,
+/tag/moma/,tag,MoMA,,,keep,/tag/moma/,
+/tag/moma/feed/,feed,MoMA feed,,,alias,/tag/moma/index.xml,
+/tag/monica-espinel/,tag,Monica Espinel,,,keep,/tag/monica-espinel/,
+/tag/monica-espinel/feed/,feed,Monica Espinel feed,,,alias,/tag/monica-espinel/index.xml,
+/tag/painting/,tag,Painting,,,keep,/tag/painting/,
+/tag/painting/feed/,feed,Painting feed,,,alias,/tag/painting/index.xml,
+/tag/past-lives/,tag,Past Lives,,,keep,/tag/past-lives/,
+/tag/past-lives/feed/,feed,Past Lives feed,,,alias,/tag/past-lives/index.xml,
+/tag/playlist/,tag,Playlist,,,keep,/tag/playlist/,
+/tag/playlist/feed/,feed,Playlist feed,,,alias,/tag/playlist/index.xml,
+/tag/remorses/,tag,Remorses,,,keep,/tag/remorses/,
+/tag/remorses/feed/,feed,Remorses feed,,,alias,/tag/remorses/index.xml,
+/tag/sacred-heart/,tag,Sacred Heart,,,keep,/tag/sacred-heart/,
+/tag/sacred-heart/feed/,feed,Sacred Heart feed,,,alias,/tag/sacred-heart/index.xml,
+/tag/tatiana-arocha/,tag,Tatiana Arocha,,,keep,/tag/tatiana-arocha/,
+/tag/tatiana-arocha/feed/,feed,Tatiana Arocha feed,,,alias,/tag/tatiana-arocha/index.xml,
+/tag/vanderlei-lopes/,tag,Vanderlei Lopes,,,keep,/tag/vanderlei-lopes/,
+/tag/vanderlei-lopes/feed/,feed,Vanderlei Lopes feed,,,alias,/tag/vanderlei-lopes/index.xml,
+/tag/yeguas-del-apocalipsis/,tag,Yeguas del Apocalipsis,,,keep,/tag/yeguas-del-apocalipsis/,
+/tag/yeguas-del-apocalipsis/feed/,feed,Yeguas del Apocalipsis feed,,,alias,/tag/yeguas-del-apocalipsis/index.xml,
+/tag/yves-klein/,tag,Yves Klein,,,keep,/tag/yves-klein/,
+/tag/yves-klein/feed/,feed,Yves Klein feed,,,alias,/tag/yves-klein/index.xml,
+/author/monica-espinel/,author,Monica Espinel,,,redirect,/,"TODO: author slug derived from login, verify on live site"
+/author/monica-espinel/page/2/,pagination,Monica Espinel – page 2,,,redirect,/,"TODO: author slug derived from login, verify on live site"
+/author/monica-espinel/page/3/,pagination,Monica Espinel – page 3,,,redirect,/,"TODO: author slug derived from login, verify on live site"
+/author/monica-espinel/page/4/,pagination,Monica Espinel – page 4,,,redirect,/,"TODO: author slug derived from login, verify on live site"
+/author/monica-espinel/feed/,feed,Monica Espinel feed,,,redirect,/index.xml,"TODO: author slug derived from login, verify on live site"
+/author/simon-letort/,author,Simon Letort,,,redirect,/,"TODO: author slug derived from login, verify on live site"
+/author/simon-letort/feed/,feed,Simon Letort feed,,,redirect,/index.xml,"TODO: author slug derived from login, verify on live site"
+/2003/,date,Archive 2003,,,redirect,/,
+/2004/,date,Archive 2004,,,redirect,/,
+/2005/,date,Archive 2005,,,redirect,/,
+/2008/,date,Archive 2008,,,redirect,/,
+/2009/,date,Archive 2009,,,redirect,/,
+/2010/,date,Archive 2010,,,redirect,/,
+/2011/,date,Archive 2011,,,redirect,/,
+/2012/,date,Archive 2012,,,redirect,/,
+/2013/,date,Archive 2013,,,redirect,/,
+/2014/,date,Archive 2014,,,redirect,/,
+/2016/,date,Archive 2016,,,redirect,/,
+/2017/,date,Archive 2017,,,redirect,/,
+/2018/,date,Archive 2018,,,redirect,/,
+/2020/,date,Archive 2020,,,redirect,/,
+/2021/,date,Archive 2021,,,redirect,/,
+/2022/,date,Archive 2022,,,redirect,/,
+/2023/,date,Archive 2023,,,redirect,/,
+/2024/,date,Archive 2024,,,redirect,/,
+/2003/06/,date,Archive 2003-06,,,redirect,/,
+/2004/06/,date,Archive 2004-06,,,redirect,/,
+/2005/02/,date,Archive 2005-02,,,redirect,/,
+/2005/05/,date,Archive 2005-05,,,redirect,/,
+/2008/05/,date,Archive 2008-05,,,redirect,/,
+/2008/07/,date,Archive 2008-07,,,redirect,/,
+/2009/06/,date,Archive 2009-06,,,redirect,/,
+/2009/08/,date,Archive 2009-08,,,redirect,/,
+/2009/10/,date,Archive 2009-10,,,redirect,/,
+/2010/05/,date,Archive 2010-05,,,redirect,/,
+/2010/11/,date,Archive 2010-11,,,redirect,/,
+/2011/06/,date,Archive 2011-06,,,redirect,/,
+/2011/10/,date,Archive 2011-10,,,redirect,/,
+/2012/07/,date,Archive 2012-07,,,redirect,/,
+/2013/04/,date,Archive 2013-04,,,redirect,/,
+/2014/09/,date,Archive 2014-09,,,redirect,/,
+/2014/10/,date,Archive 2014-10,,,redirect,/,
+/2014/12/,date,Archive 2014-12,,,redirect,/,
+/2016/09/,date,Archive 2016-09,,,redirect,/,
+/2017/02/,date,Archive 2017-02,,,redirect,/,
+/2018/02/,date,Archive 2018-02,,,redirect,/,
+/2020/01/,date,Archive 2020-01,,,redirect,/,
+/2020/05/,date,Archive 2020-05,,,redirect,/,
+/2020/09/,date,Archive 2020-09,,,redirect,/,
+/2020/10/,date,Archive 2020-10,,,redirect,/,
+/2021/01/,date,Archive 2021-01,,,redirect,/,
+/2021/02/,date,Archive 2021-02,,,redirect,/,
+/2021/11/,date,Archive 2021-11,,,redirect,/,
+/2021/12/,date,Archive 2021-12,,,redirect,/,
+/2022/04/,date,Archive 2022-04,,,redirect,/,
+/2022/06/,date,Archive 2022-06,,,redirect,/,
+/2022/09/,date,Archive 2022-09,,,redirect,/,
+/2022/10/,date,Archive 2022-10,,,redirect,/,
+/2023/01/,date,Archive 2023-01,,,redirect,/,
+/2023/02/,date,Archive 2023-02,,,redirect,/,
+/2023/07/,date,Archive 2023-07,,,redirect,/,
+/2024/03/,date,Archive 2024-03,,,redirect,/,
+/carmen-herrera/carmen-herrera-installation-shot-4/,attachment,"Carmen Herrara, Lines of Sights - Installation shot",,2020-03-03,redirect,/carmen-herrera/,
+/carmen-herrera/exh_herrera_install_3_1200x675/,attachment,"Carmen Herrara, Lines of Sights - Installation shot",,2020-03-03,redirect,/carmen-herrera/,old attachment slug; path derived from current attachment URL
+/luis-roldan/luis-roldan-ventana/,attachment,"Luis Roldan, Ventana, 2017",,2020-03-08,redirect,/luis-roldan/,
+/luis-roldan/rlf2017ventana_1-2/,attachment,"Luis Roldan, Ventana, 2017",,2020-03-08,redirect,/luis-roldan/,old attachment slug; path derived from current attachment URL
+/geometric-abstract-works/geometric-abstract-works-catalogue/,attachment,Geometric Abstract Works: Catalogue,,2020-03-04,redirect,/geometric-abstract-works/,
+/geometric-abstract-works/geometric-abstract-works-2/,attachment,Geometric Abstract Works: Catalogue,,2020-03-04,redirect,/geometric-abstract-works/,old attachment slug; path derived from current attachment URL
+/geometric-abstract-works/geometric-abstract-works-sm-2/,attachment,Geometric Abstract Works: Catalogue,,2020-03-04,redirect,/geometric-abstract-works/,old attachment slug; path derived from current attachment URL
+/black-milk/black-milk-installation-shot/,attachment,Black Milk Installation shot,,2020-03-04,redirect,/black-milk/,
+/black-milk/1-28/,attachment,Black Milk Installation shot,,2020-03-04,redirect,/black-milk/,old attachment slug; path derived from current attachment URL
+/black-milk/black-milk-installation-shot-2/,attachment,Black Milk Installation shot,,2020-03-04,redirect,/black-milk/,old attachment slug; path derived from current attachment URL
+/works-on-paper/kurt_lightner-settle/,attachment,"Kurt Lightner, Settle, 2003",,2020-03-04,redirect,/works-on-paper/,
+/works-on-paper/2-20/,attachment,"Kurt Lightner, Settle, 2003",,2020-03-04,redirect,/works-on-paper/,old attachment slug; path derived from current attachment URL
+/monica-espinel/,attachment,Monica Espinel,,2020-03-07,redirect,/,parent missing or unpublished
+/image/,attachment,Monica Espinel,,2020-03-07,redirect,/,old attachment slug; path derived from current attachment URL
+/carmen-herrera/carmen-herrera-chronology-2/,attachment,Carmen Herrera's chronology for Lines of Sight,,2020-03-07,redirect,/carmen-herrera/,
+/carmen-herrera/carmen-herrera-lines-of-sight-chronology/,attachment,Carmen Herrera's chronology for Lines of Sight,,2020-03-07,redirect,/carmen-herrera/,old attachment slug; path derived from current attachment URL
+/carmen-herrera/carmen-herrera-catalogue-cover/,attachment,Carmen Herrera: Lines of Sight - catalogue,,2020-03-07,redirect,/carmen-herrera/,
+/carmen-herrera/herrera_cat_resizedforweb_740/,attachment,Carmen Herrera: Lines of Sight - catalogue,,2020-03-07,redirect,/carmen-herrera/,old attachment slug; path derived from current attachment URL
+/carmen-herrera/carmen-herrera-installation-shot-3/,attachment,Carmen Herrera: Lines of Sight - installation shot,,2020-03-07,redirect,/carmen-herrera/,
+/carmen-herrera/wmaa_herra_install-13_sm_800/,attachment,Carmen Herrera: Lines of Sight - installation shot,,2020-03-07,redirect,/carmen-herrera/,old attachment slug; path derived from current attachment URL
+/carmen-herrera/carmen-herrera-installation-shot-2/,attachment,Carmen Herrera: Lines of Sight - installation shot,,2020-03-07,redirect,/carmen-herrera/,
+/carmen-herrera/wmaa_herra_install-15_sm_800/,attachment,Carmen Herrera: Lines of Sight - installation shot,,2020-03-07,redirect,/carmen-herrera/,old attachment slug; path derived from current attachment URL
+/carmen-herrera/carmen-herrera-installation-shot-1/,attachment,Carmen Herrera: Lines of Sight - installation shot,,2020-03-07,redirect,/carmen-herrera/,
+/carmen-herrera/wmaa_herra_install-18_resizedforweb_800/,attachment,Carmen Herrera: Lines of Sight - installation shot,,2020-03-07,redirect,/carmen-herrera/,old attachment slug; path derived from current attachment URL
+/bruno-miguel/bruno-miguel-todos-a-mesa-2015-installation-shot-6/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,
+/bruno-miguel/photo-3/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,old attachment slug; path derived from current attachment URL
+/bruno-miguel/bruno-miguel-todos-a-mesa-2015-installation-shot-4/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,
+/bruno-miguel/photo-5/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,old attachment slug; path derived from current attachment URL
+/hybrid-topographies-encounters-latin-america/karina-aguilera-skvirsky-2/,attachment,Karina Aguilera Skvirsky,,2020-03-07,redirect,/hybrid-topographies-encounters-latin-america/,
+/hybrid-topographies-encounters-latin-america/karina-aguilera-skvirsky-lancha/,attachment,Karina Aguilera Skvirsky,,2020-03-07,redirect,/hybrid-topographies-encounters-latin-america/,old attachment slug; path derived from current attachment URL
+/artpace-international-artist-in-residence-program/milagros-de-la-torre/,attachment,Milagros de la Torre,,2020-03-08,redirect,/artpace-international-artist-in-residence-program/,
+/artpace-international-artist-in-residence-program/milagros/,attachment,Milagros de la Torre,,2020-03-08,redirect,/artpace-international-artist-in-residence-program/,old attachment slug; path derived from current attachment URL
+/artpace-international-artist-in-residence-program/daniel-ramos/,attachment,Daniel Ramos,,2020-03-08,redirect,/artpace-international-artist-in-residence-program/,
+/artpace-international-artist-in-residence-program/daniel-ramos2/,attachment,Daniel Ramos,,2020-03-08,redirect,/artpace-international-artist-in-residence-program/,old attachment slug; path derived from current attachment URL
+/artpace-international-artist-in-residence-program/carlos-castro/,attachment,Carlos Castro Arias,,2020-03-08,redirect,/artpace-international-artist-in-residence-program/,
+/artpace-international-artist-in-residence-program/artpace-logo/,attachment,Artpace Logo,,2020-03-08,redirect,/artpace-international-artist-in-residence-program/,
+/olympus-digital-camera/,attachment,Artpace,,2020-03-11,redirect,/,parent missing or unpublished
+/el-museo-del-barrio-celebrates-carmen-herrera-105-birthday/carmenherrera/,attachment,Carmen Herrera,,2021-02-21,redirect,/el-museo-del-barrio-celebrates-carmen-herrera-105-birthday/,
+/bruno-miguel/bruno-miguel-todos-a-mesa-catalogue/,attachment,Bruno Miguel - Todos a Mesa - Catalogue,,2020-03-03,redirect,/bruno-miguel/,
+/bruno-miguel/bruno-miguel-todos-a-mesa-sm-2/,attachment,Bruno Miguel - Todos a Mesa - Catalogue,,2020-03-03,redirect,/bruno-miguel/,old attachment slug; path derived from current attachment URL
+/hybrid-topographies-encounters-latin-america/hybrid-topographies_catalogue/,attachment,Hybrid Topographies - Catalogue,,2020-03-03,redirect,/hybrid-topographies-encounters-latin-america/,
+/hybrid-topographies-encounters-latin-america/db_2018_hybridtopographies_catalogue_v17_finalsm-2/,attachment,Hybrid Topographies - Catalogue,,2020-03-03,redirect,/hybrid-topographies-encounters-latin-america/,old attachment slug; path derived from current attachment URL
+/luis-roldan/press_release_luis_roldan_umbra/,attachment,Luis Roldan Umbra - press release,,2020-03-03,redirect,/luis-roldan/,
+/mauricio-ianes-artnexus/mauricio-ianes-galeria-vermelho/,attachment,Mauricio Ianes Galeria Vermelho,,2020-03-04,redirect,/mauricio-ianes-artnexus/,
+/mauricio-ianes-artnexus/screen-shot-2020-03-04-at-12-10-05-am/,attachment,Mauricio Ianes Galeria Vermelho,,2020-03-04,redirect,/mauricio-ianes-artnexus/,old attachment slug; path derived from current attachment URL
+/mauricio-ianes-artnexus/mauricio-ianes-artnexus-article/,attachment,Mauricio Ianes Galeria Vermelho - Artnexus article,,2020-03-04,redirect,/mauricio-ianes-artnexus/,
+/mauricio-ianes-artnexus/mauricio-ianes-galeria-vermelho-sm-2/,attachment,Mauricio Ianes Galeria Vermelho - Artnexus article,,2020-03-04,redirect,/mauricio-ianes-artnexus/,old attachment slug; path derived from current attachment URL
+/sp-arte/1-14/,attachment,Monica_Espinel_SP_Arte-1,,2020-03-04,redirect,/sp-arte/,
+/sp-arte/1-15/,attachment,Monica_Espinel_SP_Arte-1,,2020-03-04,redirect,/sp-arte/,
+/sp-arte/2-10/,attachment,Monica_Espinel_SP_Arte-2,,2020-03-04,redirect,/sp-arte/,
+/carlos-castro-arias-remorses-and-other-maladies/carlos-castro-arias-folleto-remorses/,attachment,Carlos Castro Arias - Remorses and Other Maladies,,2021-03-10,redirect,/carlos-castro-arias-remorses-and-other-maladies/,
+/carlos-castro-arias-remorses-and-other-maladies/espinel-carlos-castro-arias/,attachment,Espinel-Carlos-Castro-Arias,,2021-03-18,redirect,/carlos-castro-arias-remorses-and-other-maladies/,
+/e1357bff-a368-4ff3-ad52-78b572436d72/,attachment,Carlos Castro Arias - Remorses and Other Maladies,,2021-03-18,redirect,/,parent missing or unpublished
+/carlos-castro-arias-remorses-and-other-maladies/silencio-copy/,attachment,Remorses and other maladies,,2021-03-18,redirect,/carlos-castro-arias-remorses-and-other-maladies/,
+/hoyos-puertas-1968/,attachment,Hoyos Puertas 1968,,2021-03-26,redirect,/,parent missing or unpublished
+/artpace-talk/,attachment,Artpace talk,,2021-03-26,redirect,/,parent missing or unpublished
+/parcharte/parcharte-2/,attachment,parcharte,,2021-12-29,redirect,/parcharte/,
+/parcharte/parcharte/,attachment,parcharte,,2021-12-29,redirect,/parcharte/,old attachment slug; path derived from current attachment URL
+/brooklyn-rail-carmen-herrera/brooklyn-rail-logo/,attachment,Brooklyn Rail - logo,,2022-06-21,redirect,/brooklyn-rail-carmen-herrera/,
+/obra-de-la-artista-carmen-herrera/photo-2022-06-15-13-23-52/,attachment,PHOTO-2022-06-15-13-23-52,,2022-06-21,redirect,/obra-de-la-artista-carmen-herrera/,
+/obra-de-la-artista-carmen-herrera/carmen-herrera-gun-club/,attachment,Carmen-Herrera,,2022-06-21,redirect,/obra-de-la-artista-carmen-herrera/,
+/beats-of-the-sacred-heart/screenshot-2024-10-08-at-9-42-07-am/,attachment,,,2024-10-08,redirect,/beats-of-the-sacred-heart/,
+/?attachment_id=4491,attachment,image,,2026-01-23,unsupported,/,query-string URL: cannot be served on GitHub Pages; parent missing or unpublished
+/rituals-of-chaos/installation-shot-the-rituals-of-chaos-2012/,attachment,"Installation shot, The Rituals of Chaos, 2012",,2020-03-04,redirect,/rituals-of-chaos/,
+/rituals-of-chaos/1-16/,attachment,"Installation shot, The Rituals of Chaos, 2012",,2020-03-04,redirect,/rituals-of-chaos/,old attachment slug; path derived from current attachment URL
+/rituals-of-chaos/2-11/,attachment,"Claudia Andujar, Rua Direita, 1970s, Inkjet prints,  40 x 60 cm each, polyptych of 8",,2020-03-04,redirect,/rituals-of-chaos/,
+/photographic-treasures/installation-shot-photographic-treasures-from-the-collection-of-alfred-stieglitz-2011/,attachment,"Installation shot, Photographic Treasures from the Collection of Alfred Stieglitz, 2011",,2020-03-04,redirect,/photographic-treasures/,
+/photographic-treasures/1-18/,attachment,"Installation shot, Photographic Treasures from the Collection of Alfred Stieglitz, 2011",,2020-03-04,redirect,/photographic-treasures/,old attachment slug; path derived from current attachment URL
+/photographic-treasures/alvin-langdon-coburn-the-bubble/,attachment,"Alvin Langdon Coburn, The Bubble",,2020-03-04,redirect,/photographic-treasures/,
+/photographic-treasures/2-12/,attachment,"Alvin Langdon Coburn, The Bubble",,2020-03-04,redirect,/photographic-treasures/,old attachment slug; path derived from current attachment URL
+/taking-aim/1-19/,attachment,"Installation shot, Taking Aim, 2011",,2020-03-04,redirect,/taking-aim/,
+/taking-aim/2-13/,attachment,"Installation shot, Taking Aim, 2011",,2020-03-04,redirect,/taking-aim/,
+/then-now/then-and-now-catalogue/,attachment,Then and Now - Catalogue,,2020-03-04,redirect,/then-now/,
+/then-now/then-and-now-catalogue-low-res-2/,attachment,Then and Now - Catalogue,,2020-03-04,redirect,/then-now/,old attachment slug; path derived from current attachment URL
+/then-now/1-20/,attachment,"Luis Fernando Roldán, Petit Pan Jaune",,2020-03-04,redirect,/then-now/,
+/then-now/2-14/,attachment,"Arturo Herrera, Books",,2020-03-04,redirect,/then-now/,
+/memory-leaks/1-21/,attachment,"Julie Tolentino, Lead/Led, 2005 / 2010, Performance and sculptural remnant, dictaphone, wire, hook, dimensions variable",,2020-03-04,redirect,/memory-leaks/,
+/muhheakantuck/1-22/,attachment,Nicholas Galanin,,2020-03-04,redirect,/muhheakantuck/,
+/geometric-abstract-works/1-23/,attachment,"Installation shot, Geometric Abstract Works",,2020-03-04,redirect,/geometric-abstract-works/,
+/geometric-abstract-works/2-15/,attachment,"Alejandro Otero, Hoy en TV",,2020-03-04,redirect,/geometric-abstract-works/,
+/rosemberg-sandoval-artforum/rosemberg-sandoval-artforum-article/,attachment,Rosemberg Sandoval - artforum.com : critics picks,,2020-03-04,redirect,/rosemberg-sandoval-artforum/,
+/rosemberg-sandoval-artforum/rosemberg-sandoval-artforum-com-critics-picks-2/,attachment,Rosemberg Sandoval - artforum.com : critics picks,,2020-03-04,redirect,/rosemberg-sandoval-artforum/,old attachment slug; path derived from current attachment URL
+/rosemberg-sandoval-artforum/picksimg_large/,attachment,"Rosemberg Sandoval, Caribe (Caribbean), 1989–92",,2020-03-04,redirect,/rosemberg-sandoval-artforum/,
+/allora-calzadilla-arte-al-dia/allora-calzadilla-2/,attachment,Allora & Calzadilla,,2020-03-04,redirect,/allora-calzadilla-arte-al-dia/,
+/allora-calzadilla-arte-al-dia/ac_bgg_2009_02_m-2/,attachment,Allora & Calzadilla,,2020-03-04,redirect,/allora-calzadilla-arte-al-dia/,old attachment slug; path derived from current attachment URL
+/allora-calzadilla-arte-al-dia/allora-and-calzadilla-arte-al-dia-article/,attachment,Allora & Calzadilla,,2020-03-04,redirect,/allora-calzadilla-arte-al-dia/,
+/allora-calzadilla-arte-al-dia/3-allora-and-calzadilla/,attachment,Allora & Calzadilla,,2020-03-04,redirect,/allora-calzadilla-arte-al-dia/,old attachment slug; path derived from current attachment URL
+/ceremonies-of-summer/1-24/,attachment,"Installation shot, Ceremonies of Summer, 2008",,2020-03-04,redirect,/ceremonies-of-summer/,
+/ceremonies-of-summer/angela-freiberger-mood-swings/,attachment,"Angela Freiberger, Mood Swings",,2020-03-04,redirect,/ceremonies-of-summer/,
+/ceremonies-of-summer/2-16/,attachment,"Angela Freiberger, Mood Swings",,2020-03-04,redirect,/ceremonies-of-summer/,old attachment slug; path derived from current attachment URL
+/fanny-sanin/installation-shot-fanny-sanin-a-chromatic-journey-2008/,attachment,"Installation shot, Fanny Sanín: A Chromatic Journey, 2008",,2020-03-04,redirect,/fanny-sanin/,
+/fanny-sanin/1-25/,attachment,"Installation shot, Fanny Sanín: A Chromatic Journey, 2008",,2020-03-04,redirect,/fanny-sanin/,old attachment slug; path derived from current attachment URL
+/fanny-sanin/fanny-sanin-oleo-no-6/,attachment,"Fanny Sanín, Oleo No. 6",,2020-03-04,redirect,/fanny-sanin/,
+/fanny-sanin/2-17/,attachment,"Fanny Sanín, Oleo No. 6",,2020-03-04,redirect,/fanny-sanin/,old attachment slug; path derived from current attachment URL
+/crackerfarm/crackerfarm-2/,attachment,Crackerfarm,,2020-03-04,redirect,/crackerfarm/,
+/crackerfarm/1-26/,attachment,Crackerfarm,,2020-03-04,redirect,/crackerfarm/,old attachment slug; path derived from current attachment URL
+/denise-schatz/denise-schatz-signal-if-you-cant-breathe-installation-shot/,attachment,"Installation shot, Denise Schatz – Signal if you Can’t Breathe, 2005",,2020-03-04,redirect,/denise-schatz/,
+/denise-schatz/1-27/,attachment,"Installation shot, Denise Schatz – Signal if you Can’t Breathe, 2005",,2020-03-04,redirect,/denise-schatz/,old attachment slug; path derived from current attachment URL
+/denise-schatz/denise-schatz-signal-if-you-cant-breathe/,attachment,"Installation shot, Denise Schatz – Signal if you Can’t Breathe, 2005",,2020-03-04,redirect,/denise-schatz/,
+/denise-schatz/2-18/,attachment,"Installation shot, Denise Schatz – Signal if you Can’t Breathe, 2005",,2020-03-04,redirect,/denise-schatz/,old attachment slug; path derived from current attachment URL
+/black-milk/angela-strassheim-untitled/,attachment,"Angela Strassheim, Untitled",,2020-03-04,redirect,/black-milk/,
+/black-milk/2-19/,attachment,"Angela Strassheim, Untitled",,2020-03-04,redirect,/black-milk/,old attachment slug; path derived from current attachment URL
+/works-on-paper/installation-shot-works-on-paper/,attachment,"Installation shot, Works on Paper, 2003",,2020-03-04,redirect,/works-on-paper/,
+/works-on-paper/1-29/,attachment,"Installation shot, Works on Paper, 2003",,2020-03-04,redirect,/works-on-paper/,old attachment slug; path derived from current attachment URL
+/hybrid-topographies-encounters-latin-america/claudia-andujar_from-sonhos-yanomami-yanomami-dreams-series-1971-1981-2/,attachment,"Claudia Andujar from Sonhos Yanomami (Yanomami Dreams) series, 1971-1981",,2020-03-07,redirect,/hybrid-topographies-encounters-latin-america/,
+/rosemberg-sandoval-artforum/rosemberg-sandoval-sudor/,attachment,"Rosemberg Sandoval - Sudor, 2014",,2020-03-07,redirect,/rosemberg-sandoval-artforum/,
+/rosemberg-sandoval-artforum/1-sudor/,attachment,"Rosemberg Sandoval - Sudor, 2014",,2020-03-07,redirect,/rosemberg-sandoval-artforum/,old attachment slug; path derived from current attachment URL
+/hybrid-topographies-encounters-latin-america/karina-aguilera-skvirsky/,attachment,Karina Aguilera Skvirsky,,2020-03-07,redirect,/hybrid-topographies-encounters-latin-america/,
+/hybrid-topographies-encounters-latin-america/karina-aguilera-skvirsky-perilous_pily/,attachment,Karina Aguilera Skvirsky,,2020-03-07,redirect,/hybrid-topographies-encounters-latin-america/,old attachment slug; path derived from current attachment URL
+/bruno-miguel/bruno-miguel-todos-a-mesa-2015-installation-shot/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,
+/bruno-miguel/photo-1/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,old attachment slug; path derived from current attachment URL
+/bruno-miguel/bruno-miguel-todos-a-mesa-2015-installation-shot-2/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,
+/bruno-miguel/photo-2/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,old attachment slug; path derived from current attachment URL
+/bruno-miguel/bruno-miguel-todos-a-mesa-2015-installation-shot-3/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,
+/bruno-miguel/photo-4/,attachment,"Bruno Miguel, Todos à Mesa, 2015 - Installation shot",,2020-03-07,redirect,/bruno-miguel/,old attachment slug; path derived from current attachment URL
+/ifa-latam-2022/islaa_poster_1_twitter/,attachment,ISLAA_poster_1_twitter,,2022-04-21,redirect,/ifa-latam-2022/,
+/remembering-carmen-herrera-whitney-museum/carmen_herrera_memorial/,attachment,Carmen_Herrera_memorial,,2022-10-27,redirect,/remembering-carmen-herrera-whitney-museum/,
+/remembering-carmen-herrera-whitney-museum/carmen_herrera_memorial-2/,attachment,Carmen_Herrera_memorial,,2022-10-27,redirect,/remembering-carmen-herrera-whitney-museum/,
+/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/1-carolina-rubio-macwright-ice-cream-truck-of-rights/,attachment,Carolina Rubio MacWright Ice Cream Truck of Rights,,2023-11-10,redirect,/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/,
+/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/2-tatiana-arocha-mambe-rubbings/,attachment,2-Tatiana-Arocha-Mambe-Rubbings,,2023-11-10,redirect,/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/,
+/embodying-the-abject-maria-evelia-marmolejos-anonimo-4/3-marmolejo_maria_evelia_anonimo-4/,attachment,Marmolejo_maria_evelia_anonimo-4,,2023-11-10,redirect,/embodying-the-abject-maria-evelia-marmolejos-anonimo-4/,
+/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/4-tatiana-arocha-impending-beauty/,attachment,Tatiana Arocha Impending Beauty,,2023-11-10,redirect,/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/,
+/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/tatiana-arocha-belleza-inminente/,attachment,Tatiana-Arocha-Belleza-inminente,,2023-11-10,redirect,/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/,
+/xocomil-vivian-suters-salute-to-the-wind/5-vivian-suter-xocomil/,attachment,Vivian Suter Xocomil,,2023-11-10,redirect,/xocomil-vivian-suters-salute-to-the-wind/,
+/xocomil-vivian-suters-salute-to-the-wind/111th-caa-annual-conference-program-schedule/,attachment,111th-CAA-Annual-Conference-Program-Schedule,,2023-11-10,redirect,/xocomil-vivian-suters-salute-to-the-wind/,
+/juan-francisco-elso-por-america/6-juan-francisco-elso-por-america-jose-marti-1986/,attachment,Juan Francisco Elso Por America Jose Marti 1986,,2023-11-10,redirect,/juan-francisco-elso-por-america/,
+/burning-with-desire/7-vanderlei-lopes-coracao-2013/,attachment,Vanderlei Lopes Coracao 2013,,2023-11-10,redirect,/burning-with-desire/,
