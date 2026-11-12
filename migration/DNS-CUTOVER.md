@@ -24,7 +24,7 @@ The domain is **registered at GoDaddy**, and its DNS is hosted by **Bluehost** t
 
 **Decision (owner, 2026-11-12): stop using Bluehost's DNS.** Move it to **GoDaddy**, the registrar, as **step 0**, before the website cutover:
 - Step 0 copies every record across unchanged, so the site stays on WordPress and email keeps flowing.
-- After a wait of 1–2 days, check that nothing changed.
+- After a wait of 48 hours, check that nothing changed.
 - Steps 1–10 (the cutover) then happen in **GoDaddy's DNS editor**.
 
 Doing one change at a time means any problem has only one possible cause. Once DNS is off Bluehost, cancelling Bluehost later can't take the domain down.
@@ -42,20 +42,34 @@ Doing one change at a time means any problem has only one possible cause. Once D
 
 ---
 
-## Step 0: Move the DNS from Bluehost to GoDaddy (1–2 days before the cutover)
+## Step 0: Move the DNS from Bluehost to GoDaddy (at least 48 hours before the cutover)
 
 Nothing visible changes in this step. The records are copied with the **same values**, so the site stays on WordPress and email stays on Google Workspace.
 
-### 0a. Switch the nameservers to GoDaddy's
+### 0a. Before switching: check DNSSEC, and have the records ready
+
+- [ ] **Check DNSSEC first.** GoDaddy → monicaespinel.com → **DNS → DNSSEC** (sometimes under the domain's settings).
+  - **No DS records listed** (DNSSEC off, the usual case with Bluehost): continue.
+  - **DS records listed:** don't switch yet. They belong to Bluehost's DNS signing keys, and pointing the domain at GoDaddy with them still in place makes it unreachable for most internet users, website and email alike.
+    1. **Remove the DS records** at GoDaddy.
+    2. **Wait 2 days** for the change to spread.
+    3. **Then do the switch.**
+    4. **Optionally, turn DNSSEC on again** at GoDaddy afterwards.
+- [ ] **Have the step 0c table open** before switching, so the records go in within minutes.
+- [ ] **Pick a quiet time**, for example in the evening or at a weekend. For a few minutes after the switch, GoDaddy's starting zone has no `MX` records (see below).
+
+### 0b. Switch the nameservers to GoDaddy's
 
 - [ ] GoDaddy → monicaespinel.com → **DNS → Nameservers → Change nameservers** → choose **GoDaddy's default nameservers** (`ns##.domaincontrol.com`; GoDaddy fills them in). Save.
-- [ ] Go straight on to step 0b. GoDaddy usually only lets you edit the records once its own nameservers are selected, and it starts with a few default records (for example a "Parked" `@` record).
+- [ ] Go straight on to step 0c. GoDaddy usually only lets you edit the records once its own nameservers are selected, and it starts with a few default records (for example a "Parked" `@` record).
 
-Nameserver changes spread slowly, over up to 24–48 hours. During that time some visitors still get answers from Bluehost's DNS, and some from GoDaddy's. That's fine as long as both have the same records, so **don't delete anything at Bluehost**. The short gap before step 0b is done is harmless for email: mail servers retry for days.
+Nameserver changes spread slowly, over up to 24–48 hours. During that time some visitors still get answers from Bluehost's DNS, and some from GoDaddy's. That's fine as long as both have the same records, so **don't delete anything at Bluehost**.
 
-### 0b. Enter the records at GoDaddy
+**Enter the five `MX` records first** in step 0c, straight after switching. Until they exist at GoDaddy, a sender whose DNS lookup reaches GoDaddy's starting zone finds no `MX` record. It then tries the domain's own address, GoDaddy's parking server, which can reject the message, so it may **bounce** instead of being retried. The risk is small, because few lookups reach GoDaddy in the first minutes, but entering `MX` first keeps it to a few minutes.
 
-In **DNS Records**, make the zone match this list exactly. Edit GoDaddy's default records where they exist: for example, change the "Parked" `@` `A` record to the WordPress IP, and keep `www` → `@`.
+### 0c. Enter the records at GoDaddy
+
+In **DNS Records**, make the zone match this list exactly. **Start with the five `MX` rows**, then the rest. Edit GoDaddy's default records where they exist: for example, change the "Parked" `@` `A` record to the WordPress IP, and keep `www` → `@`.
 
 | Type | Name | Value | Notes |
 |---|---|---|---|
@@ -100,9 +114,12 @@ The WordPress site keeps working without them. Its own certificate renews over H
 
 - [ ] Delete any other default record GoDaddy added that isn't in the table. **Keep `_domainconnect` if GoDaddy created it**: it's harmless.
 
-### 0c. Check, 1–2 days later
+### 0d. Check, at least 48 hours later
 
-- [ ] GoDaddy shows its own nameservers as active for monicaespinel.com.
+Wait **a full 48 hours** after the switch in 0b. The `.com` registry's pointer to a domain's nameservers is cached for up to 2 days, so until then some visitors' DNS still asks Bluehost. GoDaddy showing the nameservers as "active" only means the registrar has the change, not that everyone uses it.
+
+- [ ] At least 48 hours have passed since 0b.
+- [ ] Public DNS uses GoDaddy: on `https://dns.google`, look up `monicaespinel.com` with type **NS**. The answer must list `ns##.domaincontrol.com`, not `ns1/ns2.bluehost.com`.
 - [ ] `https://monicaespinel.com` still shows the WordPress site, with a valid padlock.
 - [ ] Email to and from the domain works: send one each way.
 - [ ] In Google Workspace admin (Apps → Gmail → Authenticate email), DKIM still shows as authenticating, if you use it.
@@ -123,7 +140,7 @@ These are the values to restore if you roll back:
 | `@` `A` | **`162.241.252.140`** (WordPress at Bluehost). It was `66.235.200.147` while Bluehost's Cloudflare integration was on. | **Replace** with GitHub's four `A` records (step 6) |
 | `www` `CNAME` | `monicaespinel.com` | **Replace** with `monica-espinel.github.io` (step 7) |
 | `@` `AAAA`, `CAA`, `ALIAS`/`ANAME` | none | nothing to delete. Adding GitHub's `AAAA` records is optional. |
-| everything else in the step 0b table | as listed | **keep** |
+| everything else in the step 0c table | as listed | **keep** |
 
 **Email is Google Workspace**, not Bluehost, so the mailboxes never depended on the Bluehost plan.
 
@@ -139,7 +156,7 @@ These are the values to restore if you roll back:
 
 | When | Step |
 |---|---|
-| 1–2 days before | 0. Move the DNS from Bluehost to GoDaddy, with all records unchanged, then check site and email. |
+| At least 48 hours before | 0. Check DNSSEC, move the DNS from Bluehost to GoDaddy with all records unchanged, wait 48 hours, then check site and email. |
 | At least 24 hours before | 1. Write down the current records. 2. Lower the TTL to 300. 3. Verify the domain in GitHub. 4. Add the Search Console DNS record. |
 | Cutover day, at a quiet time | 5. Set the custom domain in GitHub (before DNS). 6. Point the apex to GitHub. 7. Point `www` to GitHub. 8. Wait for the DNS check and certificate, turn on Enforce HTTPS. 9. Confirm email is untouched. 10. Check both addresses. |
 | Afterwards | Raise the TTL again. Phase 7 checks (Search Console, GA4, contact form). |
@@ -155,7 +172,7 @@ These are the values to restore if you roll back:
 
 ### 1. Write down the current records
 
-Done: the owner exported the Bluehost zone twice on 2026-11-12, the second time after turning off Cloudflare. The values are in the step 0b table and in *The current records* above. These are the rollback values.
+Done: the owner exported the Bluehost zone twice on 2026-11-12, the second time after turning off Cloudflare. The values are in the step 0c table and in *The current records* above. These are the rollback values.
 
 - [x] `A` record for the apex: **`162.241.252.140`** (one record; WordPress at Bluehost). It was `66.235.200.147` while Bluehost's Cloudflare integration was on.
 - [x] `AAAA` records for the apex: **none**
@@ -187,11 +204,11 @@ Where things are hosted (needed to cancel WordPress safely later):
 
 ### 2. Lower the TTL to 300 seconds
 
-After step 0, the TTL is set **at GoDaddy**. Bluehost's TTL (the apex was set to 15 minutes there) no longer matters once the nameservers point to GoDaddy.
-- [ ] At GoDaddy, set the TTL of the `@` `A` record and the `www` `CNAME` to the lowest option: 300 seconds (the brief's value) if offered, otherwise GoDaddy's minimum (often 600 seconds). Rollback then takes about that long.
-- [ ] Wait at least as long as the **old** TTL before starting the cutover. The old TTL was 3600 (1 hour, from the zone export), so wait at least an hour after the last TTL change; doing it the day before covers that. Until then, resolvers may still cache the old value.
+After step 0, the TTL is set **at GoDaddy**. Bluehost's TTL no longer matters once the nameservers point to GoDaddy.
+- [ ] At GoDaddy, check that the `@` `A` record and the `www` `CNAME` have the **lowest TTL** GoDaddy offers. Step 0c already sets this. Use 300 seconds (the brief's value) if offered, otherwise GoDaddy's minimum (often 600 seconds).
+- [ ] **Only if you changed a TTL just now** (rather than in 0c): wait at least as long as the previous TTL before the cutover, so resolvers drop the old value. The 48-hour wait in step 0 covers anything set in 0c.
 
-This keeps the switch, and any rollback, to about 5 minutes.
+The cutover, and any rollback, then takes effect within about that TTL: 5 minutes at 300 seconds, 10 minutes at 600.
 
 ### 3. Verify the domain in GitHub (prevents domain takeover)
 
@@ -340,7 +357,7 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
   - Its admin is no longer reachable at `monicaespinel.com/wp-admin`, because that now goes to GitHub.
   - If you need it, use the host's own temporary address or control panel.
 - [ ] **Before cancelling WordPress (Bluehost):** the DNS already moved to GoDaddy in step 0, so cancelling Bluehost can't take the domain down, and email is Google Workspace. Before cancelling:
-  1. Check that GoDaddy's nameservers are active and the zone matches step 0b, now with GitHub's `A` and `www` records.
+  1. Check that GoDaddy's nameservers are active and the zone matches step 0c, now with GitHub's `A` and `www` records.
   2. Ideally, have whoever manages the email update SPF to `v=spf1 include:_spf.google.com ~all` and remove `default._domainkey` at GoDaddy (see the SPF note).
   3. Then cancel the Bluehost plan.
 - [ ] **Formspree:** if reCAPTCHA is on in the form settings, turn it off to get the inline thank-you message. The honeypot covers spam. Messages arrive either way.

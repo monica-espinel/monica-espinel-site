@@ -241,6 +241,9 @@ Acceptance checks:
     **GoDaddy** (the registrar), as **step 0 before the cutover**, with every record copied unchanged, then a
     1–2 day check, then the cutover at GoDaddy. The guide lists the exact records to enter at GoDaddy, and the
     Bluehost/cPanel records to leave behind. Bluehost can then be cancelled without affecting DNS.
+  - Step 0 safeguards: check DNSSEC/DS records at GoDaddy before switching (a leftover DS record would make the
+    domain unreachable); enter the MX records first (a zone without MX can bounce mail); wait a full 48 hours and
+    confirm via public DNS (NS lookup) before the cutover; step 2 just confirms the low TTL set in step 0.
 - Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
   `https://www.monicaespinel.com` load with a valid certificate.
 
