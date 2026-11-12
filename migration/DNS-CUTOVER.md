@@ -170,6 +170,7 @@ These are the values to restore if you roll back:
   - The records were imported from a zone file built from the Bluehost export.
   - GoDaddy's export matches it **16/16 records**, with values and TTLs identical and both DKIM keys byte-for-byte equal.
   - GoDaddy's default `_dmarc` record was removed (not in the Bluehost zone), and so was `_domainconnect`.
+- **Early email test (2026-11-12, after 0c):** a message to the domain was received, and the reply went out. Both directions work.
 - **Next: step 0d, on or after 2026-11-14 at 12:00:** the NS check on `dns.google`, the site still on WordPress, email in both directions. Until then, don't change anything at Bluehost. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
 
 ---
