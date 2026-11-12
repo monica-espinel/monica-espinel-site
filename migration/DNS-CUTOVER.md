@@ -37,6 +37,32 @@ Bluehost's screens change from time to time, so look for these names if a label 
   - `TXT` values go in without quotes.
 - **GoDaddy, the registrar:** nothing changes there for the cutover. Do check the domain's **Forwarding** setting at GoDaddy is off.
 
+### The current records (from the owner's Bluehost zone export, 2026-11-12)
+
+These are the values to restore if you roll back. DNS records are public, but the export file itself isn't committed.
+
+| Record | Current value | At cutover |
+|---|---|---|
+| `@` `A` | `66.235.200.147` (the WordPress site), TTL 3600 | **Replace** with GitHub's four `A` records (step 6) |
+| `www` `CNAME` | `monicaespinel.com` | **Replace** with `monica-espinel.github.io` (step 7) |
+| `@` `AAAA`, `CAA`, `ALIAS`/`ANAME` | none | nothing to delete. Adding GitHub's `AAAA` records is optional. |
+| `@` `MX` (5 records) | Google Workspace: `aspmx.l.google.com` (1), `alt1`/`alt2.aspmx.l.google.com` (5), `alt3`/`alt4.aspmx.l.google.com` (10) | **keep** |
+| `google._domainkey` `TXT` | Google Workspace DKIM key | **keep** |
+| `@` `TXT` `google-site-verification=…` (2 records: `AMn5o…` and `wHV2C…`) | Search Console verification | **keep** (step 4) |
+| `@` `TXT` `v=spf1 +a +mx +ip4:162.241.252.140 +include:websitewelcome.com ~all` | SPF (email) | **keep for now** (see the note below) |
+| `_github-challenge-monica-espinel-org` `TXT` | GitHub *organization* domain verification | **keep** (not the same as the Pages record in step 3) |
+| `calendar`, `drive` `CNAME` → `ghs.googlehosted.com`; `zqlnqvtpi7av` `CNAME` → `…dv.googlehosted.com` | Google Workspace | **keep** |
+| `autoconfig`, `autodiscover`, `cpanel`, `ftp`, `webdisk`, `webmail`, `whm` `A` → `162.241.252.140`; `localhost`; `default._domainkey`; `_cpanel-dcv-test-record`; `_acme-challenge*`; `_autodiscover._tcp` `SRV` | Bluehost/cPanel services | **keep** until Bluehost is cancelled; they don't affect the website |
+
+**Email is Google Workspace**, not Bluehost: the mailboxes don't depend on the Bluehost plan. Only the DNS zone does.
+
+**Note on SPF (an email record, outside this migration's scope):**
+
+- The SPF record authorizes `+a`, the apex's `A` record IPs. After cutover, those are GitHub's IPs, so `+a` would authorize GitHub's Pages servers to send mail as monicaespinel.com. They don't send mail, so the risk is low but untidy.
+- The record also doesn't include Google (`include:_spf.google.com`), so mail sent from Google Workspace relies on DKIM to pass checks.
+- When the DNS moves off Bluehost (see *After cutover*), it's a good moment to have whoever manages the email set SPF to `v=spf1 include:_spf.google.com ~all`. That's the Google-only form, once nothing sends mail from Bluehost any more.
+- This guide doesn't change it.
+
 **Important for later:** because Bluehost hosts the DNS, and maybe the email too, **cancelling the Bluehost plan would take monicaespinel.com offline**, the new site included. See "Before cancelling WordPress (Bluehost)" under *After cutover*: move the DNS, and email if it's at Bluehost, first.
 
 ---
@@ -76,7 +102,7 @@ Also note **where things are hosted**. You need this to cancel WordPress safely 
 
 ### 2. Lower the TTL to 300 seconds
 
-- [ ] Set the TTL of the apex `A` / `AAAA` records and the `www` record to **300** (5 minutes).
+- [ ] Set the TTL of the apex `A` record and the `www` `CNAME` to **300** (5 minutes). Their current TTL is 3600 (1 hour), so wait **at least an hour** after lowering it. Doing it the day before covers that.
 - [ ] Wait at least as long as the **old** TTL (often 1 to 24 hours) before the cutover. Until then, resolvers may still cache the old value for the old TTL.
 
 This keeps the switch, and any rollback, to about 5 minutes.
@@ -89,13 +115,15 @@ Verifying the domain stops anyone else's GitHub Pages site from claiming `monica
 - [ ] GitHub shows a `TXT` record named like `_github-pages-challenge-monica-espinel.monicaespinel.com`, with a code value. Add exactly that `TXT` record at the DNS provider.
 - [ ] Back in GitHub, click **Verify**. It can take a few minutes for the record to be visible.
 
-This TXT record lives on its own `_github-pages-challenge-…` name, so it doesn't touch any existing record.
+This TXT record lives on its own `_github-pages-challenge-…` name, so it doesn't touch any existing record. The zone already has `_github-challenge-monica-espinel-org`: that's the *organization's* verified-domain record. Keep it, but it isn't the Pages one, so this step is still needed.
 
 ### 4. Search Console: verify by DNS (not the meta tag)
 
 The WordPress site proves ownership to Google with a `google-site-verification` meta tag in its pages. The new site doesn't have that tag, as the brief decided. If you skip this step, Search Console loses verification at cutover.
 
-- [ ] In Google Search Console, **add a Domain property** for `monicaespinel.com`, or for the existing property open **Settings → Ownership verification → add a method → Domain name provider**. Google shows a value like `google-site-verification=…`.
+**This may already be done:** the zone already has two `google-site-verification` `TXT` records, `AMn5o…` and `wHV2C…`, the second being the same token as the old site's meta tag. In Search Console, open **Settings → Ownership verification** for the monicaespinel.com property(ies). If **Domain name provider** is listed as a verified method, skip to step 5. Either way, never delete those two records.
+
+- [ ] Otherwise: in Google Search Console, **add a Domain property** for `monicaespinel.com`, or for the existing property open **Settings → Ownership verification → add a method → Domain name provider**. Google shows a value like `google-site-verification=…`.
 - [ ] At the DNS provider, **add** a `TXT` record on the apex (`@`) with that value.
   - **Add a new record, don't edit an existing one:** the apex may already have an SPF `TXT` record (`v=spf1 …`) for email, and it must stay.
 - [ ] In Search Console, click **Verify**.
@@ -146,6 +174,8 @@ Never leave old `AAAA` records pointing to WordPress next to the new `A` records
 ### 7. Point `www` to GitHub Pages
 
 A `CNAME` can't share its name with any other record, so clear `www` first.
+
+Today `www` is a `CNAME` to `monicaespinel.com`, and nothing else is on `www`.
 
 - [ ] **Delete every existing record named `www`**: `A`, `AAAA`, `CNAME`, and anything else such as `TXT` or `MX` on `www`. They're all in your step 1 notes, for rollback.
 - [ ] **Add** one `CNAME`, TTL 300:
@@ -229,7 +259,17 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
      - the `MX` records, and the SPF and DKIM `TXT` records;
      - the Search Console `google-site-verification` `TXT` record;
      - the `_github-pages-challenge-monica-espinel` `TXT` record.
-  2. **Email:** if the `MX` records point to Bluehost, the mailboxes live at Bluehost and disappear with the plan. Set up email elsewhere first (for example Google Workspace, Microsoft 365, or GoDaddy's email), move the mail, and use that provider's `MX`, SPF and DKIM records in step 1.
+  2. **Email** is Google Workspace (the `MX` records point to Google), so the mailboxes stay. Copy the Google records in step 1:
+     - the five `MX` records;
+     - `google._domainkey`;
+     - the `calendar`, `drive` and `zqlnqvtpi7av` `CNAME`s;
+     - both `google-site-verification` `TXT` records;
+     - the SPF record, ideally updated as in the SPF note above.
+
+     Leave out the Bluehost/cPanel-only records:
+     - `autoconfig`, `autodiscover`, `cpanel`, `ftp`, `webdisk`, `webmail`, `whm` and `localhost`;
+     - `default._domainkey`, `_cpanel-dcv-test-record` and `_acme-challenge*`;
+     - the `_autodiscover._tcp` `SRV` record.
   3. **Switch the nameservers** at GoDaddy, under the **Nameservers** tab, from `ns1.bluehost.com` / `ns2.bluehost.com` back to **GoDaddy's default nameservers** (`ns##.domaincontrol.com`; GoDaddy fills them in).
   4. **Wait at least a day**, then check that the site, `www`, HTTPS and email all still work.
   5. **Only then** cancel the Bluehost plan.

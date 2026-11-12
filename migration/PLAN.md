@@ -227,6 +227,12 @@ Acceptance checks:
     change happens in Bluehost's DNS editor. **Before cancelling Bluehost**, the DNS (and email, if its MX
     records point to Bluehost) must move to GoDaddy or another provider, or the domain stops resolving.
     The guide has a step-by-step for that, as a separate step after the cutover is stable.
+  - From the owner's zone export: the apex is `A 66.235.200.147` (TTL 3600) and `www` is a `CNAME` to the apex.
+    There are no `AAAA`/`CAA`/`ALIAS` records. Email is **Google Workspace** (MX to Google), so the mailboxes
+    don't depend on Bluehost. Two `google-site-verification` `TXT` records exist (Search Console may already be
+    DNS-verified). The SPF record (`+a +mx +ip4:162.241.252.140 +include:websitewelcome.com`) doesn't include
+    Google, and `+a` will cover GitHub's IPs after cutover: flagged for the owner, not changed (email records
+    are out of scope). The export file itself is not committed.
 - Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
   `https://www.monicaespinel.com` load with a valid certificate.
 
