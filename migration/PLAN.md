@@ -215,6 +215,11 @@ Acceptance checks:
   - removing old `AAAA` records, and GitHub's optional IPv6 `AAAA` records
   - Cloudflare "DNS only" and `CAA`/Let's Encrypt caveats
   - checks, and the rollback steps
+  - **order:** the custom domain is saved in GitHub *before* the DNS change (GitHub's recommendation; the brief
+    lists it after), so there's no window where GitHub serves "There isn't a GitHub Pages site here"
+  - a warning to expect certificate errors on `https://` until the certificate is issued (pick a quiet time,
+    don't roll back for that alone)
+  - delete every `www` record before adding the `CNAME`
 - Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
   `https://www.monicaespinel.com` load with a valid certificate.
 

@@ -10,7 +10,7 @@
 
 - **GitHub user/organization:** `monica-espinel`. Its Pages host is `monica-espinel.github.io`.
 - **Repository:** `monica-espinel/monica-espinel-site`. The Pages source is already **GitHub Actions** (done in Phase 5).
-- **Expected time:** about 15 minutes of work on the day, plus waiting for DNS (minutes to a few hours) and for the HTTPS certificate (usually under an hour, at most 24 hours).
+- **Expected time:** about 15 minutes of work on the day, plus waiting for DNS (minutes to a few hours) and for the HTTPS certificate (usually under an hour, at most 24 hours). Until the certificate is issued, `https://` visitors see a certificate warning (see step 8), so pick a quiet time.
 
 ---
 
@@ -19,7 +19,7 @@
 | When | Step |
 |---|---|
 | At least 24 hours before | 1. Write down the current records. 2. Lower the TTL to 300. 3. Verify the domain in GitHub. 4. Add the Search Console DNS record. |
-| Cutover day | 5. Point the apex to GitHub. 6. Point `www` to GitHub. 7. Set the custom domain in GitHub. 8. Turn on Enforce HTTPS. 9. Confirm email is untouched. 10. Check both addresses. |
+| Cutover day, at a quiet time | 5. Set the custom domain in GitHub (before DNS). 6. Point the apex to GitHub. 7. Point `www` to GitHub. 8. Wait for the DNS check and certificate, turn on Enforce HTTPS. 9. Confirm email is untouched. 10. Check both addresses. |
 | Afterwards | Raise the TTL again. Phase 7 checks (Search Console, GA4, contact form). |
 
 ---
@@ -32,7 +32,7 @@ At the DNS provider, take a screenshot or copy every record for `monicaespinel.c
 
 - [ ] `A` record(s) for the apex (`@` or `monicaespinel.com`): the WordPress host's IP address
 - [ ] `AAAA` record(s) for the apex, if any
-- [ ] the `www` record: a `CNAME` or `A`, and its value
+- [ ] **every** record named `www` (`CNAME`, `A`, `AAAA`, and anything else on `www`), with its value
 - [ ] all `MX` records (email)
 - [ ] all `TXT` records, especially `v=spf1 …` (email) and any `google-site-verification=…`
 - [ ] any `CAA` records
@@ -74,7 +74,18 @@ A Domain property covers `http`, `https`, `www` and the apex in one place.
 
 Check first that the latest deploy on GitHub passed: **Actions → Deploy site to GitHub Pages**, the newest run on `main` is green.
 
-### 5. Point the apex to GitHub Pages
+### 5. Set the custom domain in GitHub (before changing DNS)
+
+Do this **first**, while DNS still points to WordPress. If you change DNS first, GitHub receives requests for monicaespinel.com before it knows the domain, and visitors get a GitHub "There isn't a GitHub Pages site here" error until this step is done. GitHub's own documentation recommends this order. The brief lists this step after the DNS records; doing it first changes nothing else. The domain verification in step 3 protects the domain in the meantime.
+
+- [ ] In the repository: **Settings → Pages → Custom domain**, enter `monicaespinel.com` and click **Save**.
+- [ ] GitHub now shows the DNS check as **failing**. That's expected until steps 6–7 are done. Visitors still see WordPress, because DNS hasn't changed.
+
+From now on, the github.io project address redirects to `monicaespinel.com`, which is still WordPress until step 6.
+
+`static/CNAME` in the repository already contains `monicaespinel.com`. With GitHub Actions deployments, this setting is what counts.
+
+### 6. Point the apex to GitHub Pages
 
 - [ ] **Delete** the apex `A` record(s) that point to the WordPress host.
 - [ ] **Add four** `A` records for the apex (`@`), TTL 300:
@@ -97,9 +108,12 @@ Check first that the latest deploy on GitHub passed: **Actions → Deploy site t
 
 Never leave old `AAAA` records pointing to WordPress next to the new `A` records: IPv6 visitors would still reach WordPress.
 
-### 6. Point `www` to GitHub Pages
+### 7. Point `www` to GitHub Pages
 
-- [ ] Replace the `www` record with a `CNAME`, TTL 300:
+A `CNAME` can't share its name with any other record, so clear `www` first.
+
+- [ ] **Delete every existing record named `www`**: `A`, `AAAA`, `CNAME`, and anything else such as `TXT` or `MX` on `www`. They're all in your step 1 notes, for rollback.
+- [ ] **Add** one `CNAME`, TTL 300:
 
 | Type | Name | Value |
 |---|---|---|
@@ -107,19 +121,20 @@ Never leave old `AAAA` records pointing to WordPress next to the new `A` records
 
 The value is the bare host name: no `https://`, and no `/monica-espinel-site`. Some providers want a trailing dot (`monica-espinel.github.io.`).
 
-### 7. Set the custom domain in GitHub
+If the provider refuses the `CNAME` with an error like "conflicts with an existing record", a `www` record is still there: delete it and try again.
 
-- [ ] In the repository: **Settings → Pages → Custom domain**, enter `monicaespinel.com` and click **Save**.
-- [ ] Wait for **"DNS check successful"**. It can take from a few minutes to a few hours after step 5, depending on the old TTL. If it fails, wait and click **Check again**.
+### 8. Wait for the DNS check and the certificate, then turn on HTTPS
 
-With the apex as the custom domain and `www` pointing to GitHub, GitHub redirects `www.monicaespinel.com` to `monicaespinel.com` automatically. That matches the WordPress site, whose canonical address is the apex.
-
-`static/CNAME` in the repository already contains `monicaespinel.com`. With GitHub Actions deployments, the setting above is what counts.
-
-### 8. Turn on HTTPS
-
+- [ ] In **Settings → Pages**, click **Check again** until it shows **"DNS check successful"**. That takes minutes to a few hours after steps 6–7, depending on the old TTL.
 - [ ] Wait until the Pages settings show the certificate as issued. Until then, the **Enforce HTTPS** box is greyed out with a message about the certificate.
 - [ ] Tick **Enforce HTTPS**.
+
+**Expect a short window of certificate warnings. This is normal: don't roll back because of it.** From the moment DNS points to GitHub until the certificate for monicaespinel.com is issued (usually under an hour, at most 24 hours), `https://monicaespinel.com` shows a "Your connection is not private" warning, because GitHub briefly serves its generic certificate. Plain `http://` works during that time.
+
+- Do the cutover at a quiet time, for example in the evening, US Eastern time.
+- Only roll back if the certificate still isn't issued after 24 hours, or if something else is wrong (wrong site, broken pages).
+
+With the apex as the custom domain and `www` pointing to GitHub, GitHub redirects `www.monicaespinel.com` to `monicaespinel.com` automatically. That matches the WordPress site, whose canonical address is the apex.
 
 **If the domain has `CAA` records** (step 1), one must allow `letsencrypt.org`, the certificate authority GitHub uses. Otherwise the certificate can't be issued.
 
@@ -161,7 +176,7 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 ## Rollback (if something is seriously wrong)
 
 1. At the DNS provider, delete the GitHub `A` (and `AAAA`) records and put back the WordPress apex `A` / `AAAA` records written down in step 1.
-2. Put the old `www` record back.
+2. Delete the `www` `CNAME`, and put back every old `www` record from step 1.
 3. With TTL 300, most visitors see WordPress again within minutes.
 4. Leave the GitHub custom domain setting as it is, or remove it: either way WordPress serves the site once DNS points back.
 5. Tell Claude what went wrong, so it can be fixed before the next attempt.
