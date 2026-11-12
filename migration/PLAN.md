@@ -197,6 +197,27 @@ Acceptance checks:
   Root-relative links (`/about/`, CSS, images) point outside that folder there, so pages look unstyled and links
   break; the brief allows checking on a local server instead.
 
+## Phase 5 result
+
+- First deploy from `main` (#4 merged): workflow run #7 on 30b1bbf, **all jobs green including Deploy**
+  (https://github.com/monica-espinel/monica-espinel-site/actions/runs/43142894674).
+- The site is on `https://monica-espinel.github.io/monica-espinel-site/`. As expected, root-relative links
+  point outside that folder there; the site was checked on a local server instead (brief note).
+
+## Phase 6 (DNS cutover, owner)
+
+- Instructions: `migration/DNS-CUTOVER.md`, a step-by-step checklist with tables of exact records.
+  On top of the brief's six steps, it adds:
+  - writing down every current record first (rollback values)
+  - verifying the domain in the GitHub organization (protects against domain takeover)
+  - the Search Console DNS TXT record before cutover (new site has no meta tag)
+  - keeping the SPF `TXT` and other email records
+  - removing old `AAAA` records, and GitHub's optional IPv6 `AAAA` records
+  - Cloudflare "DNS only" and `CAA`/Let's Encrypt caveats
+  - checks, and the rollback steps
+- Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
+  `https://www.monicaespinel.com` load with a valid certificate.
+
 ## Open issues
 
 - **5 Brooklyn Rail speaker photos missing** (post `/brooklyn-rail-carmen-herrera/`: Tony Bechara, Odili Donald Odita,
