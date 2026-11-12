@@ -5,9 +5,9 @@
   <title>{{ .Permalink }}</title>
   <link rel="canonical" href="{{ .Permalink }}">
   <meta name="robots" content="noindex">
-  <meta http-equiv="refresh" content="0; url={{ .Permalink }}">
+  <meta http-equiv="refresh" content="0; url={{ .Page.RelPermalink }}">
 </head>
 <body>
-  <p>This page has moved to <a href="{{ .Permalink }}">{{ .Permalink }}</a>.</p>
+  <p>This page has moved to <a href="{{ .Page.RelPermalink }}">{{ .Permalink }}</a>.</p>
 </body>
 </html>
