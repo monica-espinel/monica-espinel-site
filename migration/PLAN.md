@@ -180,8 +180,10 @@ Acceptance checks:
   Pages settings; the file documents it and is harmless.)
 - Replayed in a fresh clone: build 12 s (183 images processed from scratch), 405/406 URLs, 40 pages indexed,
   `public/` 187 MB (Pages limit 1 GB).
-- **Owner, before merging:** Settings → Pages → Build and deployment → Source: **GitHub Actions**.
-  Don't enter the custom domain yet: that is Phase 6, after the DNS TTL is lowered.
+- Pages source: **GitHub Actions**, set by the owner on 2026-11-11 when the repo was made public (#5, #6).
+  `main` is protected (PR required). Don't enter the custom domain yet: that is Phase 6, after the DNS TTL is lowered.
+- Merged with `main` after #5/#6: the build doesn't need the (now untracked) WordPress export, and the
+  "Homo Rodans" draft images are no longer published. All checks still pass.
 - Project URL: until the custom domain is set, the site is at `https://monica-espinel.github.io/monica-espinel-site/`.
   Root-relative links (`/about/`, CSS, images) point outside that folder there, so pages look unstyled and links
   break; the brief allows checking on a local server instead.
