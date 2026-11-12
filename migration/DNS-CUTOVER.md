@@ -155,7 +155,7 @@ From now on, the github.io project address redirects to `monicaespinel.com`, whi
 
 - [ ] **Delete** the apex `A` record(s) that point to the WordPress host.
 - [ ] **Delete** any `ALIAS`, `ANAME` or `CNAME` record on the apex (step 1). It conflicts with the new `A` records: the provider either refuses them, or keeps sending some visitors to WordPress.
-- [ ] **Add four** `A` records for the apex (`@`), TTL 300:
+- [ ] **Add four** `A` records for the apex (`@`), TTL 5 minutes, or Bluehost's lowest (15 minutes):
 
 | Type | Name | Value |
 |---|---|---|
@@ -182,7 +182,7 @@ A `CNAME` can't share its name with any other record, so clear `www` first.
 Today `www` is a `CNAME` to `monicaespinel.com`, and nothing else is on `www`.
 
 - [ ] **Delete every existing record named `www`**: `A`, `AAAA`, `CNAME`, and anything else such as `TXT` or `MX` on `www`. They're all in your step 1 notes, for rollback.
-- [ ] **Add** one `CNAME`, TTL 300:
+- [ ] **Add** one `CNAME`, TTL 5 minutes, or Bluehost's lowest (15 minutes):
 
 | Type | Name | Value |
 |---|---|---|
