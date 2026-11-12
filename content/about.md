@@ -5,6 +5,7 @@ lastmod: '2024-03-07T17:47:13'
 slug: about
 author: Monica Espinel
 description: Monica Espinel is an independent curator and writer specialized in Modern and Contemporary Art from Latin America. She is a Ph.D. candidate at The Graduate Center.
+summary: Monica Espinel is an independent curator and writer specialized in Modern and Contemporary Art from Latin America. She is a Research Fellow at the Cisneros Institute of the Museum of Modern Art, the editor of Carmen Herrera's catalogue raisonné, and a Ph.D. candidate in the History of Art at The Graduate Center, City University of […]
 wordpress_id: 7
 ---
 

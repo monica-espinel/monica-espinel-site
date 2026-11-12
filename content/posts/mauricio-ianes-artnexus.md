@@ -10,6 +10,7 @@ description: Artnexus article for Maurício Ianês's exhibition at Galeria Verme
 image: /wp-content/uploads/2014/12/Screen-Shot-2020-03-04-at-12.10.05-AM.png
 image_alt: Mauricio Ianes Galeria Vermelho
 image_caption: Mauricio Ianes Galeria Vermelho
+summary: '"Maurício Ianês." ArtNexus, 95, Vol. 13 (December 2014-February 2015): 126-127.'
 wordpress_id: 429
 ---
 

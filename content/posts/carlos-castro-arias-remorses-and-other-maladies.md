@@ -18,6 +18,7 @@ tags:
 - remorses
 image: /wp-content/uploads/2021/02/silencio-copy.jpg
 image_alt: headphones
+summary: Bread & Salt, San Diego February 27 - April 30, 2021 In Remorses and Other Maladies, Carlos Castro Arias constructs an aesthetic experience divided in three chapters. The first, Remorses, presents a series of paintings begun in 2017, that he halted fleetingly and reignited once the pandemic began. On view is the existential soul strength […]
 wordpress_id: 4274
 ---
 

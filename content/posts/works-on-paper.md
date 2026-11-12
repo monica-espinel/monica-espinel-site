@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2020/03/1-11.png
 image_alt: Installation shot, Works on Paper, 2003
 image_caption: Installation shot, Works on Paper, 2003
+summary: Marvelli Gallery, New York June 10 - September 27, 2003 Marvelli Gallery is pleased to present Works on Paper, a group exhibition of works on paper or synthetic materials by Andrea Frank, Guy Hindley, Kurt Lightner, Tim Maxwell, Dean Smith and Nicolas Touron. For some of these artists, this exhibition represents their first gallery exposure. […]
 wordpress_id: 174
 ---
 

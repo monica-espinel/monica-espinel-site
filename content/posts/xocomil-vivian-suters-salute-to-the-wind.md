@@ -7,6 +7,7 @@ author: Simon Letort
 categories:
 - talks
 image: /wp-content/uploads/2023/11/5-Vivian-Suter-Xocomil.png
+summary: '"Xocomil, Vivian Suter''s Salute to the Wind," 111th CAA Annual Conference, New York, February 18, 2023.'
 wordpress_id: 4451
 ---
 

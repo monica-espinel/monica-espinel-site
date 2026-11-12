@@ -10,6 +10,7 @@ description: Hybrid Topographies presents contemporary artists from Latin Americ
 image: /wp-content/uploads/2020/03/Karina-Aguilera-Skvirsky-Lancha.jpg
 image_alt: Karina Aguilera Skvirsky
 image_caption: Karina Aguilera Skvirsky
+summary: 60 Wall Gallery, Deutsche Bank February 12 - May 14, 2018 Hybrid Topographies presents contemporary artists from Latin America who share an engagement with the landscape, whether urban or rural. The works on view weave a multiplicity of narratives that stem from a place of encounters as a means to understand the other and as […]
 wordpress_id: 364
 ---
 

@@ -10,6 +10,7 @@ description: Artforum article of Rosemberg Sandoval’s exhibition “Salvaje”
 image: /wp-content/uploads/2014/09/picksimg_large.jpg
 image_alt: Rosemberg Sandoval, Caribe (Caribbean), 1989–92, glass, jar, 22 x 18 x 4"
 image_caption: Rosemberg Sandoval, Caribe (Caribbean), 1989–92, glass, jar, 22 x 18 x 4"
+summary: '“Rosemberg Sandoval.” Artforum online (September 9, 2014): https://www.artforum.com/picks/rosemberg-sandoval-48147'
 wordpress_id: 424
 ---
 

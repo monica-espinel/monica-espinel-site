@@ -3,54 +3,94 @@ old_url,type,title,description,date,action,target,note
 /feed/,feed,Main RSS feed,,,alias,/index.xml,
 /comments/feed/,feed,Comments feed,,,redirect,/index.xml,no comments in export
 /about/,page,About,Monica Espinel is an independent curator and writer specialized in Modern and Contemporary Art from Latin America. She is a Ph.D. candidate at The Graduate Center.,2014-12-02,keep,/about/,
+/about/feed/,feed,About comments feed,,2014-12-02,redirect,/about/,per-post comments feed; no comments in export
 /black-milk/,post,Black Milk: Theories on Suicide,"Black Milk: Theories on Suicide, a group exhibition curated by Monica Espinel, that brings together young contemporary artists whose work touches on issues related to suicide.",2004-06-30,keep,/black-milk/,
+/black-milk/feed/,feed,Black Milk: Theories on Suicide comments feed,,2004-06-30,redirect,/black-milk/,per-post comments feed; no comments in export
 /sp-arte/,post,The Skin I Live In,"The Skin I Live In presents artists who explore the notion of the body, not only as a physical space, but also as a mental, political and affective space. SP-Arte, Sao Paulo 2013",2013-04-03,keep,/sp-arte/,
+/sp-arte/feed/,feed,The Skin I Live In comments feed,,2013-04-03,redirect,/sp-arte/,per-post comments feed; no comments in export
 /bruno-miguel/,post,Bruno Miguel: Todos à Mesa,"Bruno Miguel's exhibition Todos as Mesa at Galeria Emma Thomas, São Paulo. Bruno delves into the material and conceptual issues of painting through an innovative use of non-traditional materials.",2014-10-11,keep,/bruno-miguel/,
+/bruno-miguel/feed/,feed,Bruno Miguel: Todos à Mesa comments feed,,2014-10-11,redirect,/bruno-miguel/,per-post comments feed; no comments in export
 /contact/,page,Contact,,2014-12-09,keep,/contact/,no description in export; owner decision: leave empty
+/contact/feed/,feed,Contact comments feed,,2014-12-09,redirect,/contact/,per-post comments feed; no comments in export
 /rituals-of-chaos/,post,The Rituals of Chaos,"The Bronx Museum presents The Rituals of Chaos, an exhibition featuring the work of Mexican photojournalist Enrique Metinides, as part of its ongoing Urban Archives series.",2012-07-19,keep,/rituals-of-chaos/,
 /the-rituals-of-chaos/,post,The Rituals of Chaos,"The Bronx Museum presents The Rituals of Chaos, an exhibition featuring the work of Mexican photojournalist Enrique Metinides, as part of its ongoing Urban Archives series.",2012-07-19,alias,/rituals-of-chaos/,old slug
+/rituals-of-chaos/feed/,feed,The Rituals of Chaos comments feed,,2012-07-19,redirect,/rituals-of-chaos/,per-post comments feed; no comments in export
 /photographic-treasures/,post,Photographic Treasures from the Collection of Alfred Stieglitz,Rarely seen masterpieces from Alfred Stieglitz’s personal collection of photography will be presented at The Metropolitan Museum of Art in the Howard Gilman Gallery.,2011-10-13,keep,/photographic-treasures/,
 /photographic-treasures-from-the-collection-of-alfred-stieglitz/,post,Photographic Treasures from the Collection of Alfred Stieglitz,Rarely seen masterpieces from Alfred Stieglitz’s personal collection of photography will be presented at The Metropolitan Museum of Art in the Howard Gilman Gallery.,2011-10-13,alias,/photographic-treasures/,old slug
+/photographic-treasures/feed/,feed,Photographic Treasures from the Collection of Alfred Stieglitz comments feed,,2011-10-13,redirect,/photographic-treasures/,per-post comments feed; no comments in export
 /taking-aim/,post,Taking Aim,Guest curators Marysol Nieves and Mónica Espinel look at the history of the Bronx Museum's Artist in the Marketplace (AIM) program to celebrate the 30th anniversary of this ground-breaking program.,2011-06-26,keep,/taking-aim/,
+/taking-aim/feed/,feed,Taking Aim comments feed,,2011-06-26,redirect,/taking-aim/,per-post comments feed; no comments in export
 /memory-leaks/,post,Memory Leaks,"Memory Leaks is a personally charged show of works that were tattooed in my brain, a subjective momentary ordering of memory, time and meaning.",2010-11-03,keep,/memory-leaks/,
+/memory-leaks/feed/,feed,Memory Leaks comments feed,,2010-11-03,redirect,/memory-leaks/,per-post comments feed; no comments in export
 /then-now/,post,Then & Now: Abstraction in Latin American Art from 1950 to Present,"Then & Now explores the various modes of abstraction that arose in Latin America, ranging from geometric to gestural, kinetic, neo-concrete art and more.",2010-05-24,keep,/then-now/,
 /then-now-abstraction-in-latin-american-art-from-1950-to-present/,post,Then & Now: Abstraction in Latin American Art from 1950 to Present,"Then & Now explores the various modes of abstraction that arose in Latin America, ranging from geometric to gestural, kinetic, neo-concrete art and more.",2010-05-24,alias,/then-now/,old slug
+/then-now/feed/,feed,Then & Now: Abstraction in Latin American Art from 1950 to Present comments feed,,2010-05-24,redirect,/then-now/,per-post comments feed; no comments in export
 /geometric-abstract-works/,post,Geometric Abstract Works:,"Geometric Abstract Works: The Latin American vision from the 1950s, 60s and 70s offers a rare opportunity to view seminal works by Latin American artists whose exposure in the United States has been limited.",2009-10-16,keep,/geometric-abstract-works/,
 /geometric-abstract-works-the-latin-american-vision-from-the-1950s-60s-and-70s/,post,Geometric Abstract Works:,"Geometric Abstract Works: The Latin American vision from the 1950s, 60s and 70s offers a rare opportunity to view seminal works by Latin American artists whose exposure in the United States has been limited.",2009-10-16,alias,/geometric-abstract-works/,old slug
+/geometric-abstract-works/feed/,feed,Geometric Abstract Works: comments feed,,2009-10-16,redirect,/geometric-abstract-works/,per-post comments feed; no comments in export
 /muhheakantuck/,post,The Muhheakantuck in Focus,"Muhheakantuck, a Lenape word meaning “the river that flows both ways,” was the original name for the estuary now named for Henry Hudson.",2009-08-01,keep,/muhheakantuck/,
 /the-muhheakantuck-in-focus/,post,The Muhheakantuck in Focus,"Muhheakantuck, a Lenape word meaning “the river that flows both ways,” was the original name for the estuary now named for Henry Hudson.",2009-08-01,alias,/muhheakantuck/,old slug
+/muhheakantuck/feed/,feed,The Muhheakantuck in Focus comments feed,,2009-08-01,redirect,/muhheakantuck/,per-post comments feed; no comments in export
 /ceremonies-of-summer/,post,Ceremonies of Summer,"Ceremonies of Summer, a multimedia exhibition is an homage to Marta Traba and was inspired by her first novel “Las ceremonias del verano” published in 1966.",2008-07-17,keep,/ceremonies-of-summer/,
+/ceremonies-of-summer/feed/,feed,Ceremonies of Summer comments feed,,2008-07-17,redirect,/ceremonies-of-summer/,per-post comments feed; no comments in export
 /fanny-sanin/,post,"Fanny Sanín: A Chromatic Journey, 1966-2006","A Chromatic Journey, 1966 - 2006 presents Fanny Sanín’s exploration undertaken with color as the thread that links the various phases of her work.",2008-05-01,keep,/fanny-sanin/,
 /fanny-sanin-a-chromatic-journey-1966-2006/,post,"Fanny Sanín: A Chromatic Journey, 1966-2006","A Chromatic Journey, 1966 - 2006 presents Fanny Sanín’s exploration undertaken with color as the thread that links the various phases of her work.",2008-05-01,alias,/fanny-sanin/,old slug
+/fanny-sanin/feed/,feed,"Fanny Sanín: A Chromatic Journey, 1966-2006 comments feed",,2008-05-01,redirect,/fanny-sanin/,per-post comments feed; no comments in export
 /crackerfarm/,post,CRACKERFARM,"Gramercy Post is pleased to present Crackerfarm, an artist collective comprised of photographers Mike Beyer and Lindsey Rome.",2005-05-04,keep,/crackerfarm/,
 /crackerfarm0/,post,CRACKERFARM,"Gramercy Post is pleased to present Crackerfarm, an artist collective comprised of photographers Mike Beyer and Lindsey Rome.",2005-05-04,alias,/crackerfarm/,old slug
+/crackerfarm/feed/,feed,CRACKERFARM comments feed,,2005-05-04,redirect,/crackerfarm/,per-post comments feed; no comments in export
 /denise-schatz/,post,Denise Schatz – Signal if you Can’t Breathe,"Denise Schatz makes collages and works on paper, using magazine cut-outs, graphite and colored pencils.",2005-02-16,keep,/denise-schatz/,
 /denise-schatz-signal-if-you-cant-breathe/,post,Denise Schatz – Signal if you Can’t Breathe,"Denise Schatz makes collages and works on paper, using magazine cut-outs, graphite and colored pencils.",2005-02-16,alias,/denise-schatz/,old slug
+/denise-schatz/feed/,feed,Denise Schatz – Signal if you Can’t Breathe comments feed,,2005-02-16,redirect,/denise-schatz/,per-post comments feed; no comments in export
 /works-on-paper/,post,Works on Paper,"Works on Paper is a group exhibition of works on paper or synthetic materials by Andrea Frank, Guy Hindley, Kurt Lightner, Tim Maxwell, Dean Smith and Nicolas Touron.",2003-06-10,keep,/works-on-paper/,
 /works-on-paper-2/,post,Works on Paper,"Works on Paper is a group exhibition of works on paper or synthetic materials by Andrea Frank, Guy Hindley, Kurt Lightner, Tim Maxwell, Dean Smith and Nicolas Touron.",2003-06-10,alias,/works-on-paper/,old slug
+/works-on-paper/feed/,feed,Works on Paper comments feed,,2003-06-10,redirect,/works-on-paper/,per-post comments feed; no comments in export
 /luis-roldan/,post,Luis Roldan: Umbra,"Press release for Luis Rolan exhibition Umbra at Henrique Faria, New York, February 16 - March 25, 2017",2017-02-13,keep,/luis-roldan/,
+/luis-roldan/feed/,feed,Luis Roldan: Umbra comments feed,,2017-02-13,redirect,/luis-roldan/,per-post comments feed; no comments in export
 /carmen-herrera/,post,Carmen Herrera's Chronology for Lines of Sight,"Carmen Herrera's chronology for the Whitney Museum exhibition: Lines of Sight. September 16, 2016 - January 9, 2017",2016-09-16,keep,/carmen-herrera/,
+/carmen-herrera/feed/,feed,Carmen Herrera's Chronology for Lines of Sight comments feed,,2016-09-16,redirect,/carmen-herrera/,per-post comments feed; no comments in export
 /hybrid-topographies-encounters-latin-america/,post,Hybrid Topographies:  Encounters from Latin America,"Hybrid Topographies presents contemporary artists from Latin America who share an engagement with the landscape, whether urban or rural. 60 Wall Gallery, Deutsche Bank",2018-02-12,keep,/hybrid-topographies-encounters-latin-america/,
+/hybrid-topographies-encounters-latin-america/feed/,feed,Hybrid Topographies:  Encounters from Latin America comments feed,,2018-02-12,redirect,/hybrid-topographies-encounters-latin-america/,per-post comments feed; no comments in export
 /rosemberg-sandoval-artforum/,post,Rosemberg Sandoval:  ARTFORUM,"Artforum article of Rosemberg Sandoval’s exhibition “Salvaje” (Savage) at Galeria Pilar, Sao Paulo.",2014-09-09,keep,/rosemberg-sandoval-artforum/,
+/rosemberg-sandoval-artforum/feed/,feed,Rosemberg Sandoval:  ARTFORUM comments feed,,2014-09-09,redirect,/rosemberg-sandoval-artforum/,per-post comments feed; no comments in export
 /mauricio-ianes-artnexus/,post,Maurício Ianês:  ArtNexus,"Artnexus article for Maurício Ianês's exhibition at Galeria Vermelho, Sao Paulo. December 2014-February 2015",2014-12-15,keep,/mauricio-ianes-artnexus/,
+/mauricio-ianes-artnexus/feed/,feed,Maurício Ianês:  ArtNexus comments feed,,2014-12-15,redirect,/mauricio-ianes-artnexus/,per-post comments feed; no comments in export
 /allora-calzadilla-arte-al-dia/,post,Allora & Calzadilla - Arte al Dia,Review of Allora & Calzadilla's show at Barbara Gladstone in Arte al Dia.,2009-06-01,keep,/allora-calzadilla-arte-al-dia/,
+/allora-calzadilla-arte-al-dia/feed/,feed,Allora & Calzadilla - Arte al Dia comments feed,,2009-06-01,redirect,/allora-calzadilla-arte-al-dia/,per-post comments feed; no comments in export
 /artpace-international-artist-in-residence-program/,post,Artpace International Artist-in-residence Program,"Exhibition of Carlos Castro Arias, Milagros de la Torre, and Daniel Ramos for the Spring 2020 International Artist-in-residence program at Artpace, San Antonio",2020-01-27,keep,/artpace-international-artist-in-residence-program/,
+/artpace-international-artist-in-residence-program/feed/,feed,Artpace International Artist-in-residence Program comments feed,,2020-01-27,redirect,/artpace-international-artist-in-residence-program/,per-post comments feed; no comments in export
 /el-museo-del-barrio-celebrates-carmen-herrera-105-birthday/,post,El Museo del Barrio celebrates Carmen Herrera's birthday,"Celebrating Carmen Herrera's birthday with Tony Bechara, Carolina Ponce de Leon and Monica Espinel; moderator Susanna Temkin, Curator, El Museo del Barrio.",2020-05-26,keep,/el-museo-del-barrio-celebrates-carmen-herrera-105-birthday/,
+/el-museo-del-barrio-celebrates-carmen-herrera-105-birthday/feed/,feed,El Museo del Barrio celebrates Carmen Herrera's birthday comments feed,,2020-05-26,redirect,/el-museo-del-barrio-celebrates-carmen-herrera-105-birthday/,per-post comments feed; no comments in export
 /carlos-castro-arias-remorses-and-other-maladies/,post,Carlos Castro Arias - Remorses and Other Maladies,,2021-02-27,keep,/carlos-castro-arias-remorses-and-other-maladies/,no description in export; owner decision: leave empty
+/carlos-castro-arias-remorses-and-other-maladies/feed/,feed,Carlos Castro Arias - Remorses and Other Maladies comments feed,,2021-02-27,redirect,/carlos-castro-arias-remorses-and-other-maladies/,per-post comments feed; no comments in export
 /ana-mercedes-hoyos/,post,Ana Mercedes Hoyos,,2020-10-09,keep,/ana-mercedes-hoyos/,no description in export; owner decision: leave empty
+/ana-mercedes-hoyos/feed/,feed,Ana Mercedes Hoyos comments feed,,2020-10-09,redirect,/ana-mercedes-hoyos/,per-post comments feed; no comments in export
 /spring-2020-international-artists-in-residence-talk/,post,Spring 2020 International Artists-in-Residence Talk,,2020-09-18,keep,/spring-2020-international-artists-in-residence-talk/,no description in export; owner decision: leave empty
+/spring-2020-international-artists-in-residence-talk/feed/,feed,Spring 2020 International Artists-in-Residence Talk comments feed,,2020-09-18,redirect,/spring-2020-international-artists-in-residence-talk/,per-post comments feed; no comments in export
 /parcharte/,post,Parcharte,"Parcharte, ”hanging out with art”, is a podcast by independent curator Monica Espinel. She speaks with contemporary artists about their practice.",2021-12-29,keep,/parcharte/,
+/parcharte/feed/,feed,Parcharte comments feed,,2021-12-29,redirect,/parcharte/,per-post comments feed; no comments in export
 /ifa-latam-2022/,post,Symposium of Latin American Art,"Panel with Monica Espinel, Macarena Deij Prado, Aline Hernández moderated by Dr. Claire Bishop and Cathryn Jijón: ""(Re)Enactments: Performance and Public Space"".",2022-04-01,keep,/ifa-latam-2022/,
+/ifa-latam-2022/feed/,feed,Symposium of Latin American Art comments feed,,2022-04-01,redirect,/ifa-latam-2022/,per-post comments feed; no comments in export
 /brooklyn-rail-carmen-herrera/,post,The Brooklyn Rail - 1970s: Carmen Herrera at Lisson,,2022-06-07,keep,/brooklyn-rail-carmen-herrera/,no description in export; owner decision: leave empty
+/brooklyn-rail-carmen-herrera/feed/,feed,The Brooklyn Rail - 1970s: Carmen Herrera at Lisson comments feed,,2022-06-07,redirect,/brooklyn-rail-carmen-herrera/,per-post comments feed; no comments in export
 /obra-de-la-artista-carmen-herrera/,post,Obra de la artista Carmen Herrera,,2022-06-21,keep,/obra-de-la-artista-carmen-herrera/,no description in export; owner decision: leave empty
+/obra-de-la-artista-carmen-herrera/feed/,feed,Obra de la artista Carmen Herrera comments feed,,2022-06-21,redirect,/obra-de-la-artista-carmen-herrera/,per-post comments feed; no comments in export
 /remembering-carmen-herrera-whitney-museum/,post,Carmen Herrera memorial Whitney Museum,,2022-09-28,keep,/remembering-carmen-herrera-whitney-museum/,no description in export; owner decision: leave empty
+/remembering-carmen-herrera-whitney-museum/feed/,feed,Carmen Herrera memorial Whitney Museum comments feed,,2022-09-28,redirect,/remembering-carmen-herrera-whitney-museum/,per-post comments feed; no comments in export
 /tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/,post,Duet of Displacement,,2021-11-11,keep,/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/,no description in export; owner decision: leave empty
+/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/feed/,feed,Duet of Displacement comments feed,,2021-11-11,redirect,/tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement/,per-post comments feed; no comments in export
 /embodying-the-abject-maria-evelia-marmolejos-anonimo-4/,post,Embodying the Abject,,2023-07-01,keep,/embodying-the-abject-maria-evelia-marmolejos-anonimo-4/,no description in export; owner decision: leave empty
+/embodying-the-abject-maria-evelia-marmolejos-anonimo-4/feed/,feed,Embodying the Abject comments feed,,2023-07-01,redirect,/embodying-the-abject-maria-evelia-marmolejos-anonimo-4/,per-post comments feed; no comments in export
 /impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/,post,Impending Beauty: Resilience and Resignification in Tatiana Arocha's Forests of the Mind,,2021-01-01,keep,/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/,no description in export; owner decision: leave empty
+/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/feed/,feed,Impending Beauty: Resilience and Resignification in Tatiana Arocha's Forests of the Mind comments feed,,2021-01-01,redirect,/impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind/,per-post comments feed; no comments in export
 /xocomil-vivian-suters-salute-to-the-wind/,post,"Xocomil, Vivian Suter's Salute to the Wind",,2023-02-18,keep,/xocomil-vivian-suters-salute-to-the-wind/,no description in export; owner decision: leave empty
+/xocomil-vivian-suters-salute-to-the-wind/feed/,feed,"Xocomil, Vivian Suter's Salute to the Wind comments feed",,2023-02-18,redirect,/xocomil-vivian-suters-salute-to-the-wind/,per-post comments feed; no comments in export
 /juan-francisco-elso-por-america/,post,Juan Francisco Elso: Por América,,2023-01-09,keep,/juan-francisco-elso-por-america/,no description in export; owner decision: leave empty
+/juan-francisco-elso-por-america/feed/,feed,Juan Francisco Elso: Por América comments feed,,2023-01-09,redirect,/juan-francisco-elso-por-america/,per-post comments feed; no comments in export
 /burning-with-desire/,post,Burning with Desire,,2022-10-27,keep,/burning-with-desire/,no description in export; owner decision: leave empty
+/burning-with-desire/feed/,feed,Burning with Desire comments feed,,2022-10-27,redirect,/burning-with-desire/,per-post comments feed; no comments in export
 /beats-of-the-sacred-heart/,post,Beats of the Sacred Heart,,2024-03-13,keep,/beats-of-the-sacred-heart/,no description in export; owner decision: leave empty
+/beats-of-the-sacred-heart/feed/,feed,Beats of the Sacred Heart comments feed,,2024-03-13,redirect,/beats-of-the-sacred-heart/,per-post comments feed; no comments in export
 /page/2/,pagination,Home – page 2,,,redirect,/,8 posts per page
 /page/3/,pagination,Home – page 3,,,redirect,/,8 posts per page
 /page/4/,pagination,Home – page 4,,,redirect,/,8 posts per page
@@ -200,6 +240,44 @@ old_url,type,title,description,date,action,target,note
 /2023/02/,date,Archive 2023-02,,,redirect,/,
 /2023/07/,date,Archive 2023-07,,,redirect,/,
 /2024/03/,date,Archive 2024-03,,,redirect,/,
+/2003/06/10/,date,Archive 2003-06-10,,,redirect,/,
+/2004/06/30/,date,Archive 2004-06-30,,,redirect,/,
+/2005/02/16/,date,Archive 2005-02-16,,,redirect,/,
+/2005/05/04/,date,Archive 2005-05-04,,,redirect,/,
+/2008/05/01/,date,Archive 2008-05-01,,,redirect,/,
+/2008/07/17/,date,Archive 2008-07-17,,,redirect,/,
+/2009/06/01/,date,Archive 2009-06-01,,,redirect,/,
+/2009/08/01/,date,Archive 2009-08-01,,,redirect,/,
+/2009/10/16/,date,Archive 2009-10-16,,,redirect,/,
+/2010/05/24/,date,Archive 2010-05-24,,,redirect,/,
+/2010/11/03/,date,Archive 2010-11-03,,,redirect,/,
+/2011/06/26/,date,Archive 2011-06-26,,,redirect,/,
+/2011/10/13/,date,Archive 2011-10-13,,,redirect,/,
+/2012/07/19/,date,Archive 2012-07-19,,,redirect,/,
+/2013/04/03/,date,Archive 2013-04-03,,,redirect,/,
+/2014/09/09/,date,Archive 2014-09-09,,,redirect,/,
+/2014/10/11/,date,Archive 2014-10-11,,,redirect,/,
+/2014/12/15/,date,Archive 2014-12-15,,,redirect,/,
+/2016/09/16/,date,Archive 2016-09-16,,,redirect,/,
+/2017/02/13/,date,Archive 2017-02-13,,,redirect,/,
+/2018/02/12/,date,Archive 2018-02-12,,,redirect,/,
+/2020/01/27/,date,Archive 2020-01-27,,,redirect,/,
+/2020/05/26/,date,Archive 2020-05-26,,,redirect,/,
+/2020/09/18/,date,Archive 2020-09-18,,,redirect,/,
+/2020/10/09/,date,Archive 2020-10-09,,,redirect,/,
+/2021/01/01/,date,Archive 2021-01-01,,,redirect,/,
+/2021/02/27/,date,Archive 2021-02-27,,,redirect,/,
+/2021/11/11/,date,Archive 2021-11-11,,,redirect,/,
+/2021/12/29/,date,Archive 2021-12-29,,,redirect,/,
+/2022/04/01/,date,Archive 2022-04-01,,,redirect,/,
+/2022/06/07/,date,Archive 2022-06-07,,,redirect,/,
+/2022/06/21/,date,Archive 2022-06-21,,,redirect,/,
+/2022/09/28/,date,Archive 2022-09-28,,,redirect,/,
+/2022/10/27/,date,Archive 2022-10-27,,,redirect,/,
+/2023/01/09/,date,Archive 2023-01-09,,,redirect,/,
+/2023/02/18/,date,Archive 2023-02-18,,,redirect,/,
+/2023/07/01/,date,Archive 2023-07-01,,,redirect,/,
+/2024/03/13/,date,Archive 2024-03-13,,,redirect,/,
 /carmen-herrera/carmen-herrera-installation-shot-4/,attachment,"Carmen Herrara, Lines of Sights - Installation shot",,2020-03-03,redirect,/carmen-herrera/,
 /carmen-herrera/exh_herrera_install_3_1200x675/,attachment,"Carmen Herrara, Lines of Sights - Installation shot",,2020-03-03,redirect,/carmen-herrera/,old attachment slug; path derived from current attachment URL
 /luis-roldan/luis-roldan-ventana/,attachment,"Luis Roldan, Ventana, 2017",,2020-03-08,redirect,/luis-roldan/,

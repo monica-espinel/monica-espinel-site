@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2020/03/1-4.png
 image_alt: Luis Fernando Roldán, Petit Pan Jaune (Installation shot), 2009, Pencil, papercuts on paper and acrylic, dimensions variable
 image_caption: Luis Fernando Roldán, Petit Pan Jaune (Installation shot), 2009, Pencil, papercuts on paper and acrylic, dimensions variable
+summary: 60 Wall Gallery, Deutsche Bank May 24 - September 3, 2010 In the post-World War II era, artists in Latin America broke away from the creation of national artistic styles and socially concerned figurative art and began developing abstract languages that reflected a broader international context. “Then & Now” explores the various modes of abstraction […]
 wordpress_id: 120
 ---
 

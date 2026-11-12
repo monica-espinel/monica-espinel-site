@@ -8,42 +8,32 @@ Writes:
   content/<slug>.md                one file per published page
   content/categories/<slug>/_index.md, content/tags/<slug>/_index.md
                                    term pages, so URLs keep the WordPress slugs
+Files written by the previous run but not by this one (unpublished posts, removed terms)
+are deleted, using the list in migration/generated-content.txt.
 Needs: beautifulsoup4, markdownify, PyYAML (run once locally; output is committed).
 """
-import html
 import json
 import re
 import sys
-import xml.etree.ElementTree as ET
-from collections import defaultdict
 from pathlib import Path
 
 import yaml
 from bs4 import BeautifulSoup
 from markdownify import markdownify
 
-NS = {
-    "wp": "http://wordpress.org/export/1.2/",
-    "content": "http://purl.org/rss/1.0/modules/content/",
-    "excerpt": "http://wordpress.org/export/1.2/excerpt/",
-    "dc": "http://purl.org/dc/elements/1.1/",
-}
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # -I leaves the script dir off sys.path
+from wxr import NS, ROOT, channel, description, is_published, meta, raw, t  # noqa: E402
+
+# WordPress builds automatic excerpts from these blocks only (images, galleries, embeds are
+# dropped), cut at 55 words + " […]" (wp_trim_excerpt). The archive pages show that excerpt.
+EXCERPT_BLOCKS = {"paragraph", "heading", "list", "quote", "freeform", "preformatted"}
+EXCERPT_WORDS = 55
 SITE_RE = re.compile(r"https?://(?:www\.)?monicaespinel\.com(?=/)")
+MANIFEST = ROOT / "migration" / "generated-content.txt"
 BLOCK_RE = re.compile(r"<!--\s+(/)?wp:([a-z0-9/-]+)(?:\s+(\{.*?\}))?\s*(/)?-->", re.S)
 # Podcast platforms that no longer exist; links removed (owner decision, Phase 2).
 DROP_PLATFORMS = {"Google-Podcasts"}  # shut down in 2024
 TODOS = []  # (file, message) for the final report
-
-
-def t(el, path):
-    return (el.findtext(path, namespaces=NS) or "").strip()
-
-
-def meta(item):
-    out = defaultdict(list)
-    for m in item.findall("wp:postmeta", NS):
-        out[t(m, "wp:meta_key")].append(t(m, "wp:meta_value"))
-    return out
 
 
 def rel(url):
@@ -104,13 +94,13 @@ def sc_attr(v):
 
 
 # Local copies of images that posts loaded from other sites (scripts/fetch_external_images.py).
-EXTERNAL = json.loads(Path("migration/external-images.json").read_text()) \
-    if Path("migration/external-images.json").exists() else {}
+EXTERNAL_MAP = ROOT / "migration" / "external-images.json"
+EXTERNAL = json.loads(EXTERNAL_MAP.read_text()) if EXTERNAL_MAP.exists() else {}
 
 
 def local_copy(src):
-    local = EXTERNAL.get(html.unescape(src))
-    if local and Path("static" + local).exists():
+    local = EXTERNAL.get(src)
+    if local and (ROOT / "static" / local.lstrip("/")).exists():
         return local
     if src.startswith("http") and not SITE_RE.match(src):
         TODOS.append(("(external image)", f"no local copy yet: {src}"))
@@ -166,6 +156,8 @@ def render(nodes, ctx):
 
 def render_block(name, attrs, children, inner, ctx):
     if name in ("paragraph", "heading", "list", "list-item", "quote", "html", "freeform", "preformatted", "table"):
+        if name in EXCERPT_BLOCKS:
+            ctx.text.append(plain_text(inner))
         if name == "html":
             ctx.todo(f"raw HTML block converted to Markdown, check rendering: {inner.strip()[:80]!r}")
         return md(inner)
@@ -204,9 +196,9 @@ def render_block(name, attrs, children, inner, ctx):
         feed = attrs.get("url", "")
         guids = ", ".join(e.get("guid", "") for e in attrs.get("selectedEpisodes", []))
         ctx.todo(f"Jetpack podcast player (feed {feed}, episode {guids}) replaced by a link to the feed")
-        return ("{{/* TODO: the WordPress page embedded a Jetpack podcast player for episode "
-                f"{guids}. Replace with the episode's own player embed if wanted. */}}}}\n\n"
-                f"[Podcast feed]({feed})").replace("}}}}", "}}")
+        note = (f"TODO: the WordPress page embedded a Jetpack podcast player for episode {guids}. "
+                "Replace with the episode's own player embed if wanted.")
+        return "{{/* " + note + " */}}\n\n" + f"[Podcast feed]({feed})"
     if name == "secondline-themes/podcast-subscribe-button":
         links = []
         for b in attrs.get("secondline_psb_repeat_subscribe", []):
@@ -242,17 +234,26 @@ def render_block(name, attrs, children, inner, ctx):
 class Ctx:
     def __init__(self, path):
         self.path = path
+        self.text = []  # plain text of the text blocks, for the excerpt
 
     def todo(self, msg):
         TODOS.append((self.path, msg))
 
 
-def description(m):
-    for key in ("_aioseo_description", "_aioseop_description"):
-        for v in m.get(key, []):
-            if v and not v.startswith("#"):
-                return re.sub(r"\s+", " ", html.unescape(v)).strip()
-    return ""
+def plain_text(fragment):
+    """Text like WordPress strip_tags: inline tags join without spaces; line breaks and
+    list items become spaces."""
+    soup = BeautifulSoup(fragment, "html.parser")
+    for el in soup.find_all(["br", "li", "p", "h1", "h2", "h3", "h4", "h5", "h6"]):
+        el.insert_after(" ")
+    return soup.get_text()
+
+
+def auto_excerpt(texts):
+    words = " ".join(texts).replace("\u00a0", " ").split()
+    if len(words) > EXCERPT_WORDS:
+        return " ".join(words[:EXCERPT_WORDS]) + " […]"
+    return " ".join(words)
 
 
 def dump(front, body):
@@ -262,7 +263,7 @@ def dump(front, body):
 
 def main(src, out_dir):
     out = Path(out_dir)
-    ch = ET.parse(src).getroot().find("channel")
+    ch = channel(src)
     items = ch.findall("item")
     by_id = {t(i, "wp:post_id"): i for i in items}
     authors = {t(a, "wp:author_login"): t(a, "wp:author_display_name") for a in ch.findall("wp:author", NS)}
@@ -270,15 +271,15 @@ def main(src, out_dir):
     written = []
 
     for i in items:
-        typ, status = t(i, "wp:post_type"), t(i, "wp:status")
-        if typ not in ("post", "page") or status != "publish":
+        if not is_published(i):
             continue
+        typ = t(i, "wp:post_type")
         m = meta(i)
         slug = t(i, "wp:post_name")
         path = out / ("posts" if typ == "post" else "") / f"{slug}.md"
         ctx = Ctx(str(path))
         front = {
-            "title": html.unescape(t(i, "title")),
+            "title": t(i, "title"),
             "date": t(i, "wp:post_date").replace(" ", "T"),
             "lastmod": t(i, "wp:post_modified").replace(" ", "T"),
             "slug": slug,
@@ -303,17 +304,18 @@ def main(src, out_dir):
             tm = meta(thumb)
             front["image"] = "/wp-content/uploads/" + tm["_wp_attached_file"][0]
             alt = (tm.get("_wp_attachment_image_alt") or [""])[0]
-            cap = inline_md(t(thumb, "excerpt:encoded"))
+            cap = inline_md(raw(thumb, "excerpt:encoded"))
             if alt:
                 front["image_alt"] = alt
             if cap:
                 front["image_caption"] = cap
-        excerpt = t(i, "excerpt:encoded")
-        if excerpt:
-            front["summary"] = inline_md(excerpt)
+        body = render(parse_blocks(raw(i, "content:encoded")), ctx)
+        manual = raw(i, "excerpt:encoded")
+        summary = inline_md(manual) if manual else auto_excerpt(ctx.text)
+        if summary:
+            front["summary"] = summary
         front["wordpress_id"] = int(t(i, "wp:post_id"))
 
-        body = render(parse_blocks(i.findtext("content:encoded", namespaces=NS) or ""), ctx)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(dump(front, body), encoding="utf-8")
         written.append(path)
@@ -326,17 +328,32 @@ def main(src, out_dir):
             slug = t(el, slug_el)
             if slug not in used[domain]:
                 continue  # empty terms redirect (Phase 4)
-            front = {"title": html.unescape(t(el, name_el)), "slug": slug}
+            front = {"title": t(el, name_el), "slug": slug}
             if t(el, desc_el):
-                front["description"] = html.unescape(t(el, desc_el))
+                front["description"] = t(el, desc_el)
             p = out / section / slug / "_index.md"
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_text(dump(front, ""), encoding="utf-8")
             written.append(p)
 
+    remove_stale(written)
     print(f"{len(written)} files written under {out}/")
     for f, msg in TODOS:
         print(f"TODO {f}: {msg}")
+
+
+def remove_stale(written):
+    """Delete files the previous run generated that this run did not, then record this run's list."""
+    now = sorted(str(p.resolve().relative_to(ROOT)) for p in written)
+    before = MANIFEST.read_text().split() if MANIFEST.exists() else []
+    for f in sorted(set(before) - set(now)):
+        p = ROOT / f
+        if p.exists():
+            p.unlink()
+            print(f"removed stale {f}")
+            if p.name == "_index.md" and not any(p.parent.iterdir()):
+                p.parent.rmdir()
+    MANIFEST.write_text("\n".join(now) + "\n")
 
 
 if __name__ == "__main__":

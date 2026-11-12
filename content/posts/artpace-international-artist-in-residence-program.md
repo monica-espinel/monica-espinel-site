@@ -8,6 +8,7 @@ categories:
 - exhibitions
 description: Exhibition of Carlos Castro Arias, Milagros de la Torre, and Daniel Ramos for the Spring 2020 International Artist-in-residence program at Artpace, San Antonio
 image: /wp-content/uploads/2020/03/ArtpaceBuilding.jpg
+summary: 'In Spring 2020, Artpace San Antonio will present solo exhibitions by Carlos Castro Arias, Milagros de la Torre, and Daniel Ramos. In-Residence Dates: Jan 27, 2020 - Mar 23, 2020 Exhibition Dates: Mar 19, 2020 - May 10, 2020 Carlos Castro Arias was born in Bogota, Colombia. His interdisciplinary work explores individual and collective identity […]'
 wordpress_id: 4215
 ---
 

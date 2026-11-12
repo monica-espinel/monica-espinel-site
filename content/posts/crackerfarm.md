@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2020/03/1-8.png
 image_alt: Crackerfarm, Untitled, 2003, C-print, Ed. of 4, 24 x 20 in.
 image_caption: Crackerfarm, Untitled, 2003, C-print, Ed. of 4, 24 x 20 in.
+summary: Gramercy Post, New York May 4 - June 18, 2005 In its second collaboration with emerging artists, Gramercy Post is pleased to present Crackerfarm, an artist collective comprised of photographers Mike Beyer and Lindsey Rome. Their photography is a strange brew, a kind of self-reflective ethnography that evokes Jack Kerouac’s “On the Road”. Like Sal […]
 wordpress_id: 156
 ---
 

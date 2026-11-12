@@ -12,6 +12,7 @@ description: 'Carmen Herrera''s chronology for the Whitney Museum exhibition: Li
 image: /wp-content/uploads/2020/03/wmaa_herra_install-18_resizedforweb_800.jpg
 image_alt: 'Carmen Herrera: Lines of Sight - installation shot'
 image_caption: 'Carmen Herrera: Lines of Sight - installation shot'
+summary: Whitney Museum of American Art September 16, 2016 - January 9, 2017 Carmen Herrera's chronology for the Lines of Sight exhibition.
 wordpress_id: 299
 ---
 

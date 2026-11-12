@@ -10,6 +10,7 @@ description: Memory Leaks is a personally charged show of works that were tattoo
 image: /wp-content/uploads/2010/11/1.png
 image_alt: Julie Tolentino, Lead/Led, 2005 / 2010, Performance and sculptural remnant, dictaphone, wire, hook, dimensions variable
 image_caption: Julie Tolentino, Lead/Led, 2005 / 2010
+summary: Creon, New York November 3 - December 4, 2010 “Nothing tells memories from ordinary moments. Only afterwards do they claim remembrance on account of their scars.” Chris Marker, La Jetée Memory Leaks is a personally charged show of works that were tattooed in my brain, a subjective momentary ordering of memory, time and meaning. It […]
 wordpress_id: 117
 ---
 

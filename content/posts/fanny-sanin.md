@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2020/03/1-7.png
 image_alt: 'Installation shot, Fanny Sanín: A Chromatic Journey, 2008'
 image_caption: 'Installation shot, Fanny Sanín: A Chromatic Journey, 2008'
+summary: Frederico Sève Gallery / Latincollector, New York May 1 - June 14, 2008 Frederico Seve/Latincollector Gallery is pleased to announce a retrospective exhibition of paintings by Fanny Sanín. A Chromatic Journey, 1966 - 2006 presents Sanín’s exploration undertaken with color as the thread that links the various phases of her work. This small survey enables […]
 wordpress_id: 147
 ---
 

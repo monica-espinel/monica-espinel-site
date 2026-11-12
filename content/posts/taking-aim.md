@@ -10,6 +10,7 @@ description: Guest curators Marysol Nieves and Mónica Espinel look at the histo
 image: /wp-content/uploads/2020/03/2-3.png
 image_alt: Installation shot, Taking Aim, 2011
 image_caption: Installation shot, Taking Aim, 2011
+summary: The Bronx Museum of the Arts June 26 - September 5, 2011 Bronx Museum Celebrates 30th Anniversary of Artist In the Marketplace (Aim) For three decades, the Bronx Museum of the Arts’ Artist in the Marketplace (AIM) program has helped to demystify the often opaque professional practices of the art world for artists at the […]
 wordpress_id: 116
 ---
 

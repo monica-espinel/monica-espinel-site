@@ -7,6 +7,7 @@ author: Simon Letort
 categories:
 - publications
 image: /wp-content/uploads/2023/11/4-Tatiana-Arocha-Impending-Beauty.jpeg
+summary: '"Impending Beauty: Resilience and Resignification in Tatiana Arocha''s Forests of the Mind," in Tatiana Arocha - Impending Beauty, Brooklyn Arts Council, 2021, New York: 46-63. https://www.tatianaarocha.com/belleza-inminente'
 wordpress_id: 4443
 ---
 

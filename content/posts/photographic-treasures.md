@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2020/03/1-2.png
 image_alt: Installation shot, Photographic Treasures from the Collection of Alfred Stieglitz, 2011
 image_caption: Installation shot, Photographic Treasures from the Collection of Alfred Stieglitz, 2011
+summary: Howard Gilman Gallery, Metropolitan Museum of Art October 13, 2011 - February 26, 2012 Rarely seen masterpieces from Alfred Stieglitz’s personal collection of photography will be presented at The Metropolitan Museum of Art from October 13, 2011, through February 26, 2012, in the exhibition Photographic Treasures from the Collection of Alfred Stieglitz. Stieglitz was not […]
 wordpress_id: 105
 ---
 

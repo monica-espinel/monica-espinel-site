@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2012/07/1.png
 image_alt: Installation shot, The Rituals of Chaos, 2012
 image_caption: Installation shot, The Rituals of Chaos, 2012
+summary: The Bronx Museum of the Arts July 19, 2012 – January 6, 2013 The Bronx Museum will present The Rituals of Chaos, an exhibition featuring the work of Mexican photojournalist Enrique Metinides, as part of its ongoing Urban Archives series. On view from July 19, 2012 through January 6, 2013, the exhibition will feature more […]
 wordpress_id: 100
 ---
 

@@ -10,6 +10,7 @@ description: Bruno Miguel's exhibition Todos as Mesa at Galeria Emma Thomas, Sã
 image: /wp-content/uploads/2020/03/photo-1-1-scaled.jpg
 image_alt: Bruno Miguel, Todos à Mesa, 2015 - Installation shot
 image_caption: Bruno Miguel, Todos à Mesa, 2015 - Installation shot
+summary: Galeria Emma Thomas, São Paulo, October 11 – November 13, 2014 Bruno Miguel delves into the material and conceptual issues of painting through an innovative use of non-traditional materials that include resin, found objects, wood, studio leftovers and Companhia das Indias tableware from a vast collection acquired in antique stores or at auction. “Todos à […]
 wordpress_id: 59
 ---
 

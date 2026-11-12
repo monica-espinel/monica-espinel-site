@@ -12,6 +12,7 @@ tags:
 description: Parcharte, ”hanging out with art”, is a podcast by independent curator Monica Espinel. She speaks with contemporary artists about their practice.
 image: /wp-content/uploads/2021/12/parcharte.png
 image_alt: parcharte
+summary: Parcharte, which translates to ”hanging out with art”, is an interview program hosted by independent curator Monica Espinel. She speaks with contemporary artists about their practice.
 wordpress_id: 4338
 ---
 

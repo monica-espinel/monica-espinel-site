@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2020/03/1-5.png
 image_alt: Installation shot, Geometric Abstract Works - The Latin American vision from the 1950s, 60s and 70s, 2009
 image_caption: Installation shot, Geometric Abstract Works - The Latin American vision from the 1950s, 60s and 70s, 2009
+summary: 'Henrique Faria, New York October 16 - November 24, 2009 Geometric Abstract Works: The Latin American vision from the 1950s, 60s and 70s offers a rare opportunity to view seminal works by Latin American artists whose exposure in the United States has been limited. This is the first in a series of historically rooted exhibitions […]'
 wordpress_id: 130
 ---
 

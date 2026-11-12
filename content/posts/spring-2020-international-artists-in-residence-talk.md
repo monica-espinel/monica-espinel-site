@@ -12,6 +12,7 @@ tags:
 - daniel-ramos
 - milagros-de-la-torre
 image: /wp-content/uploads/2021/03/Artpace-talk.jpeg
+summary: Conversation with Carlos Castro Arias, Daniel Ramos, and Milagros de la Torre, Artpace, San Antonio, TX
 wordpress_id: 4300
 ---
 

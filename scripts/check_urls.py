@@ -28,6 +28,12 @@ def url_to_file(public, url):
     return p
 
 
+def file_to_url(public, index_file):
+    """public/a/b/index.html -> /a/b/ ; public/index.html -> /"""
+    rel = index_file.parent.relative_to(public).as_posix()
+    return "/" if rel == "." else f"/{rel}/"
+
+
 def redirect_target(file):
     try:
         text = file.read_text(encoding="utf-8", errors="replace")[:4000]
@@ -81,10 +87,8 @@ def main(argv):
 
     listed = {r["old_url"] for r in rows}
     extra = sorted(
-        "/" + str(p.parent.relative_to(public)).replace(".", "").strip("/") + ("/" if p.parent != public else "")
-        for p in public.rglob("index.html")
-        if "/" + str(p.parent.relative_to(public)).replace(".", "").strip("/") + "/" not in listed
-        and p.parent != public and not redirect_target(p)
+        u for u in (file_to_url(public, p) for p in public.rglob("index.html"))
+        if u not in listed and not redirect_target(url_to_file(public, u))
     )
 
     print(f"inventory rows: {len(rows)}  ok: {ok}  pending: {len(pending)}  mismatches: {len(mismatches)}")

@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2009/08/1.png
 image_alt: Nicholas Galanin, Imaginary Indian (installation shot), 2008, wood and wallpaper, dimensions variable
 image_caption: Nicholas Galanin, Imaginary Indian (installation shot), 2008, wood and wallpaper, dimensions variable
+summary: Glyndor Gallery at Wave Hill, New York August 1 - November 29, 2009 Laura Anderson Barbata, Mary Anne Barkhouse, Lorenzo Clayton, Peter Edlund, Nicholas Galanin, Edgar Heap of Birds, Melanie Printup-Hope, Maria Hupfield, G. Peter Jemison, Jason Lujan, Alan Michelson, Anna Tsouhlarakis, William R. Wilson Muhheakantuck, a Lenape word meaning “the river that flows both […]
 wordpress_id: 136
 ---
 

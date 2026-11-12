@@ -22,6 +22,7 @@ tags:
 - yves-klein
 image: /wp-content/uploads/2024/10/Screenshot-2024-10-08-at-9.42.07-AM.png
 image_caption: Las Yeguas del Apocalipsis, Pedro Mardones Lemebel, Francisco Casas Silva. Las Dos Fridas (The Two Fridas). 1989. Inkjet print, photograph by Pedro Marinello Kairath, 49 3/16 × 47 1/4" (125 × 120 cm). The Museum of Modern Art, New York. Gift of Pedro Montes through the Latin American and Caribbean Fund in honor of Pedro Lemebel and Francisco Casas
+summary: Discover artworks that address the personal, political, and sacred with hearts on fire @ MoMA Magazine https://www.moma.org/magazine/articles/1041
 wordpress_id: 4470
 ---
 

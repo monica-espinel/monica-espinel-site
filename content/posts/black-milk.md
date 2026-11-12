@@ -10,6 +10,7 @@ description: 'Black Milk: Theories on Suicide, a group exhibition curated by Mon
 image: /wp-content/uploads/2020/03/1-10.png
 image_alt: Black Milk Installation shot
 image_caption: Black Milk Installation shot
+summary: 'Marvelli Gallery, New York June 30 - July 31, 2004 Marvelli Gallery is pleased to present Black Milk: Theories on Suicide, a group exhibition curated by Monica Espinel, that brings together young contemporary artists whose work touches on issues related to suicide. The multimedia exhibition will include work by Charles Cohen, Ian Cooper, Elizabeth Gray […]'
 wordpress_id: 43
 ---
 

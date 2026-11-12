@@ -10,6 +10,7 @@ description: Review of Allora & Calzadilla's show at Barbara Gladstone in Arte a
 image: /wp-content/uploads/2009/06/AC_BGG_2009_02_m.jpg
 image_alt: 'Stop, Repair, Prepare: Variations on Ode to Joy for a Prepared Piano (2008), Courtesy Gladstone Gallery'
 image_caption: 'Stop, Repair, Prepare: Variations on Ode to Joy for a Prepared Piano (2008), Courtesy Gladstone Gallery'
+summary: '“Allora & Calzadilla.” Arte al Dia, 127 (May, June, July 2009): 106.'
 wordpress_id: 437
 ---
 

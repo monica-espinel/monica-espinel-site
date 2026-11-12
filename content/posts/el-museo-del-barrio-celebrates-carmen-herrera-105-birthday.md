@@ -9,6 +9,7 @@ categories:
 description: Celebrating Carmen Herrera's birthday with Tony Bechara, Carolina Ponce de Leon and Monica Espinel; moderator Susanna Temkin, Curator, El Museo del Barrio.
 image: /wp-content/uploads/2020/05/CarmenHerrera.jpg
 image_alt: Carmen Herrera
+summary: 'The discussion, moderated by Susanna Temkin, Curator, El Museo del Barrio, featured Tony Bechara, artist and long-time friend of Herrera’s; Carolina Ponce de Leon, independent curator who formerly worked at El Museo del Barrio where she organized the exhibition ‘Carmen Herrera: The Black and White Paintings, 1951-1989’ in 1998; and Monica Espinel, independent curator and […]'
 wordpress_id: 4254
 ---
 

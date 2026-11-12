@@ -10,6 +10,7 @@ description: The Skin I Live In presents artists who explore the notion of the b
 image: /wp-content/uploads/2013/04/1.png
 image_alt: Installation shot, The Skin I Live In, 2013
 image_caption: Installation shot, The Skin I Live In, 2013
+summary: Laboratório Curatorial, SP-Arte, São Paulo April 2 – 7, 2013 Strange seizures beset us when we see the interior of our body. The opposite is also true. The Skin I Live In presents artists who explore the notion of the body, inside and outside, not only as a physical space, but also as a mental, […]
 wordpress_id: 47
 ---
 

@@ -10,6 +10,7 @@ description: Ceremonies of Summer, a multimedia exhibition is an homage to Marta
 image: /wp-content/uploads/2020/03/1-6.png
 image_alt: Installation shot, Ceremonies of Summer, 2008
 image_caption: Installation shot, Ceremonies of Summer, 2008
+summary: Frederico Sève Gallery / Latincollector, New York July 17 - September 13, 2008 Frederico Seve/Latincollector Gallery is pleased to announce Ceremonies of Summer, a multimedia exhibition curated by Mónica Espinel. The exhibition is an homage to Marta Traba, critic, author, curator and historian, and was inspired by her first novel “Las ceremonias del verano” published […]
 wordpress_id: 139
 ---
 

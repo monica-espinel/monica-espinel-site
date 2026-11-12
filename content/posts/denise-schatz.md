@@ -12,6 +12,7 @@ aliases:
 image: /wp-content/uploads/2020/03/1-9.png
 image_alt: Installation shot, Denise Schatz – Signal if you Can’t Breathe, 2005
 image_caption: Installation shot, Denise Schatz – Signal if you Can’t Breathe, 2005
+summary: Gramercy Post, New York February 16 - April 2, 2005 Gramercy Post is pleased to open its collaboration with emerging artists with an exhibition of work by Denise Schatz curated by Monica Espinel. Schatz makes collages and works on paper, using magazine cut-outs, graphite and colored pencils. She creates delicate, layered scenes where animals, molecules, […]
 wordpress_id: 162
 ---
 

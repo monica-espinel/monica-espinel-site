@@ -7,6 +7,7 @@ author: Monica Espinel
 categories:
 - talks
 image: /wp-content/uploads/2022/09/Carmen_Herrera_memorial-1.jpg
+summary: 'Remembering Carmen Herrera. A celebration in memory of Carmen Herrera, September 28 2022, Whitney Museum of American Art: Adam Weinberg Alex Logsdail Estrellita Brodsky Monica Espinel Nigel Prince Dana Miller Olga Viso Tony Bechara'
 wordpress_id: 4414
 ---
 

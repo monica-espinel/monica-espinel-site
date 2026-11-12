@@ -10,6 +10,7 @@ tags:
 - maria-evelia-marmolejo
 description: 'Panel with Monica Espinel, Macarena Deij Prado, Aline Hernández moderated by Dr. Claire Bishop and Cathryn Jijón: "(Re)Enactments: Performance and Public Space".'
 image: /wp-content/uploads/2022/04/ISLAA_poster_1_twitter.gif
+summary: 'The Institute of Fine Arts at New York University, The Graduate Center at the City University of New York, Columbia University in the City of New York, and the Institute for Studies on Latin American Art (ISLAA) are pleased to announce the Sixth Annual Symposium of Latin American Art. “Movement & Presence: The Visual Culture […]'
 wordpress_id: 4370
 ---
 

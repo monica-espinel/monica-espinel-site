@@ -7,6 +7,7 @@ author: Simon Letort
 categories:
 - talks
 image: /wp-content/uploads/2023/11/6-Juan-Francisco-Elso-Por-America-Jose-Marti-1986.jpg
+summary: '"Juan Francisco Elso: Por América." Conversation with José Falconi, Susanna V. Temkin, Olga Viso, and Irene Vázquez, The New Social Environment #720, presented by The Brooklyn Rail, New York, January 9, 2023. https://brooklynrail.org/events/2023/01/09/juan-francisco-elso-por-america/'
 wordpress_id: 4457
 ---
 
