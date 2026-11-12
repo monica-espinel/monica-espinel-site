@@ -234,6 +234,8 @@ Acceptance checks:
     DNS-verified). The SPF record (`+a +mx +ip4:162.241.252.140 +include:websitewelcome.com`) doesn't include
     Google, and `+a` will cover GitHub's IPs after cutover: flagged for the owner, not changed (email records
     are out of scope). The export file itself is not committed.
+  - The owner turned off Bluehost's Cloudflare integration (2026-11-12), which GitHub needs in order to issue the
+    certificate. The apex `A` value from the export may have been the proxy's, so the guide asks to re-check it.
 - Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
   `https://www.monicaespinel.com` load with a valid certificate.
 

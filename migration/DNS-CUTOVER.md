@@ -29,7 +29,7 @@ Bluehost's screens change from time to time, so look for these names if a label 
   - Pointing to Bluehost (for example `mail.monicaespinel.com` or a Bluehost host name): the mailboxes are at Bluehost.
   - Pointing to Google or Microsoft: email is elsewhere.
   - Either way, the cutover doesn't touch them (step 9).
-- **Bluehost's CDN / Cloudflare toggle:** if the domain has Bluehost's CDN or Cloudflare integration turned on, turn it off for the cutover. GitHub must see its own IP addresses to issue the certificate.
+- [x] **Bluehost's CDN / Cloudflare integration: turned off** by the owner (2026-11-12). GitHub must see its own IP addresses to issue the certificate, so leave it off.
 - **Names in the form:**
   - `@` means the apex, `monicaespinel.com`;
   - write `www`, not `www.monicaespinel.com`;
@@ -78,6 +78,7 @@ These are the values to restore if you roll back. DNS records are public, but th
 **Progress (2026-11-12):**
 - **Step 1 is done:** the records are written down, except the HSTS check.
 - **Step 2 is partly done:** the apex TTL is 15 minutes; the `www` TTL and the 1-hour wait remain.
+- **Bluehost's Cloudflare integration is off.** Re-check the apex `A` value afterwards (step 1).
 - **Steps 3 and 4** are next.
 
 ---
@@ -108,7 +109,10 @@ Where things are hosted (needed to cancel WordPress safely later):
 - [x] **Who provides email:** **Google Workspace** (`MX` → Google), so the mailboxes don't depend on Bluehost.
 - [ ] **Whether the WordPress site forces HTTPS in browsers (HSTS).** In a browser, open `https://monicaespinel.com`, then open Developer tools → Network, reload, click the first request, and look under *Response headers* for `Strict-Transport-Security`. Note whether it's there. Step 8 explains why it matters.
 
-**Cloudflare:** not used, since the DNS is at Bluehost. Only check that Bluehost's own CDN/Cloudflare toggle is off for the domain (see *Where the DNS is*).
+**Cloudflare:** Bluehost's Cloudflare integration was on, and the owner turned it off (2026-11-12).
+- [ ] **Re-check the apex `A` record** in Bluehost's DNS editor now. Turning Cloudflare off can change it: with the integration on, the apex may have pointed at the proxy rather than the WordPress server.
+  - If it's no longer `66.235.200.147`, write down the new value. That is the rollback value.
+  - Also check the site still loads on WordPress, which it should.
 
 ### 2. Lower the TTL to 300 seconds
 
