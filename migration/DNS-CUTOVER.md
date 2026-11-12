@@ -55,13 +55,13 @@ Nothing visible changes in this step. The records are copied with the **same val
     2. **Wait 2 days** for the change to spread.
     3. **Then do the switch.**
     4. **Optionally, turn DNSSEC on again** at GoDaddy afterwards.
-- [ ] **Have the step 0c table open** before switching, so the records go in within minutes.
-- [ ] **Pick a quiet time**, for example in the evening or at a weekend. For a few minutes after the switch, GoDaddy's starting zone has no `MX` records (see below).
+- [x] **Have the step 0c table open** before switching, so the records go in within minutes.
+- [x] **Pick a quiet time**, for example in the evening or at a weekend. For a few minutes after the switch, GoDaddy's starting zone has no `MX` records (see below).
 
 ### 0b. Switch the nameservers to GoDaddy's
 
-- [ ] GoDaddy → monicaespinel.com → **DNS → Nameservers → Change nameservers** → choose **GoDaddy's default nameservers** (`ns##.domaincontrol.com`; GoDaddy fills them in). Save.
-- [ ] Go straight on to step 0c. GoDaddy usually only lets you edit the records once its own nameservers are selected, and it starts with a few default records (for example a "Parked" `@` record).
+- [x] GoDaddy → monicaespinel.com → **DNS → Nameservers → Change nameservers** → choose **GoDaddy's default nameservers** (`ns##.domaincontrol.com`; GoDaddy fills them in). Save.
+- [x] Go straight on to step 0c. GoDaddy usually only lets you edit the records once its own nameservers are selected, and it starts with a few default records (for example a "Parked" `@` record).
 
 Nameserver changes spread slowly, over up to 24–48 hours. During that time some visitors still get answers from Bluehost's DNS, and some from GoDaddy's. That's fine as long as both have the same records, so **don't delete anything at Bluehost**.
 
@@ -165,7 +165,12 @@ These are the values to restore if you roll back:
 - **Step 1 is done:** the records are written down (new Bluehost export after turning off Cloudflare: apex `A` `162.241.252.140`). The HSTS check is still open.
 - **Bluehost's Cloudflare integration is off.**
 - **Step 0a: DNSSEC is off** (no DS record at the `.com` registry).
-- **Next: step 0b,** switching the nameservers to GoDaddy, then 0c, entering the records. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
+- **Step 0b done** (2026-11-12, about 11:55 US Eastern): the nameservers were switched to GoDaddy's, `ns11.domaincontrol.com` and `ns12.domaincontrol.com`.
+- **Step 0c done** (12:00):
+  - The records were imported from a zone file built from the Bluehost export.
+  - GoDaddy's export matches it **16/16 records**, with values and TTLs identical and both DKIM keys byte-for-byte equal.
+  - GoDaddy's default `_dmarc` record was removed (not in the Bluehost zone), and so was `_domainconnect`.
+- **Next: step 0d, on or after 2026-11-14 at 12:00:** the NS check on `dns.google`, the site still on WordPress, email in both directions. Until then, don't change anything at Bluehost. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
 
 ---
 
