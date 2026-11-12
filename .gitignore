@@ -2,3 +2,17 @@ public/
 resources/
 .hugo_build.lock
 __pycache__/
+*.pyc
+.DS_Store
+
+# WordPress export: contains drafts, private pages, author emails and logins.
+# Keep it locally for scripts/ (wp_to_hugo.py, wp_inventory.py); the build does not need it.
+source/*.xml
+
+# WordPress plugin data from the uploads folder (logs with visitor IPs, caches, dictionaries).
+source/wp-content/uploads/aioseo/
+source/wp-content/uploads/aioseo-logs/
+source/wp-content/uploads/wpforms/
+
+# Images attached only to the unpublished draft "Homo Rodans" (2025-07-24).
+source/wp-content/uploads/2026/01/image*
