@@ -171,7 +171,7 @@ These are the values to restore if you roll back:
   - GoDaddy's export matches it **16/16 records**, with values and TTLs identical and both DKIM keys byte-for-byte equal.
   - GoDaddy's default `_dmarc` record was removed (not in the Bluehost zone), and so was `_domainconnect`.
 - **Early email test (2026-11-12, after 0c):** a message to the domain was received, and the reply went out. Both directions work.
-- **Step 3 in progress:** the GitHub Pages challenge `TXT` record is at GoDaddy and visible in public DNS; GitHub's **Verify** is still to retry.
+- **Step 3 done:** monicaespinel.com is a verified domain for GitHub Pages in the monica-espinel organization (2026-11-12).
 - **Next: step 0d, on or after 2026-11-14 at 12:00:** the NS check on `dns.google`, the site still on WordPress, email in both directions. Until then, don't change anything at Bluehost. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
 
 ---
@@ -226,9 +226,7 @@ Verifying the domain stops anyone else's GitHub Pages site from claiming `monica
 - [x] GitHub shows a `TXT` record named like `_github-pages-challenge-monica-espinel.monicaespinel.com`, with a code value. Add exactly that `TXT` record at the DNS provider.
   - Done 2026-11-12 at GoDaddy: `_github-pages-challenge-monica-espinel` `TXT` `142a1fc26294c117b9db2502c7f20c`.
   - `dns.google` already returns it, answered by GoDaddy's nameserver `173.201.73.6`.
-- [ ] Back in GitHub, click **Verify**. It can take a few minutes for the record to be visible.
-  - The first try on 2026-11-12 failed, probably because GitHub had cached "not found" (up to 1 hour) or was still using Bluehost's nameservers.
-  - Retry after an hour, or at step 0d at the latest.
+- [x] Back in GitHub, click **Verify**. Done 2026-11-12: "Successfully verified monicaespinel.com". The first try had failed while GitHub's lookup was still cached; a later retry worked. **Keep this `TXT` record permanently**: GitHub re-checks it.
 
 This TXT record lives on its own `_github-pages-challenge-…` name, so it doesn't touch any existing record. The zone already has `_github-challenge-monica-espinel-org`: that's the *organization's* verified-domain record. Keep it, but it isn't the Pages one, so this step is still needed.
 
