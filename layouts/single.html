@@ -1,17 +1,21 @@
 {{ define "main" }}
-<article class="post">
+<article class="post" data-pagefind-body>
   <header class="entry-header">
-    {{ with .GetTerms "categories" }}<div class="entry-categories">{{ range $i, $c := . }}{{ if $i }}, {{ end }}<a href="{{ $c.RelPermalink }}">{{ $c.LinkTitle }}</a>{{ end }}</div>{{ end }}
-    <h1 class="entry-title">{{ .Title }}</h1>
-    {{ if eq .Section "posts" }}<p class="post-meta"><span class="post-author">By {{ .Params.author }}</span> <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></p>{{ end }}
+    <div class="entry-header-inner section-inner medium">
+      <div data-pagefind-ignore>{{ partial "categories.html" . }}</div>
+      <h1 class="entry-title" data-pagefind-meta="title">{{ .Title }}</h1>
+      {{ if eq .Section "posts" }}<div class="post-meta-wrapper" data-pagefind-ignore>{{ partial "post-meta.html" . }}</div>{{ end }}
+    </div>
   </header>
   {{ with .Params.image }}
-  <figure class="featured-media">
-    <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}">
-    {{ with $.Params.image_caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
-  </figure>
+  <figure class="featured-media"><div class="featured-media-inner section-inner medium">
+    {{ partial "img.html" (dict "src" . "alt" ($.Params.image_alt | default "") "eager" true "sizes" "(max-width: 1040px) 100vw, 1000px" "maxWidth" 1000) }}
+    {{ with $.Params.image_caption }}<figcaption class="wp-caption-text">{{ . | markdownify }}</figcaption>{{ end }}
+  </div></figure>
   {{ end }}
-  <div class="entry-content">{{ .Content }}</div>
-  {{ with .GetTerms "tags" }}<p class="post-tags">Tags: {{ range $i, $t := . }}{{ if $i }}, {{ end }}<a href="{{ $t.RelPermalink }}" rel="tag">{{ $t.LinkTitle }}</a>{{ end }}</p>{{ end }}
+  <div class="post-inner thin">
+    <div class="entry-content">{{ .Content }}</div>
+  </div>
+  {{ with .GetTerms "tags" }}<div class="section-inner" data-pagefind-ignore><div class="post-tags">{{ partial "icons.html" "tag" }}<span class="screen-reader-text">Tags</span><span class="meta-text">{{ range $i, $t := . }}{{ if $i }}, {{ end }}<a href="{{ $t.RelPermalink }}" rel="tag">{{ $t.LinkTitle }}</a>{{ end }}</span></div></div>{{ end }}
 </article>
 {{ end }}

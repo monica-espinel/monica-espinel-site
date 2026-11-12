@@ -1,9 +1,19 @@
 <header id="site-header">
-  <div class="site-title"><a href="{{ "/" | relURL }}" rel="home">{{ site.Title }}</a></div>
-  <div class="site-description">{{ site.Params.tagline }}</div>
-  <nav aria-label="Main">
-    <ul>
-      {{ range site.Menus.main }}<li><a href="{{ .URL }}">{{ .Name }}</a></li>{{ end }}
-    </ul>
-  </nav>
+  <div class="header-inner section-inner">
+    <div class="header-titles">
+      {{ if .IsHome }}<h1 class="site-title">{{ else }}<div class="site-title">{{ end }}<a href="{{ "/" | relURL }}" rel="home"{{ if .IsHome }} aria-current="page"{{ end }}>{{ site.Title }}</a>{{ if .IsHome }}</h1>{{ else }}</div>{{ end }}
+      <div class="site-description">{{ site.Params.tagline }}</div>
+    </div>
+    <div class="header-navigation">
+      <nav class="primary-menu-wrapper" aria-label="Main">
+        <ul class="primary-menu">
+          {{- $current := . }}
+          {{- range site.Menus.main }}
+          <li><a href="{{ .URL }}"{{ if or ($current.IsMenuCurrent "main" .) (eq $current.RelPermalink .URL) }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+          {{- end }}
+        </ul>
+      </nav>
+      <a class="search-toggle" href="{{ "/search/" | relURL }}">{{ partial "icons.html" "search" }}<span class="toggle-text">Search</span></a>
+    </div>
+  </div>
 </header>

@@ -1,0 +1,5 @@
+{{- /* Byline and date. The byline stays in the HTML but is visually hidden, as on the WordPress site (owner decision). */ -}}
+<ul class="post-meta">
+  <li class="post-author">{{ partial "icons.html" "user" }}<span class="meta-text">By {{ .Params.author }}</span></li>
+  <li class="post-date">{{ partial "icons.html" "calendar" }}<span class="meta-text"><a href="{{ .RelPermalink }}"><time datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">{{ .Date.Format "January 2, 2006" }}</time></a></span></li>
+</ul>

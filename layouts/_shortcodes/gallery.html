@@ -1,3 +1,2 @@
 {{/* WordPress gallery block: a grid of figure shortcodes. */}}
-<div class="gallery">{{ .Inner }}</div>
-{{ with .Get "caption" }}<p class="gallery-caption">{{ . | markdownify }}</p>{{ end }}
+<figure class="wp-block-gallery">{{ .Inner }}{{ with .Get "caption" }}<figcaption class="blocks-gallery-caption">{{ . | markdownify }}</figcaption>{{ end }}</figure>

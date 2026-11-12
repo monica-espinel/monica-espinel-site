@@ -1,4 +1,12 @@
 {{ define "main" }}
-  <header class="archive-header"><h1 class="archive-title">{{ .Title }}</h1>{{ with .Description }}<p>{{ . }}</p>{{ end }}</header>
-  {{ range .Pages }}{{ partial "post-summary.html" . }}{{ end }}
+  <header class="archive-header">
+    <div class="archive-header-inner section-inner medium">
+      <h1 class="archive-title"><span class="color-accent">{{ if eq .Data.Plural "categories" }}Category{{ else }}Tag{{ end }}:</span> <span>{{ .Title }}</span></h1>
+      {{ with .Description }}<div class="archive-subtitle"><p>{{ . }}</p></div>{{ end }}
+    </div>
+  </header>
+  {{ range $i, $p := .Pages }}
+    {{ if $i }}<hr class="post-separator styled-separator is-style-wide section-inner" aria-hidden="true">{{ end }}
+    {{ partial "post-summary.html" $p }}
+  {{ end }}
 {{ end }}

@@ -1,0 +1,7 @@
+{{- /* Replaces Hugo's built-in figure: same params (src, alt, link, caption), with responsive sizes for uploads. */ -}}
+<figure class="wp-block-image{{ with .Get "class" }} {{ . }}{{ end }}">
+  {{- with .Get "link" }}<a href="{{ . | relURL }}">{{ end -}}
+  {{ partial "img.html" (dict "src" (.Get "src") "alt" (.Get "alt") "sizes" "(max-width: 620px) 100vw, 580px" "maxWidth" 580) }}
+  {{- if .Get "link" }}</a>{{ end -}}
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

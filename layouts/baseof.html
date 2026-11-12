@@ -3,16 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ if .IsHome }}{{ site.Params.homeTitle }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
-  {{/* Phase 3: description, canonical, Open Graph, Twitter, robots, favicon, GA4. */}}
+  {{ partial "seo.html" . }}
+  {{- with resources.Get site.Params.siteIcon }}
+  <link rel="icon" href="{{ (.Fill "32x32 webp").RelPermalink }}" sizes="32x32">
+  <link rel="icon" href="{{ (.Fill "192x192 webp").RelPermalink }}" sizes="192x192">
+  <link rel="apple-touch-icon" href="{{ (.Fill "180x180 png").RelPermalink }}">
+  {{- end }}
+  <link rel="alternate" type="application/rss+xml" title="{{ site.Title }} &raquo; Feed" href="{{ "index.xml" | absURL }}">
+  <link rel="preload" href="{{ "fonts/inter/inter-latin-wght-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+  {{- $css := resources.Get "css/main.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ block "head" . }}{{ end }}
+  {{ template "_internal/google_analytics.html" . }}
 </head>
-<body>
+<body class="{{ if .IsHome }}home{{ else if .IsPage }}singular{{ else }}archive{{ end }}">
+  <a class="skip-link screen-reader-text" href="#site-content">Skip to the content</a>
   {{ partial "header.html" . }}
   <main id="site-content">
     {{ block "main" . }}{{ end }}
   </main>
-  <footer id="site-footer">
-    <p>&copy; {{ now.Year }} <a href="{{ "/" | relURL }}">{{ site.Title }}</a></p>
-  </footer>
+  {{ partial "footer.html" . }}
+  {{ block "scripts" . }}{{ end }}
 </body>
 </html>
