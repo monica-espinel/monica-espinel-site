@@ -219,7 +219,12 @@ Acceptance checks:
     lists it after), so there's no window where GitHub serves "There isn't a GitHub Pages site here"
   - a warning to expect certificate errors on `https://` until the certificate is issued (pick a quiet time,
     don't roll back for that alone)
-  - delete every `www` record before adding the `CNAME`
+  - delete every `www` record before adding the `CNAME`, and any apex `ALIAS`/`ANAME` record
+  - note where the nameservers and email are hosted: if at the WordPress host, move them **before** cancelling it
+  - check for HSTS on the old site: returning visitors can't bypass the certificate warning during the window
+  - troubleshooting for a slow certificate (leftover records, Cloudflare, `CAA`, re-saving the custom domain)
+  - **GoDaddy** (registrar, per the owner): where the records and nameservers are, the TTL minimum if 300 isn't
+    accepted, default records to leave, domain forwarding to switch off, and how names are written in its form
 - Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
   `https://www.monicaespinel.com` load with a valid certificate.
 

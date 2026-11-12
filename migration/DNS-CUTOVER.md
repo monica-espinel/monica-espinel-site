@@ -14,6 +14,29 @@
 
 ---
 
+## At GoDaddy (where monicaespinel.com is registered)
+
+GoDaddy's screens change from time to time, so look for these names if a label differs.
+
+- **Where the records are:** sign in → **My Products** → next to monicaespinel.com, **DNS** (or **Domain → Manage DNS**). The **DNS Records** tab lists the records, and the **Nameservers** tab shows who hosts the DNS.
+- **Who hosts the DNS:**
+  - Nameservers like `ns##.domaincontrol.com` (GoDaddy's defaults): GoDaddy hosts the DNS, and every step below happens in that **DNS Records** tab. DNS doesn't depend on the WordPress host, which makes cancelling WordPress later simpler.
+  - Nameservers pointing elsewhere, for example the WordPress host or Cloudflare: the records are managed there instead, and GoDaddy's DNS Records tab has no effect. Do the steps at that provider.
+- **TTL:** if GoDaddy doesn't accept **300**, choose its lowest option (often 600 seconds, or "custom" with the minimum it allows). Rollback then takes about 10 minutes instead of 5.
+- **Typical default records:**
+  - `@` `A` (sometimes shown as "Parked" or the WordPress host's IP)
+  - `www` `CNAME` to `@`
+  - `_domainconnect` `CNAME`: leave it
+  - `MX`/`TXT` for email, if it's through GoDaddy or Microsoft 365: leave them
+- **Forwarding:** on the domain's page, check the **Forwarding** section. If domain forwarding is turned on, remove it. It overrides the `A` records and would send visitors elsewhere.
+- **Names in GoDaddy's form:**
+  - `@` means the apex, `monicaespinel.com`;
+  - write `www`, not `www.monicaespinel.com`;
+  - for the GitHub verification record, write only the part before `.monicaespinel.com`, for example `_github-pages-challenge-monica-espinel`;
+  - `TXT` values go in without quotes.
+
+---
+
 ## Timeline at a glance
 
 | When | Step |
@@ -32,11 +55,18 @@ At the DNS provider, take a screenshot or copy every record for `monicaespinel.c
 
 - [ ] `A` record(s) for the apex (`@` or `monicaespinel.com`): the WordPress host's IP address
 - [ ] `AAAA` record(s) for the apex, if any
+- [ ] any `ALIAS`, `ANAME` or `CNAME` record on the apex (some providers and hosts point the domain this way instead of with `A` records)
 - [ ] **every** record named `www` (`CNAME`, `A`, `AAAA`, and anything else on `www`), with its value
 - [ ] all `MX` records (email)
 - [ ] all `TXT` records, especially `v=spf1 …` (email) and any `google-site-verification=…`
 - [ ] any `CAA` records
 - [ ] the current **TTL** of the apex and `www` records
+
+Also note **where things are hosted**. You need this to cancel WordPress safely later:
+
+- [ ] **The nameservers** (the `NS` records, or "nameservers" in the registrar's domain settings). Who hosts the DNS? It could be the registrar, Cloudflare, or the WordPress host.
+- [ ] **Who provides email**: what the `MX` records point to, for example Google Workspace, Microsoft 365, or the WordPress host's own mail.
+- [ ] **Whether the WordPress site forces HTTPS in browsers (HSTS).** In a browser, open `https://monicaespinel.com`, then open Developer tools → Network, reload, click the first request, and look under *Response headers* for `Strict-Transport-Security`. Note whether it's there. Step 8 explains why it matters.
 
 **If the DNS is on Cloudflare** (orange cloud icons): set the apex and `www` records to **DNS only** (grey cloud) at cutover. GitHub needs to see its own IP addresses to issue the certificate.
 
@@ -88,6 +118,7 @@ From now on, the github.io project address redirects to `monicaespinel.com`, whi
 ### 6. Point the apex to GitHub Pages
 
 - [ ] **Delete** the apex `A` record(s) that point to the WordPress host.
+- [ ] **Delete** any `ALIAS`, `ANAME` or `CNAME` record on the apex (step 1). It conflicts with the new `A` records: the provider either refuses them, or keeps sending some visitors to WordPress.
 - [ ] **Add four** `A` records for the apex (`@`), TTL 300:
 
 | Type | Name | Value |
@@ -129,7 +160,9 @@ If the provider refuses the `CNAME` with an error like "conflicts with an existi
 - [ ] Wait until the Pages settings show the certificate as issued. Until then, the **Enforce HTTPS** box is greyed out with a message about the certificate.
 - [ ] Tick **Enforce HTTPS**.
 
-**Expect a short window of certificate warnings. This is normal: don't roll back because of it.** From the moment DNS points to GitHub until the certificate for monicaespinel.com is issued (usually under an hour, at most 24 hours), `https://monicaespinel.com` shows a "Your connection is not private" warning, because GitHub briefly serves its generic certificate. Plain `http://` works during that time.
+**Expect a short window of certificate warnings. This is normal: don't roll back because of it.** From the moment DNS points to GitHub until the certificate for monicaespinel.com is issued (usually under an hour, at most 24 hours), `https://monicaespinel.com` shows a "Your connection is not private" warning, because GitHub briefly serves its generic certificate. Plain `http://` works during that time for most visitors.
+
+There's one exception. If step 1 found `Strict-Transport-Security` (HSTS) on the WordPress site, browsers that visited it before always use `https://`, and they show the certificate error **without a way to continue** until the certificate is issued. That's expected too, and it ends once the certificate is issued. It's one more reason to pick a quiet time.
 
 - Do the cutover at a quiet time, for example in the evening, US Eastern time.
 - Only roll back if the certificate still isn't issued after 24 hours, or if something else is wrong (wrong site, broken pages).
@@ -137,6 +170,23 @@ If the provider refuses the `CNAME` with an error like "conflicts with an existi
 With the apex as the custom domain and `www` pointing to GitHub, GitHub redirects `www.monicaespinel.com` to `monicaespinel.com` automatically. That matches the WordPress site, whose canonical address is the apex.
 
 **If the domain has `CAA` records** (step 1), one must allow `letsencrypt.org`, the certificate authority GitHub uses. Otherwise the certificate can't be issued.
+
+#### If the certificate isn't issued within an hour or two
+
+Don't just wait the full 24 hours. Go through the usual causes:
+
+1. **Settings → Pages** says what's wrong: read the message next to the custom domain or the HTTPS box.
+2. **The DNS check isn't passing.** An old record is still there. Check that:
+   - the apex has only GitHub's four `A` records (and its `AAAA` records, if you added them);
+   - no WordPress `A`, `AAAA`, `ALIAS` or `ANAME` record is left on the apex;
+   - `www` has only the `CNAME`.
+3. **Cloudflare** is still proxying (orange cloud). Set the apex and `www` records to "DNS only".
+4. **A `CAA` record** doesn't allow `letsencrypt.org`. Add `0 issue "letsencrypt.org"`.
+5. **After fixing DNS**, re-trigger the certificate, as GitHub's documentation describes:
+   - in **Settings → Pages**, remove the custom domain and **Save**;
+   - enter `monicaespinel.com` again and **Save**.
+
+   Issuance usually follows within minutes.
 
 ### 9. Confirm email is untouched
 
@@ -169,6 +219,10 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 - [ ] Keep WordPress running for **at least 30 days** after cutover (brief: Rollback).
   - Its admin is no longer reachable at `monicaespinel.com/wp-admin`, because that now goes to GitHub.
   - If you need it, use the host's own temporary address or control panel.
+- [ ] **Before cancelling the WordPress hosting**, check your step 1 notes on nameservers and email. Cancelling the plan can delete everything the host provides.
+  - **If the DNS is hosted by the WordPress host:** first move DNS to the registrar or another DNS provider. Copy every record, including MX, SPF, the Search Console and GitHub `TXT` records, and the GitHub `A`/`AAAA`/`www` records. Then switch the nameservers and wait a day. Otherwise monicaespinel.com, and with it the new site, stops resolving.
+  - **If email is hosted by the WordPress host:** move the mailboxes to another provider (and update `MX`, SPF and DKIM) before cancelling. Otherwise email stops.
+  - If DNS and email are elsewhere (for example the registrar plus Google Workspace), cancelling WordPress doesn't affect them.
 - [ ] **Formspree:** if reCAPTCHA is on in the form settings, turn it off to get the inline thank-you message. The honeypot covers spam. Messages arrive either way.
 
 ---
