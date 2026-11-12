@@ -100,15 +100,17 @@ jobs:
         run: npx --yes pagefind@latest --site public
 
       # pagefind@latest is unpinned (as the brief asks), so check its output is still what
-      # layouts/search.html loads, and that it indexed the posts and pages.
+      # layouts/search.html loads, and that it indexed every page the build marked for search
+      # (posts and pages carry data-pagefind-body), however many there are.
       - name: Check the search index
         run: |
           for f in pagefind-ui.js pagefind-ui.css pagefind-entry.json; do
             test -s "public/pagefind/$f" || { echo "::error::public/pagefind/$f is missing: the search page would break"; exit 1; }
           done
+          expected=$(grep -rl --include=index.html data-pagefind-body public | wc -l)
           pages=$(python3 -I -c "import json; d=json.load(open('public/pagefind/pagefind-entry.json')); print(sum(l['page_count'] for l in d['languages'].values()))")
-          echo "Pagefind indexed $pages pages"
-          test "$pages" -ge 40 || { echo "::error::Pagefind indexed only $pages pages (expected at least 40)"; exit 1; }
+          echo "Pagefind indexed $pages of $expected searchable pages"
+          test "$expected" -gt 0 && test "$pages" -eq "$expected" || { echo "::error::Pagefind indexed $pages pages, but the build has $expected searchable pages"; exit 1; }
 
       - name: Upload the site for GitHub Pages
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

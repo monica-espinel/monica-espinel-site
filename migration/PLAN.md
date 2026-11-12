@@ -171,11 +171,20 @@ Acceptance checks:
   3. **deploy**: `actions/deploy-pages`, on push to `main` (and manual runs) only.
   Pull requests run jobs 1–2 as a check, without deploying; a newer push cancels the older PR run.
 - Actions are on their Node 24 majors (checkout v7, cache v6, upload-artifact v7, download-artifact v8,
-  setup-node v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5).
+  setup-node v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5), **pinned to full commit
+  SHAs** with the version in a comment, like the checksum-verified Hugo download. Don't switch them back
+  to tags: `.github/dependabot.yml` opens a monthly PR to update the pins.
+- `actions/checkout` runs with `persist-credentials: false`: the job runs repository scripts and never
+  needs the token afterwards (the repo is public, so fork PRs can run the build).
 - On main, `actions/configure-pages` runs first and fails early if Pages isn't set to GitHub Actions.
 - After Pagefind (`@latest`, unpinned as the brief asks), the job checks that `pagefind-ui.js`/`.css` exist
-  (what `/search/` loads) and that at least 40 pages were indexed.
+  (what `/search/` loads) and that it indexed exactly as many pages as the build marked for search
+  (`data-pagefind-body`: posts and pages, 40 today). No fixed number, so removing a post doesn't break deploys.
 - The image cache key covers layouts, config, content and uploads, so new posts save a fresh cache.
+- GA4: `layouts/baseof.html` sets gtag's opt-out flag (`ga-disable-G-ZR270JS8ZG`) on any host other than
+  the `baseURL` domain and its subdomains, before Hugo's built-in GA template. So the github.io project URL
+  and local previews send no pageviews, and GA4 only shows traffic from monicaespinel.com. This is
+  intentional: don't expect GA4 hits from the project URL during the Phase 5 check.
 - `static/CNAME`: `monicaespinel.com`. (With Actions deployments GitHub uses the custom domain set in the
   Pages settings; the file documents it and is harmless.)
 - Replayed in a fresh clone: build 12 s (183 images processed from scratch), 405/406 URLs, 40 pages indexed,
