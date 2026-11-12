@@ -2,7 +2,11 @@
 
 **Who does this:** the owner, at the domain's DNS provider (the registrar, or wherever the DNS records are managed) and in GitHub. Claude does not change DNS.
 
-**What changes:** only the records that point the website to a server: the apex `A` / `AAAA` records and `www`. **Email (MX) and every other record stay as they are.**
+**What changes:**
+- **Step 0:** the DNS moves from Bluehost to GoDaddy, with every record copied unchanged.
+- **The cutover:** only the records that point the website to a server change, the apex `A` / `AAAA` records and `www`.
+
+**Email (MX) and every other record stay as they are.**
 
 **WordPress keeps running** at its host the whole time. Rolling back means putting the old records back (see the end of this guide).
 
@@ -14,56 +18,120 @@
 
 ---
 
-## Where the DNS is: Bluehost (domain registered at GoDaddy)
+## Where the DNS is: moving from Bluehost to GoDaddy
 
-The domain is **registered at GoDaddy**, but its **nameservers point to Bluehost**: `ns1.bluehost.com` and `ns2.bluehost.com` (owner, 2026-11-12). So **Bluehost hosts the DNS**: every record change in this guide happens in **Bluehost's DNS editor**. Changes in GoDaddy's DNS Records tab have no effect while the nameservers point to Bluehost.
+The domain is **registered at GoDaddy**, and its DNS is hosted by **Bluehost** today (nameservers `ns1.bluehost.com` and `ns2.bluehost.com`).
 
-Bluehost's screens change from time to time, so look for these names if a label differs.
+**Decision (owner, 2026-11-12): stop using Bluehost's DNS.** Move it to **GoDaddy**, the registrar, as **step 0**, before the website cutover:
+- Step 0 copies every record across unchanged, so the site stays on WordPress and email keeps flowing.
+- After a wait of 1–2 days, check that nothing changed.
+- Steps 1–10 (the cutover) then happen in **GoDaddy's DNS editor**.
 
-- **Where the records are:** Bluehost account → **Domains** → monicaespinel.com → **DNS** (in older accounts, **cPanel → Zone Editor**).
-- **TTL:** if Bluehost doesn't accept **300**, choose its lowest option. Rollback then takes as long as that TTL instead of 5 minutes.
-- **Records you'll see:**
-  - The apex `A` (`@`) and usually `www` point to Bluehost's server. You change these.
-  - Bluehost also creates host records such as `mail`, `ftp`, `cpanel`, `webmail`, `autodiscover`, and `_domainconnect`. Leave them as they are: they don't affect the website.
-- **Email:** look at the `MX` records.
-  - Pointing to Bluehost (for example `mail.monicaespinel.com` or a Bluehost host name): the mailboxes are at Bluehost.
-  - Pointing to Google or Microsoft: email is elsewhere.
-  - Either way, the cutover doesn't touch them (step 9).
-- [x] **Bluehost's CDN / Cloudflare integration: turned off** by the owner (2026-11-12). GitHub must see its own IP addresses to issue the certificate, so leave it off.
-- **Names in the form:**
+Doing one change at a time means any problem has only one possible cause. Once DNS is off Bluehost, cancelling Bluehost later can't take the domain down.
+
+**In GoDaddy** (screens change from time to time, so look for these names if a label differs):
+- **The domain:** sign in → **My Products** → monicaespinel.com → **DNS**.
+- **The DNS Records tab** lists the records. The **Nameservers** tab sets who hosts the DNS.
+- **Names in GoDaddy's form:**
   - `@` means the apex, `monicaespinel.com`;
   - write `www`, not `www.monicaespinel.com`;
-  - for the GitHub verification record, write only the part before `.monicaespinel.com`, for example `_github-pages-challenge-monica-espinel`;
+  - for other names, write only the part before `.monicaespinel.com`, for example `google._domainkey`;
   - `TXT` values go in without quotes.
-- **GoDaddy, the registrar:** nothing changes there for the cutover. Do check the domain's **Forwarding** setting at GoDaddy is off.
+- **TTL:** for `@` and `www`, use GoDaddy's lowest option (often 600 seconds, or "custom" with the minimum it allows). For everything else, 1 hour is fine.
+- **Forwarding:** on the domain's page, the **Forwarding** section must be off. It would override the `A` records.
 
-### The current records (from the owner's Bluehost zone export, 2026-11-12)
+---
 
-These are the values to restore if you roll back. DNS records are public, but the export file itself isn't committed.
+## Step 0: Move the DNS from Bluehost to GoDaddy (1–2 days before the cutover)
 
-| Record | Current value | At cutover |
+Nothing visible changes in this step. The records are copied with the **same values**, so the site stays on WordPress and email stays on Google Workspace.
+
+### 0a. Switch the nameservers to GoDaddy's
+
+- [ ] GoDaddy → monicaespinel.com → **DNS → Nameservers → Change nameservers** → choose **GoDaddy's default nameservers** (`ns##.domaincontrol.com`; GoDaddy fills them in). Save.
+- [ ] Go straight on to step 0b. GoDaddy usually only lets you edit the records once its own nameservers are selected, and it starts with a few default records (for example a "Parked" `@` record).
+
+Nameserver changes spread slowly, over up to 24–48 hours. During that time some visitors still get answers from Bluehost's DNS, and some from GoDaddy's. That's fine as long as both have the same records, so **don't delete anything at Bluehost**. The short gap before step 0b is done is harmless for email: mail servers retry for days.
+
+### 0b. Enter the records at GoDaddy
+
+In **DNS Records**, make the zone match this list exactly. Edit GoDaddy's default records where they exist: for example, change the "Parked" `@` `A` record to the WordPress IP, and keep `www` → `@`.
+
+| Type | Name | Value | Notes |
+|---|---|---|---|
+| A | `@` | `162.241.252.140` | WordPress at Bluehost, **until the cutover** (step 6). TTL: lowest option |
+| CNAME | `www` | `@` (i.e. `monicaespinel.com`) | changed to GitHub at the cutover (step 7). TTL: lowest option |
+| MX | `@` | `aspmx.l.google.com`, priority **1** | Google Workspace email |
+| MX | `@` | `alt1.aspmx.l.google.com`, priority **5** | |
+| MX | `@` | `alt2.aspmx.l.google.com`, priority **5** | |
+| MX | `@` | `alt3.aspmx.l.google.com`, priority **10** | |
+| MX | `@` | `alt4.aspmx.l.google.com`, priority **10** | |
+| TXT | `@` | `v=spf1 +a +mx +ip4:162.241.252.140 +include:websitewelcome.com ~all` | SPF, unchanged for now (see the SPF note below) |
+| TXT | `@` | `google-site-verification=AMn5oaCp-54x9IBt6hZju8cJ7LCJqOBsnQ6gNpy2Fk0` | Search Console |
+| TXT | `@` | `google-site-verification=wHV2CvCki23M20q4s7tT_QoJS1UpK66yUkJKxjk4ymI` | Search Console |
+| TXT | `google._domainkey` | the Google DKIM key, below | Google Workspace DKIM |
+| TXT | `default._domainkey` | the Bluehost DKIM key, below | mail sent by WordPress at Bluehost; remove when Bluehost is cancelled |
+| TXT | `_github-challenge-monica-espinel-org` | `de2ec6c8aa` | GitHub organization domain verification |
+| CNAME | `calendar` | `ghs.googlehosted.com` | Google Workspace |
+| CNAME | `drive` | `ghs.googlehosted.com` | Google Workspace |
+| CNAME | `zqlnqvtpi7av` | `gv-ujqze7omrgeoxy.dv.googlehosted.com` | Google verification |
+
+Copy the two DKIM values exactly, as one line each:
+
+`google._domainkey`:
+
+```
+v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk5kTuAHVp81lVTszqUeGM8qztGHXuAELCYseNevgr6C4e3ufMTIf8xURxOGeCMxKvtSPef1GreqW2ANDIy/oODXA9rzP7Vjvl+Rxn9kWlEl4I3mxW5tSX8BZwiY+IfJlN9GHnVj3pUJk0vjrb5Bh322tDsvtyJGl3CqyFzmtIe/cD3cnQXW3bh5SeqvZ9N2C2eyP8gpJwsGLFBqPnXYZ6dBH28fvHHyNzDq/2jZXi6FGRQ89iFgOqqH7k/X+mo1pnudPZYP5BW7bWljfIDYCMrztHUkUfD/pordHxYX+mfFrskN9ghDUQIZMfQYwM3LH8R4Nrjtr46pvMVnyyP1EpQIDAQAB
+```
+
+`default._domainkey`:
+
+```
+v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyKM7FcQibzJC2gl0g3NKGrayKF7hfESh4aSAZ19znnt/nUMRdBR7zC1MfHQmq87Vvd/fB/SPZCMT4G4JuPLjb2uTTIb13gJyk+lF+L6hJTz+Qeln2d5uOwUaBQDpxvpfHcrOp6GBfzzBYphu0YTBPzbQed5qEKMToVfU5CKTjtNI9WHO5K7kdfeBm9OxP0vBu68Ft+PjdyqCYrONs6GSqKTu1W8fFHtAlVGwdiPXBeTx2XNPp6BhgHOsduNPAhNW3+d3IFwjbGwJk6ef4C6yc9Z8RchWkzVK5IY6HHt72xcjmeVCUrbqmBMa4qwgqnw6d34fxdQyyj/WxR5JYK6ITwIDAQAB;
+```
+
+**Don't copy these Bluehost/cPanel records.** They only serve Bluehost's control panel, its own mail tools, and its certificates:
+- `autoconfig`, `autodiscover`, `cpanel`, `ftp`, `webdisk`, `webmail`, `whm`, `localhost`
+- `_acme-challenge`, `_acme-challenge.autodiscover`, `_acme-challenge.mail`
+- both `_cpanel-dcv-test-record` `TXT` records
+- the `_autodiscover._tcp` `SRV` record
+
+The WordPress site keeps working without them. Its own certificate renews over HTTP while the `@` record points to Bluehost.
+
+- [ ] Delete any other default record GoDaddy added that isn't in the table. **Keep `_domainconnect` if GoDaddy created it**: it's harmless.
+
+### 0c. Check, 1–2 days later
+
+- [ ] GoDaddy shows its own nameservers as active for monicaespinel.com.
+- [ ] `https://monicaespinel.com` still shows the WordPress site, with a valid padlock.
+- [ ] Email to and from the domain works: send one each way.
+- [ ] In Google Workspace admin (Apps → Gmail → Authenticate email), DKIM still shows as authenticating, if you use it.
+- [ ] Optional: an online "DNS lookup" tool (for example Google's `dns.google`) returns the values above for `monicaespinel.com` (`A`, `MX`, `TXT`) and `www` (`CNAME`).
+
+Then continue with steps 1–4 and the cutover, all at **GoDaddy**.
+
+**If something goes wrong in step 0:** put the nameservers back to `ns1.bluehost.com` and `ns2.bluehost.com` at GoDaddy. Bluehost's zone is still there untouched.
+
+---
+
+### The current records (Bluehost zone export, 2026-11-12, after Cloudflare was turned off)
+
+These are the values to restore if you roll back:
+
+| Record | Value | At cutover |
 |---|---|---|
-| `@` `A` | `66.235.200.147` (the WordPress site). TTL now **15 minutes** (owner, 2026-11-12; the zone export showed 3600) | **Replace** with GitHub's four `A` records (step 6) |
+| `@` `A` | **`162.241.252.140`** (WordPress at Bluehost). It was `66.235.200.147` while Bluehost's Cloudflare integration was on. | **Replace** with GitHub's four `A` records (step 6) |
 | `www` `CNAME` | `monicaespinel.com` | **Replace** with `monica-espinel.github.io` (step 7) |
 | `@` `AAAA`, `CAA`, `ALIAS`/`ANAME` | none | nothing to delete. Adding GitHub's `AAAA` records is optional. |
-| `@` `MX` (5 records) | Google Workspace: `aspmx.l.google.com` (1), `alt1`/`alt2.aspmx.l.google.com` (5), `alt3`/`alt4.aspmx.l.google.com` (10) | **keep** |
-| `google._domainkey` `TXT` | Google Workspace DKIM key | **keep** |
-| `@` `TXT` `google-site-verification=…` (2 records: `AMn5o…` and `wHV2C…`) | Search Console verification | **keep** (step 4) |
-| `@` `TXT` `v=spf1 +a +mx +ip4:162.241.252.140 +include:websitewelcome.com ~all` | SPF (email) | **keep for now** (see the note below) |
-| `_github-challenge-monica-espinel-org` `TXT` | GitHub *organization* domain verification | **keep** (not the same as the Pages record in step 3) |
-| `calendar`, `drive` `CNAME` → `ghs.googlehosted.com`; `zqlnqvtpi7av` `CNAME` → `…dv.googlehosted.com` | Google Workspace | **keep** |
-| `autoconfig`, `autodiscover`, `cpanel`, `ftp`, `webdisk`, `webmail`, `whm` `A` → `162.241.252.140`; `localhost`; `default._domainkey`; `_cpanel-dcv-test-record`; `_acme-challenge*`; `_autodiscover._tcp` `SRV` | Bluehost/cPanel services | **keep** until Bluehost is cancelled; they don't affect the website |
+| everything else in the step 0b table | as listed | **keep** |
 
-**Email is Google Workspace**, not Bluehost: the mailboxes don't depend on the Bluehost plan. Only the DNS zone does.
+**Email is Google Workspace**, not Bluehost, so the mailboxes never depended on the Bluehost plan.
 
 **Note on SPF (an email record, outside this migration's scope):**
-
 - The SPF record authorizes `+a`, the apex's `A` record IPs. After cutover, those are GitHub's IPs, so `+a` would authorize GitHub's Pages servers to send mail as monicaespinel.com. They don't send mail, so the risk is low but untidy.
 - The record also doesn't include Google (`include:_spf.google.com`), so mail sent from Google Workspace relies on DKIM to pass checks.
-- When the DNS moves off Bluehost (see *After cutover*), it's a good moment to have whoever manages the email set SPF to `v=spf1 include:_spf.google.com ~all`. That's the Google-only form, once nothing sends mail from Bluehost any more.
-- This guide doesn't change it.
-
-**Important for later:** because Bluehost hosts the DNS, and maybe the email too, **cancelling the Bluehost plan would take monicaespinel.com offline**, the new site included. See "Before cancelling WordPress (Bluehost)" under *After cutover*: move the DNS, and email if it's at Bluehost, first.
+- When Bluehost is cancelled and nothing sends mail from it any more, have whoever manages the email set SPF to `v=spf1 include:_spf.google.com ~all`, and remove `default._domainkey`.
+- This guide doesn't change either.
 
 ---
 
@@ -71,15 +139,15 @@ These are the values to restore if you roll back. DNS records are public, but th
 
 | When | Step |
 |---|---|
+| 1–2 days before | 0. Move the DNS from Bluehost to GoDaddy, with all records unchanged, then check site and email. |
 | At least 24 hours before | 1. Write down the current records. 2. Lower the TTL to 300. 3. Verify the domain in GitHub. 4. Add the Search Console DNS record. |
 | Cutover day, at a quiet time | 5. Set the custom domain in GitHub (before DNS). 6. Point the apex to GitHub. 7. Point `www` to GitHub. 8. Wait for the DNS check and certificate, turn on Enforce HTTPS. 9. Confirm email is untouched. 10. Check both addresses. |
 | Afterwards | Raise the TTL again. Phase 7 checks (Search Console, GA4, contact form). |
 
 **Progress (2026-11-12):**
-- **Step 1 is done:** the records are written down, except the HSTS check.
-- **Step 2 is partly done:** the apex TTL is 15 minutes; the `www` TTL and the 1-hour wait remain.
-- **Bluehost's Cloudflare integration is off.** Re-check the apex `A` value afterwards (step 1).
-- **Steps 3 and 4** are next.
+- **Step 1 is done:** the records are written down (new Bluehost export after turning off Cloudflare: apex `A` `162.241.252.140`). The HSTS check is still open.
+- **Bluehost's Cloudflare integration is off.**
+- **Next: step 0,** moving the DNS to GoDaddy. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
 
 ---
 
@@ -87,9 +155,9 @@ These are the values to restore if you roll back. DNS records are public, but th
 
 ### 1. Write down the current records
 
-Done: the owner exported the Bluehost zone on 2026-11-12. The values are in the table under *Where the DNS is* above, and these are the rollback values.
+Done: the owner exported the Bluehost zone twice on 2026-11-12, the second time after turning off Cloudflare. The values are in the step 0b table and in *The current records* above. These are the rollback values.
 
-- [x] `A` record for the apex: **`66.235.200.147`** (one record; the WordPress site)
+- [x] `A` record for the apex: **`162.241.252.140`** (one record; WordPress at Bluehost). It was `66.235.200.147` while Bluehost's Cloudflare integration was on.
 - [x] `AAAA` records for the apex: **none**
 - [x] `ALIAS`, `ANAME` or `CNAME` on the apex: **none**
 - [x] Every record named `www`: **one `CNAME` to `monicaespinel.com`**, nothing else
@@ -105,14 +173,12 @@ Done: the owner exported the Bluehost zone on 2026-11-12. The values are in the 
 
 Where things are hosted (needed to cancel WordPress safely later):
 
-- [x] **The nameservers:** `ns1.bluehost.com` and `ns2.bluehost.com`, so Bluehost hosts the DNS. Leave them as they are for the cutover.
+- [x] **The nameservers:** `ns1.bluehost.com` and `ns2.bluehost.com`, so Bluehost hosts the DNS today. Step 0 moves them to GoDaddy.
 - [x] **Who provides email:** **Google Workspace** (`MX` → Google), so the mailboxes don't depend on Bluehost.
 - [ ] **Whether the WordPress site forces HTTPS in browsers (HSTS).** In a browser, open `https://monicaespinel.com`, then open Developer tools → Network, reload, click the first request, and look under *Response headers* for `Strict-Transport-Security`. Note whether it's there. Step 8 explains why it matters.
 
 **Cloudflare:** Bluehost's Cloudflare integration was on, and the owner turned it off (2026-11-12).
-- [ ] **Re-check the apex `A` record** in Bluehost's DNS editor now. Turning Cloudflare off can change it: with the integration on, the apex may have pointed at the proxy rather than the WordPress server.
-  - If it's no longer `66.235.200.147`, write down the new value. That is the rollback value.
-  - Also check the site still loads on WordPress, which it should.
+- [x] **Apex `A` record after turning Cloudflare off:** `162.241.252.140`, from the second zone export. Bluehost replaced the proxy address with the server's own.
 - [ ] **Confirm Cloudflare is really off.** A copy of the homepage the owner loaded after turning it off still contained Cloudflare's challenge script (`/cdn-cgi/challenge-platform/…`). The change may take up to an hour to apply, or the browser may have shown a cached page. To check:
   1. Open `https://monicaespinel.com` in a private window, open Developer tools → Network, and reload.
   2. Click the first request, and look under *Response headers*.
@@ -121,10 +187,8 @@ Where things are hosted (needed to cancel WordPress safely later):
 
 ### 2. Lower the TTL to 300 seconds
 
-- [x] Apex `A` record: TTL is **15 minutes** in Bluehost's editor (owner, 2026-11-12).
-  - If Bluehost offers 5 minutes (300 s, the brief's value), use it.
-  - If 15 minutes is the lowest option, keep it. The only difference is that a rollback takes about 15 minutes instead of 5.
-- [ ] Set the **`www` `CNAME`** to the same TTL.
+After step 0, the TTL is set **at GoDaddy**. Bluehost's TTL (the apex was set to 15 minutes there) no longer matters once the nameservers point to GoDaddy.
+- [ ] At GoDaddy, set the TTL of the `@` `A` record and the `www` `CNAME` to the lowest option: 300 seconds (the brief's value) if offered, otherwise GoDaddy's minimum (often 600 seconds). Rollback then takes about that long.
 - [ ] Wait at least as long as the **old** TTL before starting the cutover. The old TTL was 3600 (1 hour, from the zone export), so wait at least an hour after the last TTL change; doing it the day before covers that. Until then, resolvers may still cache the old value.
 
 This keeps the switch, and any rollback, to about 5 minutes.
@@ -173,7 +237,7 @@ From now on, the github.io project address redirects to `monicaespinel.com`, whi
 
 - [ ] **Delete** the apex `A` record(s) that point to the WordPress host.
 - [ ] **Delete** any `ALIAS`, `ANAME` or `CNAME` record on the apex (step 1). It conflicts with the new `A` records: the provider either refuses them, or keeps sending some visitors to WordPress.
-- [ ] **Add four** `A` records for the apex (`@`), TTL 5 minutes, or Bluehost's lowest (15 minutes):
+- [ ] **Add four** `A` records for the apex (`@`), with the same low TTL as step 2:
 
 | Type | Name | Value |
 |---|---|---|
@@ -200,7 +264,7 @@ A `CNAME` can't share its name with any other record, so clear `www` first.
 Today `www` is a `CNAME` to `monicaespinel.com`, and nothing else is on `www`.
 
 - [ ] **Delete every existing record named `www`**: `A`, `AAAA`, `CNAME`, and anything else such as `TXT` or `MX` on `www`. They're all in your step 1 notes, for rollback.
-- [ ] **Add** one `CNAME`, TTL 5 minutes, or Bluehost's lowest (15 minutes):
+- [ ] **Add** one `CNAME`, with the same low TTL as step 2:
 
 | Type | Name | Value |
 |---|---|---|
@@ -275,37 +339,19 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 - [ ] Keep WordPress running for **at least 30 days** after cutover (brief: Rollback).
   - Its admin is no longer reachable at `monicaespinel.com/wp-admin`, because that now goes to GitHub.
   - If you need it, use the host's own temporary address or control panel.
-- [ ] **Before cancelling WordPress (Bluehost)**, move what Bluehost still provides. **This applies here**, because Bluehost hosts the DNS. Do it as its own step, at least a few days after the cutover has proved stable, not on cutover day.
-  1. **Copy every DNS record** from Bluehost's DNS editor to GoDaddy: GoDaddy → My Products → monicaespinel.com → DNS → DNS Records. GoDaddy can host the DNS for free, since it's the registrar. That includes:
-     - GitHub's four apex `A` records (and `AAAA`, if added), and the `www` `CNAME`;
-     - the `MX` records, and the SPF and DKIM `TXT` records;
-     - the Search Console `google-site-verification` `TXT` record;
-     - the `_github-pages-challenge-monica-espinel` `TXT` record.
-  2. **Email** is Google Workspace (the `MX` records point to Google), so the mailboxes stay. Copy the Google records in step 1:
-     - the five `MX` records;
-     - `google._domainkey`;
-     - the `calendar`, `drive` and `zqlnqvtpi7av` `CNAME`s;
-     - both `google-site-verification` `TXT` records;
-     - the SPF record, ideally updated as in the SPF note above.
-
-     Leave out the Bluehost/cPanel-only records:
-     - `autoconfig`, `autodiscover`, `cpanel`, `ftp`, `webdisk`, `webmail`, `whm` and `localhost`;
-     - `default._domainkey`, `_cpanel-dcv-test-record` and `_acme-challenge*`;
-     - the `_autodiscover._tcp` `SRV` record.
-  3. **Switch the nameservers** at GoDaddy, under the **Nameservers** tab, from `ns1.bluehost.com` / `ns2.bluehost.com` back to **GoDaddy's default nameservers** (`ns##.domaincontrol.com`; GoDaddy fills them in).
-  4. **Wait at least a day**, then check that the site, `www`, HTTPS and email all still work.
-  5. **Only then** cancel the Bluehost plan.
-
-  Skipping steps 1–3 means monicaespinel.com stops resolving, and the new site with it, as soon as Bluehost deletes the account.
+- [ ] **Before cancelling WordPress (Bluehost):** the DNS already moved to GoDaddy in step 0, so cancelling Bluehost can't take the domain down, and email is Google Workspace. Before cancelling:
+  1. Check that GoDaddy's nameservers are active and the zone matches step 0b, now with GitHub's `A` and `www` records.
+  2. Ideally, have whoever manages the email update SPF to `v=spf1 include:_spf.google.com ~all` and remove `default._domainkey` at GoDaddy (see the SPF note).
+  3. Then cancel the Bluehost plan.
 - [ ] **Formspree:** if reCAPTCHA is on in the form settings, turn it off to get the inline thank-you message. The honeypot covers spam. Messages arrive either way.
 
 ---
 
 ## Rollback (if something is seriously wrong)
 
-1. At the DNS provider, delete the GitHub `A` (and `AAAA`) records and put back the WordPress apex `A` / `AAAA` records written down in step 1.
-2. Delete the `www` `CNAME`, and put back every old `www` record from step 1.
-3. With the lowered TTL (15 minutes, or 5 if Bluehost allows it), most visitors see WordPress again within about 15 minutes.
+1. At GoDaddy, delete the GitHub `A` records (and `AAAA` records, if added), and put back **`@` `A` `162.241.252.140`**.
+2. Change the `www` `CNAME` back to **`@`** (`monicaespinel.com`).
+3. With the lowered TTL (5 or 10 minutes at GoDaddy), most visitors see WordPress again within about that time.
 4. Leave the GitHub custom domain setting as it is, or remove it: either way WordPress serves the site once DNS points back.
 5. Tell Claude what went wrong, so it can be fixed before the next attempt.
 

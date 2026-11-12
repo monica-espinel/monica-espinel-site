@@ -235,7 +235,12 @@ Acceptance checks:
     Google, and `+a` will cover GitHub's IPs after cutover: flagged for the owner, not changed (email records
     are out of scope). The export file itself is not committed.
   - The owner turned off Bluehost's Cloudflare integration (2026-11-12), which GitHub needs in order to issue the
-    certificate. The apex `A` value from the export may have been the proxy's, so the guide asks to re-check it.
+    certificate. A second export confirmed the apex `A` is now `162.241.252.140`, Bluehost's server
+    (`66.235.200.147` was Cloudflare's proxy). That's the rollback value.
+  - **Owner decision (2026-11-12): stop using Bluehost's DNS.** Applied defaults, open to change: move it to
+    **GoDaddy** (the registrar), as **step 0 before the cutover**, with every record copied unchanged, then a
+    1–2 day check, then the cutover at GoDaddy. The guide lists the exact records to enter at GoDaddy, and the
+    Bluehost/cPanel records to leave behind. Bluehost can then be cancelled without affecting DNS.
 - Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
   `https://www.monicaespinel.com` load with a valid certificate.
 
