@@ -14,26 +14,30 @@
 
 ---
 
-## At GoDaddy (where monicaespinel.com is registered)
+## Where the DNS is: Bluehost (domain registered at GoDaddy)
 
-GoDaddy's screens change from time to time, so look for these names if a label differs.
+The domain is **registered at GoDaddy**, but its **nameservers point to Bluehost**: `ns1.bluehost.com` and `ns2.bluehost.com` (owner, 2026-11-12). So **Bluehost hosts the DNS**: every record change in this guide happens in **Bluehost's DNS editor**. Changes in GoDaddy's DNS Records tab have no effect while the nameservers point to Bluehost.
 
-- **Where the records are:** sign in → **My Products** → next to monicaespinel.com, **DNS** (or **Domain → Manage DNS**). The **DNS Records** tab lists the records, and the **Nameservers** tab shows who hosts the DNS.
-- **Who hosts the DNS:**
-  - Nameservers like `ns##.domaincontrol.com` (GoDaddy's defaults): GoDaddy hosts the DNS, and every step below happens in that **DNS Records** tab. DNS doesn't depend on the WordPress host, which makes cancelling WordPress later simpler.
-  - Nameservers pointing elsewhere, for example the WordPress host or Cloudflare: the records are managed there instead, and GoDaddy's DNS Records tab has no effect. Do the steps at that provider.
-- **TTL:** if GoDaddy doesn't accept **300**, choose its lowest option (often 600 seconds, or "custom" with the minimum it allows). Rollback then takes about 10 minutes instead of 5.
-- **Typical default records:**
-  - `@` `A` (sometimes shown as "Parked" or the WordPress host's IP)
-  - `www` `CNAME` to `@`
-  - `_domainconnect` `CNAME`: leave it
-  - `MX`/`TXT` for email, if it's through GoDaddy or Microsoft 365: leave them
-- **Forwarding:** on the domain's page, check the **Forwarding** section. If domain forwarding is turned on, remove it. It overrides the `A` records and would send visitors elsewhere.
-- **Names in GoDaddy's form:**
+Bluehost's screens change from time to time, so look for these names if a label differs.
+
+- **Where the records are:** Bluehost account → **Domains** → monicaespinel.com → **DNS** (in older accounts, **cPanel → Zone Editor**).
+- **TTL:** if Bluehost doesn't accept **300**, choose its lowest option. Rollback then takes as long as that TTL instead of 5 minutes.
+- **Records you'll see:**
+  - The apex `A` (`@`) and usually `www` point to Bluehost's server. You change these.
+  - Bluehost also creates host records such as `mail`, `ftp`, `cpanel`, `webmail`, `autodiscover`, and `_domainconnect`. Leave them as they are: they don't affect the website.
+- **Email:** look at the `MX` records.
+  - Pointing to Bluehost (for example `mail.monicaespinel.com` or a Bluehost host name): the mailboxes are at Bluehost.
+  - Pointing to Google or Microsoft: email is elsewhere.
+  - Either way, the cutover doesn't touch them (step 9).
+- **Bluehost's CDN / Cloudflare toggle:** if the domain has Bluehost's CDN or Cloudflare integration turned on, turn it off for the cutover. GitHub must see its own IP addresses to issue the certificate.
+- **Names in the form:**
   - `@` means the apex, `monicaespinel.com`;
   - write `www`, not `www.monicaespinel.com`;
   - for the GitHub verification record, write only the part before `.monicaespinel.com`, for example `_github-pages-challenge-monica-espinel`;
   - `TXT` values go in without quotes.
+- **GoDaddy, the registrar:** nothing changes there for the cutover. Do check the domain's **Forwarding** setting at GoDaddy is off.
+
+**Important for later:** because Bluehost hosts the DNS, and maybe the email too, **cancelling the Bluehost plan would take monicaespinel.com offline**, the new site included. See "Before cancelling WordPress (Bluehost)" under *After cutover*: move the DNS, and email if it's at Bluehost, first.
 
 ---
 
@@ -64,7 +68,7 @@ At the DNS provider, take a screenshot or copy every record for `monicaespinel.c
 
 Also note **where things are hosted**. You need this to cancel WordPress safely later:
 
-- [ ] **The nameservers** (the `NS` records, or "nameservers" in the registrar's domain settings). Who hosts the DNS? It could be the registrar, Cloudflare, or the WordPress host.
+- [x] **The nameservers:** `ns1.bluehost.com` and `ns2.bluehost.com`, so Bluehost hosts the DNS. Leave them as they are for the cutover.
 - [ ] **Who provides email**: what the `MX` records point to, for example Google Workspace, Microsoft 365, or the WordPress host's own mail.
 - [ ] **Whether the WordPress site forces HTTPS in browsers (HSTS).** In a browser, open `https://monicaespinel.com`, then open Developer tools → Network, reload, click the first request, and look under *Response headers* for `Strict-Transport-Security`. Note whether it's there. Step 8 explains why it matters.
 
@@ -219,10 +223,18 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 - [ ] Keep WordPress running for **at least 30 days** after cutover (brief: Rollback).
   - Its admin is no longer reachable at `monicaespinel.com/wp-admin`, because that now goes to GitHub.
   - If you need it, use the host's own temporary address or control panel.
-- [ ] **Before cancelling the WordPress hosting**, check your step 1 notes on nameservers and email. Cancelling the plan can delete everything the host provides.
-  - **If the DNS is hosted by the WordPress host:** first move DNS to the registrar or another DNS provider. Copy every record, including MX, SPF, the Search Console and GitHub `TXT` records, and the GitHub `A`/`AAAA`/`www` records. Then switch the nameservers and wait a day. Otherwise monicaespinel.com, and with it the new site, stops resolving.
-  - **If email is hosted by the WordPress host:** move the mailboxes to another provider (and update `MX`, SPF and DKIM) before cancelling. Otherwise email stops.
-  - If DNS and email are elsewhere (for example the registrar plus Google Workspace), cancelling WordPress doesn't affect them.
+- [ ] **Before cancelling WordPress (Bluehost)**, move what Bluehost still provides. **This applies here**, because Bluehost hosts the DNS. Do it as its own step, at least a few days after the cutover has proved stable, not on cutover day.
+  1. **Copy every DNS record** from Bluehost's DNS editor to GoDaddy: GoDaddy → My Products → monicaespinel.com → DNS → DNS Records. GoDaddy can host the DNS for free, since it's the registrar. That includes:
+     - GitHub's four apex `A` records (and `AAAA`, if added), and the `www` `CNAME`;
+     - the `MX` records, and the SPF and DKIM `TXT` records;
+     - the Search Console `google-site-verification` `TXT` record;
+     - the `_github-pages-challenge-monica-espinel` `TXT` record.
+  2. **Email:** if the `MX` records point to Bluehost, the mailboxes live at Bluehost and disappear with the plan. Set up email elsewhere first (for example Google Workspace, Microsoft 365, or GoDaddy's email), move the mail, and use that provider's `MX`, SPF and DKIM records in step 1.
+  3. **Switch the nameservers** at GoDaddy, under the **Nameservers** tab, from `ns1.bluehost.com` / `ns2.bluehost.com` back to **GoDaddy's default nameservers** (`ns##.domaincontrol.com`; GoDaddy fills them in).
+  4. **Wait at least a day**, then check that the site, `www`, HTTPS and email all still work.
+  5. **Only then** cancel the Bluehost plan.
+
+  Skipping steps 1–3 means monicaespinel.com stops resolving, and the new site with it, as soon as Bluehost deletes the account.
 - [ ] **Formspree:** if reCAPTCHA is on in the form settings, turn it off to get the inline thank-you message. The honeypot covers spam. Messages arrive either way.
 
 ---

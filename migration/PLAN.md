@@ -223,8 +223,10 @@ Acceptance checks:
   - note where the nameservers and email are hosted: if at the WordPress host, move them **before** cancelling it
   - check for HSTS on the old site: returning visitors can't bypass the certificate warning during the window
   - troubleshooting for a slow certificate (leftover records, Cloudflare, `CAA`, re-saving the custom domain)
-  - **GoDaddy** (registrar, per the owner): where the records and nameservers are, the TTL minimum if 300 isn't
-    accepted, default records to leave, domain forwarding to switch off, and how names are written in its form
+  - **Registrar GoDaddy, nameservers `ns1.bluehost.com` / `ns2.bluehost.com`** (owner, 2026-11-12): Bluehost hosts the DNS, so every cutover
+    change happens in Bluehost's DNS editor. **Before cancelling Bluehost**, the DNS (and email, if its MX
+    records point to Bluehost) must move to GoDaddy or another provider, or the domain stops resolving.
+    The guide has a step-by-step for that, as a separate step after the cutover is stable.
 - Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
   `https://www.monicaespinel.com` load with a valid certificate.
 
