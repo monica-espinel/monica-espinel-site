@@ -19,6 +19,9 @@ concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+# Actions are pinned to full commit SHAs (version in the comment), like the checksum-verified
+# Hugo download below; .github/dependabot.yml proposes updates.
+
 env:
   HUGO_VERSION: 0.164.0
   # sha256 of hugo_extended_0.164.0_linux-amd64.deb, from Hugo's published checksums file.
@@ -35,10 +38,13 @@ jobs:
       # Fails at the start of the run, with a clear message, if Pages isn't set to "GitHub Actions" yet.
       - name: Check GitHub Pages is set up
         if: github.event_name != 'pull_request'
-        uses: actions/configure-pages@v6
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       - name: Check out
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The job runs repository scripts and never needs git credentials after checkout.
+          persist-credentials: false
 
       - name: Install Hugo extended ${{ env.HUGO_VERSION }}
         run: |
@@ -55,7 +61,7 @@ jobs:
       # The key covers everything that decides which images get made, so new posts or uploads save a
       # fresh cache; restore-keys start from the previous one, and --gc drops images no longer used.
       - name: Cache processed images
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: resources/_gen
           key: hugo-gen-${{ env.HUGO_VERSION }}-${{ hashFiles('layouts/**', 'hugo.toml', 'content/**', 'source/wp-content/uploads/**') }}
@@ -68,7 +74,7 @@ jobs:
         run: python3 -I scripts/check_urls.py --strict public migration/url-inventory.csv
 
       - name: Keep the built site for the next job
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: hugo-public
           path: public
@@ -80,13 +86,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Get the built site
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: hugo-public
           path: public
 
       - name: Set up Node
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
 
@@ -105,7 +111,7 @@ jobs:
           test "$pages" -ge 40 || { echo "::error::Pagefind indexed only $pages pages (expected at least 40)"; exit 1; }
 
       - name: Upload the site for GitHub Pages
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public
 
@@ -123,4 +129,4 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
