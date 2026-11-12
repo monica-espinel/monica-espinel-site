@@ -162,6 +162,24 @@ Acceptance checks:
   the category, `/author/monica-espinel/` and `/2024/03/13/` → `/`, `/black-milk/1-28/` → `/black-milk/`,
   `/crackerfarm0/` → `/crackerfarm/`, `/feed/` → `/index.xml`.
 
+## Phase 5 (deployment)
+
+- `.github/workflows/pages.yml`, three jobs in order:
+  1. **build**: Hugo extended 0.164.0 from the official `.deb` (sha256 checked), `make_redirects.py --check`,
+     `hugo --minify --gc` (production), `check_urls.py --strict`; processed images cached in `resources/_gen`.
+  2. **pagefind**: `npx --yes pagefind@latest --site public`, then `actions/upload-pages-artifact`.
+  3. **deploy**: `actions/deploy-pages`, on push to `main` (and manual runs) only.
+  Pull requests run jobs 1–2 as a check, without deploying.
+- `static/CNAME`: `monicaespinel.com`. (With Actions deployments GitHub uses the custom domain set in the
+  Pages settings; the file documents it and is harmless.)
+- Replayed in a fresh clone: build 12 s (183 images processed from scratch), 405/406 URLs, 40 pages indexed,
+  `public/` 187 MB (Pages limit 1 GB).
+- **Owner, before merging:** Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+  Don't enter the custom domain yet: that is Phase 6, after the DNS TTL is lowered.
+- Project URL: until the custom domain is set, the site is at `https://monica-espinel.github.io/monica-espinel-site/`.
+  Root-relative links (`/about/`, CSS, images) point outside that folder there, so pages look unstyled and links
+  break; the brief allows checking on a local server instead.
+
 ## Open issues
 
 - **5 Brooklyn Rail speaker photos missing** (post `/brooklyn-rail-carmen-herrera/`: Tony Bechara, Odili Donald Odita,
