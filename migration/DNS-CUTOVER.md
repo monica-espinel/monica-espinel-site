@@ -43,7 +43,7 @@ These are the values to restore if you roll back. DNS records are public, but th
 
 | Record | Current value | At cutover |
 |---|---|---|
-| `@` `A` | `66.235.200.147` (the WordPress site), TTL 3600 | **Replace** with GitHub's four `A` records (step 6) |
+| `@` `A` | `66.235.200.147` (the WordPress site). TTL now **15 minutes** (owner, 2026-11-12; the zone export showed 3600) | **Replace** with GitHub's four `A` records (step 6) |
 | `www` `CNAME` | `monicaespinel.com` | **Replace** with `monica-espinel.github.io` (step 7) |
 | `@` `AAAA`, `CAA`, `ALIAS`/`ANAME` | none | nothing to delete. Adding GitHub's `AAAA` records is optional. |
 | `@` `MX` (5 records) | Google Workspace: `aspmx.l.google.com` (1), `alt1`/`alt2.aspmx.l.google.com` (5), `alt3`/`alt4.aspmx.l.google.com` (10) | **keep** |
@@ -102,7 +102,11 @@ Also note **where things are hosted**. You need this to cancel WordPress safely 
 
 ### 2. Lower the TTL to 300 seconds
 
-- [ ] Set the TTL of the apex `A` record and the `www` `CNAME` to **300** (5 minutes). Their current TTL is 3600 (1 hour), so wait **at least an hour** after lowering it. Doing it the day before covers that.
+- [x] Apex `A` record: TTL is **15 minutes** in Bluehost's editor (owner, 2026-11-12).
+  - If Bluehost offers 5 minutes (300 s, the brief's value), use it.
+  - If 15 minutes is the lowest option, keep it. The only difference is that a rollback takes about 15 minutes instead of 5.
+- [ ] Set the **`www` `CNAME`** to the same TTL.
+- [ ] The zone export showed TTL 3600 (1 hour) before, so wait **at least an hour** after the last TTL change before starting the cutover. Doing it the day before covers that.
 - [ ] Wait at least as long as the **old** TTL (often 1 to 24 hours) before the cutover. Until then, resolvers may still cache the old value for the old TTL.
 
 This keeps the switch, and any rollback, to about 5 minutes.
@@ -283,7 +287,7 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 
 1. At the DNS provider, delete the GitHub `A` (and `AAAA`) records and put back the WordPress apex `A` / `AAAA` records written down in step 1.
 2. Delete the `www` `CNAME`, and put back every old `www` record from step 1.
-3. With TTL 300, most visitors see WordPress again within minutes.
+3. With the lowered TTL (15 minutes, or 5 if Bluehost allows it), most visitors see WordPress again within about 15 minutes.
 4. Leave the GitHub custom domain setting as it is, or remove it: either way WordPress serves the site once DNS points back.
 5. Tell Claude what went wrong, so it can be fixed before the next attempt.
 
