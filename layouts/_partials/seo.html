@@ -1,0 +1,51 @@
+{{- /* <head> metadata: title, description, canonical, robots, Open Graph, Twitter, JSON-LD. */ -}}
+{{- $title := cond .IsHome site.Params.homeTitle (printf "%s | %s" .Title site.Title) -}}
+{{- $desc := "" -}}
+{{- if .IsHome }}{{ $desc = site.Params.description }}{{ else }}{{ with .Description }}{{ $desc = . }}{{ end }}{{ end -}}
+{{- $imagePath := .Params.image | default site.Params.defaultImage -}}
+{{- /* Share image: a copy at most 1200px wide as JPEG (originals can be several MB; X/Twitter refuses over 5 MB). */ -}}
+{{- $image := $imagePath | absURL -}}
+{{- $imageW := 0 }}{{ $imageH := 0 -}}
+{{- with resources.Get (strings.TrimPrefix "/" $imagePath) -}}
+  {{- $w := cond (gt .Width 1200) 1200 .Width -}}
+  {{- $share := .Resize (printf "%dx jpg q85 #ffffff" $w) -}}
+  {{- $image = $share.Permalink }}{{ $imageW = $share.Width }}{{ $imageH = $share.Height -}}
+{{- end -}}
+{{- $is404 := eq .Kind "404" -}}
+{{- $type := cond (eq .Section "posts") "article" "website" -}}
+<title>{{ $title }}</title>
+{{ with $desc }}<meta name="description" content="{{ . }}">{{ end }}
+{{ if not $is404 }}<link rel="canonical" href="{{ .Permalink }}">{{ end }}
+<meta name="robots" content="{{ if or .Params.noindex $is404 }}noindex, follow{{ else }}{{ site.Params.robots }}{{ end }}">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:type" content="{{ $type }}">
+<meta property="og:title" content="{{ cond .IsHome site.Params.homeTitle .Title }}">
+{{ with $desc }}<meta property="og:description" content="{{ . }}">{{ end }}
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ $image }}">
+{{- with $imageW }}
+<meta property="og:image:width" content="{{ . }}">
+<meta property="og:image:height" content="{{ $imageH }}">
+{{- end }}
+{{- if eq $type "article" }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}">
+{{- range .GetTerms "categories" }}
+<meta property="article:section" content="{{ .LinkTitle }}">
+{{- end }}
+{{- end }}
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="{{ site.Params.twitterSite }}">
+<meta name="twitter:title" content="{{ cond .IsHome site.Params.homeTitle .Title }}">
+{{ with $desc }}<meta name="twitter:description" content="{{ . }}">{{ end }}
+<meta name="twitter:image" content="{{ $image }}">
+{{- $person := dict "@type" "Person" "@id" (printf "%s#person" site.Home.Permalink) "name" "Monica Espinel" "url" site.Home.Permalink -}}
+{{- $website := dict "@type" "WebSite" "@id" (printf "%s#website" site.Home.Permalink) "url" site.Home.Permalink "name" site.Title "description" site.Params.tagline "inLanguage" "en-US" "publisher" (dict "@id" (printf "%s#person" site.Home.Permalink)) -}}
+{{- $graph := slice $website $person -}}
+{{- if eq $type "article" }}
+  {{- $post := dict "@type" "BlogPosting" "headline" .Title "url" .Permalink "datePublished" (.Date.Format "2006-01-02T15:04:05-07:00") "dateModified" (.Lastmod.Format "2006-01-02T15:04:05-07:00") "author" (dict "@type" "Person" "name" .Params.author) "image" $image "isPartOf" (dict "@id" (printf "%s#website" site.Home.Permalink)) -}}
+  {{- with $desc }}{{ $post = merge $post (dict "description" .) }}{{ end -}}
+  {{- $graph = $graph | append $post -}}
+{{- end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>

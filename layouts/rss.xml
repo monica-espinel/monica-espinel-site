@@ -1,0 +1,34 @@
+{{- /*
+  RSS feed, based on Hugo's built-in template. Like the WordPress feed, it carries posts only:
+  the home feed takes the posts section (not About, Contact or Search); term feeds list their posts.
+*/ -}}
+{{- $pages := cond .IsHome (where site.RegularPages "Section" "posts") .Pages -}}
+{{- $limit := site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 }}{{ $pages = $pages | first $limit }}{{ end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} &#8211; {{ site.Title }}{{ end }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ if .IsHome }}{{ site.Params.tagline }}{{ else }}{{ .Title }}{{ end }}</description>
+    <language>en-US</language>
+    {{- with $pages }}{{ with (index . 0).Lastmod }}
+    <lastBuildDate>{{ .Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}{{ end }}
+    {{- with .OutputFormats.Get "RSS" }}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+    {{- end }}
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ .Params.author }}</dc:creator>
+      {{- range .GetTerms "categories" }}
+      <category>{{ .LinkTitle }}</category>
+      {{- end }}
+      <guid isPermaLink="true">{{ .Permalink }}</guid>
+      <description>{{ .Summary | plainify | transform.XMLEscape | safeHTML }}</description>
+    </item>
+    {{- end }}
+  </channel>
+</rss>

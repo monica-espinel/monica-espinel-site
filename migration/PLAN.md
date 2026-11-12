@@ -96,6 +96,44 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 - Homepage robots: `max-image-preview:large` (author archives: `noindex`). The new site keeps the same robots values.
 - WordPress 7.1.3, AIOSEO 5.0.4, Site Kit still loading GA4 `G-ZR270JS8ZG` (plus the dead UA ID).
 
+## Phase 3 results (templates and SEO)
+
+- Look: Twenty Twenty recreated in `assets/css/main.css` (colours, Inter for headings/UI, serif body text,
+  white header/footer bands, centred entry headers, "Category:" archive titles, post separators).
+  Inter is self-hosted from `@fontsource-variable/inter` (OFL, `static/fonts/inter/`), as Twenty Twenty did.
+  The mobile menu is a wrapped list instead of Twenty Twenty's slide-out modal.
+- `<head>` (`layouts/_partials/seo.html`): title, description (left out when empty), canonical, robots
+  (`max-image-preview:large`, `noindex` on search and redirect pages), Open Graph, Twitter `summary`,
+  JSON-LD (WebSite, Person, BlogPosting), favicons generated from the WordPress site icon.
+- GA4 exactly as the brief says: `googleAnalytics = "G-ZR270JS8ZG"` + `{{ template "_internal/google_analytics.html" . }}`.
+  Hugo only outputs it in production builds, so `hugo server` previews send no pageviews.
+- `robots.txt` points to `sitemap.xml` (79 URLs: every kept page, search excluded). RSS at `/index.xml`.
+- Feeds: `/feed/` and the category/tag/author/per-post feed URLs are static redirect pages from
+  `scripts/make_redirects.py` (run with `--types feed`). Hugo aliases can't point at `index.xml`.
+  Note: feed readers usually don't follow HTML redirects, so old subscribers to `/feed/` need to re-subscribe
+  to `/index.xml`. Pages and search engines are unaffected.
+- Images: featured images, figures and galleries get WebP `srcset` sizes at build time (uploads mounted as
+  assets); links and `og:image` keep pointing to the original files.
+- Contact: Formspree form (honeypot `_gotcha`, inline success/error message, works without JavaScript).
+- Search: `/search/` with Pagefind UI; only posts and pages are indexed (`data-pagefind-body`), without
+  bylines, categories and tags.
+- `404.html` (`noindex`, no canonical) and an alias template with canonical, meta refresh, visible link and
+  `noindex`. `make_redirects.py` builds its pages from the same `layouts/alias.html`, and refuses any path
+  Hugo renders itself.
+- RSS (`layouts/rss.xml`): posts only, like the WordPress feed (no About, Contact or Search items).
+- Share images (`og:image`, `twitter:image`): a JPEG copy at most 1200px wide, with width and height
+  (originals go up to 7.5 MB; X/Twitter refuses images over 5 MB). Favicons are PNG.
+- Contact form: if Formspree refuses the background (AJAX) request, for example because reCAPTCHA is on in
+  the form settings, the form is sent the normal way, so messages still arrive. **Owner:** for the inline
+  thank-you message, turn reCAPTCHA off in the Formspree form settings (the honeypot covers spam).
+- Search Console verification: DNS TXT record, in the Phase 6 instructions (no meta tag on the new site).
+
+Acceptance checks:
+- Lighthouse SEO 100 on `/` and on `/parcharte/`. Posts without a description score 92 (owner decision).
+  Performance 97–100, accessibility 100.
+- linkinator: 270 internal links, 0 broken.
+- `check_urls.py`: 170 URLs match, 0 mismatches, 235 pending Phase 4 (redirect pages).
+
 ## Open issues
 
 - **5 Brooklyn Rail speaker photos missing** (post `/brooklyn-rail-carmen-herrera/`: Tony Bechara, Odili Donald Odita,

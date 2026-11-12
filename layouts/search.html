@@ -1,0 +1,24 @@
+{{ define "head" }}<link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">{{ end }}
+{{ define "main" }}
+<article class="post">
+  <header class="entry-header"><div class="entry-header-inner section-inner medium"><h1 class="entry-title">{{ .Title }}</h1></div></header>
+  <div class="post-inner thin">
+    <div class="entry-content">
+      <div id="search"></div>
+      <noscript><p>Search needs JavaScript. You can browse by <a href="{{ "/category/exhibitions/" | relURL }}">Exhibitions</a>, <a href="{{ "/category/publications/" | relURL }}">Publications</a>, <a href="{{ "/category/reviews/" | relURL }}">Reviews</a> or <a href="{{ "/category/talks/" | relURL }}">Talks</a>.</p></noscript>
+    </div>
+  </div>
+</article>
+{{ end }}
+{{ define "scripts" }}
+<script src="{{ "pagefind/pagefind-ui.js" | relURL }}"></script>
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+    if (typeof PagefindUI === "undefined") {
+      document.getElementById("search").textContent = "Search is not available in this preview (the index is built during deployment).";
+      return;
+    }
+    new PagefindUI({ element: "#search", showSubResults: true, showImages: false, autofocus: true });
+  });
+</script>
+{{ end }}

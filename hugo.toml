@@ -5,11 +5,23 @@ title = "MONICA ESPINEL"
 timeZone = "America/New_York"
 # WordPress had no /category/ or /tag/ index pages; don't create them.
 disableKinds = ["taxonomy"]
+# robots.txt from layouts/robots.txt (points to the sitemap).
+enableRobotsTXT = true
+# GA4, through Hugo's embedded template (only output in production builds).
+googleAnalytics = "G-ZR270JS8ZG"
 
 [params]
   tagline = "Curator & Writer"
   homeTitle = "Monica Espinel - Curator and Writer"
   description = "Monica Espinel is a curator and writer specialized in Contemporary Art from Latin America. She is currently a Ph.D. candidate at The Graduate Center, City University of New York."
+  # Sharing defaults, as on the WordPress site (All in One SEO settings).
+  twitterSite = "@monica_espinel"
+  defaultImage = "/wp-content/uploads/2020/03/image.jpg"
+  # Site icon (favicon), the same image WordPress used.
+  siteIcon = "wp-content/uploads/2020/03/image.jpg"
+  # Robots directive WordPress sent on indexable pages.
+  robots = "max-image-preview:large"
+  formspree = "https://formspree.io/f/xdegodvq"
 
 [taxonomies]
   category = "categories"
@@ -57,3 +69,15 @@ disableKinds = ["taxonomy"]
   source = "source/wp-content/uploads"
   target = "static/wp-content/uploads"
   files = ["! aioseo/**", "! aioseo-logs/**", "! wpforms/**"]
+# The same uploads, as assets, so templates can make smaller sizes (srcset) at build time.
+# Defining an assets mount replaces Hugo's default one, so assets/ is mounted again.
+[[module.mounts]]
+  source = "assets"
+  target = "assets"
+[[module.mounts]]
+  source = "source/wp-content/uploads"
+  target = "assets/wp-content/uploads"
+  files = ["**.jpg", "**.jpeg", "**.png", "**.gif", "! aioseo/**", "! aioseo-logs/**", "! wpforms/**"]
+
+[imaging]
+  quality = 82

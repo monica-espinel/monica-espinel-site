@@ -1,0 +1,11 @@
+{{- /* Replaces Hugo's built-in figure: same params (src, alt, link, caption), with responsive sizes for uploads.
+       Inside a gallery the images are grid thumbnails, so they ask for smaller files. */ -}}
+{{- $inGallery := and .Parent (eq .Parent.Name "gallery") -}}
+{{- $sizes := cond $inGallery "(max-width: 700px) 50vw, 200px" "(max-width: 620px) 100vw, 580px" -}}
+{{- $max := cond $inGallery 400 580 -}}
+<figure class="wp-block-image{{ with .Get "class" }} {{ . }}{{ end }}">
+  {{- with .Get "link" }}<a href="{{ . | relURL }}">{{ end -}}
+  {{ partial "img.html" (dict "src" (.Get "src") "alt" (.Get "alt") "sizes" $sizes "maxWidth" $max) }}
+  {{- if .Get "link" }}</a>{{ end -}}
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

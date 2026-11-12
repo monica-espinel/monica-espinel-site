@@ -1,0 +1,1 @@
+{{ with .GetTerms "categories" }}<div class="entry-categories"><span class="screen-reader-text">Categories</span><div class="entry-categories-inner">{{ range . }}<a href="{{ .RelPermalink }}" rel="category tag">{{ .LinkTitle }}</a>{{ end }}</div></div>{{ end }}

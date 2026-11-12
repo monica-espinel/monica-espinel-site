@@ -1,1 +1,52 @@
-{{/* TODO Phase 3: Formspree form (https://formspree.io/f/xdegodvq) with honeypot and success message. */}}
+{{- /*
+  Contact form on Formspree (no email address is published: owner decision).
+  - Without JavaScript the form posts normally and Formspree shows its own thank-you page.
+  - With JavaScript it posts in the background and shows the success message here.
+    If Formspree refuses the background request (for example when reCAPTCHA is on in the form's
+    settings: Formspree doesn't accept AJAX with reCAPTCHA), the form is sent the normal way instead,
+    so the message still arrives. A network error shows an error message instead (no double send).
+  - "_gotcha" is the honeypot: hidden from people, filled in by bots, which Formspree then ignores.
+*/ -}}
+<form class="contact-form" data-pagefind-ignore action="{{ site.Params.formspree }}" method="POST" accept-charset="UTF-8">
+  <p><label for="cf-name">Name <span class="required" aria-hidden="true">*</span></label>
+  <input id="cf-name" type="text" name="name" autocomplete="name" required></p>
+  <p><label for="cf-email">Email <span class="required" aria-hidden="true">*</span></label>
+  <input id="cf-email" type="email" name="email" autocomplete="email" required></p>
+  <p><label for="cf-message">Message <span class="required" aria-hidden="true">*</span></label>
+  <textarea id="cf-message" name="message" rows="8" required></textarea></p>
+  <p class="cf-honeypot" aria-hidden="true"><label for="cf-gotcha">Leave this field empty</label>
+  <input id="cf-gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off"></p>
+  <input type="hidden" name="_subject" value="Message from monicaespinel.com">
+  <p><button type="submit">Send</button></p>
+  <p class="cf-status" role="status" aria-live="polite"></p>
+</form>
+<script>
+(function () {
+  var form = document.querySelector(".contact-form");
+  if (!form || !window.fetch) return;
+  var status = form.querySelector(".cf-status");
+  var button = form.querySelector("button[type=submit]");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    button.disabled = true;
+    status.className = "cf-status";
+    status.textContent = "Sending…";
+    fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
+      .then(function (r) {
+        if (!r.ok) {
+          // Formspree refused the background request: send the normal way (its own page, captcha if any).
+          status.textContent = "Sending…";
+          HTMLFormElement.prototype.submit.call(form);
+          return;
+        }
+        form.reset();
+        status.className = "cf-status cf-success";
+        status.textContent = "Thank you. Your message has been sent.";
+      }, function () {
+        status.className = "cf-status cf-error";
+        status.textContent = "Sorry, your message could not be sent. Please try again later.";
+      })
+      .then(function () { button.disabled = false; });
+  });
+})();
+</script>

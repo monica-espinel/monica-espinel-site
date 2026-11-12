@@ -1,4 +1,7 @@
 {{ define "main" }}
   {{/* All posts on one page: WordPress /page/N/ URLs redirect to / (Phase 4). */}}
-  {{ range where site.RegularPages "Section" "posts" }}{{ partial "post-summary.html" . }}{{ end }}
+  {{ range $i, $p := where site.RegularPages "Section" "posts" }}
+    {{ if $i }}<hr class="post-separator styled-separator is-style-wide section-inner" aria-hidden="true">{{ end }}
+    {{ partial "post-summary.html" $p }}
+  {{ end }}
 {{ end }}
