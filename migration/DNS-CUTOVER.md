@@ -75,30 +75,40 @@ These are the values to restore if you roll back. DNS records are public, but th
 | Cutover day, at a quiet time | 5. Set the custom domain in GitHub (before DNS). 6. Point the apex to GitHub. 7. Point `www` to GitHub. 8. Wait for the DNS check and certificate, turn on Enforce HTTPS. 9. Confirm email is untouched. 10. Check both addresses. |
 | Afterwards | Raise the TTL again. Phase 7 checks (Search Console, GA4, contact form). |
 
+**Progress (2026-11-12):**
+- **Step 1 is done:** the records are written down, except the HSTS check.
+- **Step 2 is partly done:** the apex TTL is 15 minutes; the `www` TTL and the 1-hour wait remain.
+- **Steps 3 and 4** are next.
+
 ---
 
 ## At least 24 hours before cutover
 
 ### 1. Write down the current records
 
-At the DNS provider, take a screenshot or copy every record for `monicaespinel.com`. You need these values to roll back. In particular, note:
+Done: the owner exported the Bluehost zone on 2026-11-12. The values are in the table under *Where the DNS is* above, and these are the rollback values.
 
-- [ ] `A` record(s) for the apex (`@` or `monicaespinel.com`): the WordPress host's IP address
-- [ ] `AAAA` record(s) for the apex, if any
-- [ ] any `ALIAS`, `ANAME` or `CNAME` record on the apex (some providers and hosts point the domain this way instead of with `A` records)
-- [ ] **every** record named `www` (`CNAME`, `A`, `AAAA`, and anything else on `www`), with its value
-- [ ] all `MX` records (email)
-- [ ] all `TXT` records, especially `v=spf1 …` (email) and any `google-site-verification=…`
-- [ ] any `CAA` records
-- [ ] the current **TTL** of the apex and `www` records
+- [x] `A` record for the apex: **`66.235.200.147`** (one record; the WordPress site)
+- [x] `AAAA` records for the apex: **none**
+- [x] `ALIAS`, `ANAME` or `CNAME` on the apex: **none**
+- [x] Every record named `www`: **one `CNAME` to `monicaespinel.com`**, nothing else
+- [x] `MX` records: **Google Workspace**, five records (`aspmx.l.google.com` priority 1, `alt1`/`alt2` priority 5, `alt3`/`alt4` priority 10)
+- [x] `TXT` records:
+  - SPF `v=spf1 +a +mx +ip4:162.241.252.140 +include:websitewelcome.com ~all`
+  - two `google-site-verification` records (`AMn5o…`, `wHV2C…`)
+  - `_github-challenge-monica-espinel-org`
+  - DKIM `google._domainkey` and `default._domainkey`
+  - cPanel/ACME records
+- [x] `CAA` records: **none**, so certificate issuance isn't restricted
+- [x] TTL: **3600** in the export; the apex `A` is now **15 minutes** (step 2)
 
-Also note **where things are hosted**. You need this to cancel WordPress safely later:
+Where things are hosted (needed to cancel WordPress safely later):
 
 - [x] **The nameservers:** `ns1.bluehost.com` and `ns2.bluehost.com`, so Bluehost hosts the DNS. Leave them as they are for the cutover.
-- [ ] **Who provides email**: what the `MX` records point to, for example Google Workspace, Microsoft 365, or the WordPress host's own mail.
+- [x] **Who provides email:** **Google Workspace** (`MX` → Google), so the mailboxes don't depend on Bluehost.
 - [ ] **Whether the WordPress site forces HTTPS in browsers (HSTS).** In a browser, open `https://monicaespinel.com`, then open Developer tools → Network, reload, click the first request, and look under *Response headers* for `Strict-Transport-Security`. Note whether it's there. Step 8 explains why it matters.
 
-**If the DNS is on Cloudflare** (orange cloud icons): set the apex and `www` records to **DNS only** (grey cloud) at cutover. GitHub needs to see its own IP addresses to issue the certificate.
+**Cloudflare:** not used, since the DNS is at Bluehost. Only check that Bluehost's own CDN/Cloudflare toggle is off for the domain (see *Where the DNS is*).
 
 ### 2. Lower the TTL to 300 seconds
 
@@ -106,8 +116,7 @@ Also note **where things are hosted**. You need this to cancel WordPress safely 
   - If Bluehost offers 5 minutes (300 s, the brief's value), use it.
   - If 15 minutes is the lowest option, keep it. The only difference is that a rollback takes about 15 minutes instead of 5.
 - [ ] Set the **`www` `CNAME`** to the same TTL.
-- [ ] The zone export showed TTL 3600 (1 hour) before, so wait **at least an hour** after the last TTL change before starting the cutover. Doing it the day before covers that.
-- [ ] Wait at least as long as the **old** TTL (often 1 to 24 hours) before the cutover. Until then, resolvers may still cache the old value for the old TTL.
+- [ ] Wait at least as long as the **old** TTL before starting the cutover. The old TTL was 3600 (1 hour, from the zone export), so wait at least an hour after the last TTL change; doing it the day before covers that. Until then, resolvers may still cache the old value.
 
 This keeps the switch, and any rollback, to about 5 minutes.
 
