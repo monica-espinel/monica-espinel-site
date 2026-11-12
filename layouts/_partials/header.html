@@ -1,0 +1,9 @@
+<header id="site-header">
+  <div class="site-title"><a href="{{ "/" | relURL }}" rel="home">{{ site.Title }}</a></div>
+  <div class="site-description">{{ site.Params.tagline }}</div>
+  <nav aria-label="Main">
+    <ul>
+      {{ range site.Menus.main }}<li><a href="{{ .URL }}">{{ .Name }}</a></li>{{ end }}
+    </ul>
+  </nav>
+</header>
