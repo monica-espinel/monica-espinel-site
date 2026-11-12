@@ -173,6 +173,7 @@ These are the values to restore if you roll back:
 - **Early email test (2026-11-12, after 0c):** a message to the domain was received, and the reply went out. Both directions work.
 - **Step 4 done:** Search Console is verified through DNS ("Domain name provider"), so nothing needed adding.
 - **Step 3 done:** monicaespinel.com is a verified domain for GitHub Pages in the monica-espinel organization (2026-11-12).
+- **Early NS check (2026-11-12):** `dns.google` already returns `ns11/ns12.domaincontrol.com`, answered by GoDaddy's nameservers. This is Google's resolver only; others can cache Bluehost's nameservers until the 48 hours are up.
 - **Next: step 0d, on or after 2026-11-14 at 12:00:** the NS check on `dns.google`, the site still on WordPress, email in both directions. Until then, don't change anything at Bluehost. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
 
 ---
