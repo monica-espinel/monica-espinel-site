@@ -171,6 +171,7 @@ These are the values to restore if you roll back:
   - GoDaddy's export matches it **16/16 records**, with values and TTLs identical and both DKIM keys byte-for-byte equal.
   - GoDaddy's default `_dmarc` record was removed (not in the Bluehost zone), and so was `_domainconnect`.
 - **Early email test (2026-11-12, after 0c):** a message to the domain was received, and the reply went out. Both directions work.
+- **Step 5 done early (2026-11-12):** the custom domain is saved in GitHub. Its DNS check fails until steps 6–7 (`NotServedByPagesError`), as expected.
 - **Step 4 done:** Search Console is verified through DNS ("Domain name provider"), so nothing needed adding.
 - **Step 3 done:** monicaespinel.com is a verified domain for GitHub Pages in the monica-espinel organization (2026-11-12).
 - **Early NS check (2026-11-12):** `dns.google` already returns `ns11/ns12.domaincontrol.com`, answered by GoDaddy's nameservers. This is Google's resolver only; others can cache Bluehost's nameservers until the 48 hours are up.
@@ -257,12 +258,18 @@ Check first that the latest deploy on GitHub passed: **Actions → Deploy site t
 
 Do this **first**, while DNS still points to WordPress. If you change DNS first, GitHub receives requests for monicaespinel.com before it knows the domain, and visitors get a GitHub "There isn't a GitHub Pages site here" error until this step is done. GitHub's own documentation recommends this order. The brief lists this step after the DNS records; doing it first changes nothing else. The domain verification in step 3 protects the domain in the meantime.
 
-- [ ] In the repository: **Settings → Pages → Custom domain**, enter `monicaespinel.com` and click **Save**.
-- [ ] GitHub now shows the DNS check as **failing**. That's expected until steps 6–7 are done. Visitors still see WordPress, because DNS hasn't changed.
+- [x] In the repository: **Settings → Pages → Custom domain**, enter `monicaespinel.com` and click **Save**. Done 2026-11-12, ahead of cutover day: it's harmless while DNS points to WordPress.
+- [x] GitHub now shows the DNS check as **failing**. Seen 2026-11-12: "Both monicaespinel.com and its alternate name are improperly configured … (NotServedByPagesError)". Expected until steps 6–7. That's expected until steps 6–7 are done. Visitors still see WordPress, because DNS hasn't changed.
 
 From now on, the github.io project address redirects to `monicaespinel.com`, which is still WordPress until step 6.
 
 `static/CNAME` in the repository already contains `monicaespinel.com`. With GitHub Actions deployments, this setting is what counts.
+
+**Optional preview on your computer only, once this step is done.** You can see the real new site at `monicaespinel.com` before anyone else does:
+1. Add `185.199.108.153 monicaespinel.com www.monicaespinel.com` to `/etc/hosts` (on a Mac: `sudo nano /etc/hosts`).
+2. Clear the DNS cache with `sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder`.
+3. In a private window, open **`http://monicaespinel.com`**. `https://` shows a certificate warning until the real cutover.
+4. **Remove the line afterwards** and clear the cache again.
 
 ### 6. Point the apex to GitHub Pages
 
