@@ -23,9 +23,10 @@ You are building and deploying a static version of monicaespinel.com, a blog and
 
 ## Source material
 
-- WordPress XML export (Tools → Export, all content): owner will place it at `source/wordpress-export.xml`.
-- Uploads folder: owner will place it at `source/wp-content/uploads/`.
+- WordPress XML export (Tools → Export, all content): the current one is `source/monicaespinel.WordPress.2026-11-11.xml`. It is **gitignored and local only**, because it contains drafts, private pages, author emails and logins. Never commit it. Only the conversion scripts need it; the build uses the committed `content/`. A fresh clone won't have it: ask the owner for it before re-running `scripts/wp_*.py`.
+- Uploads folder: `source/wp-content/uploads/`, committed (the build mounts it). These parts are gitignored and excluded from the mounts in `hugo.toml`: plugin data (`aioseo/`, `aioseo-logs/`, `wpforms/`) and `2026/01/image*`, the images of the unpublished draft "Homo Rodans". Keep any new private or draft-only file out the same way: add it to `.gitignore` and to the mount excludes.
 - If either is missing, stop and ask. Do not guess content.
+- See `README.md` for setup (Hugo 0.164.0 extended, Python packages, Node for Pagefind) and the full list of untracked files.
 
 ## Site structure to recreate
 
@@ -94,6 +95,7 @@ Create `.github/workflows/pages.yml` with three jobs in order: build with Hugo, 
 - Upload `public/` with `actions/upload-pages-artifact`.
 - Add `static/CNAME` containing `monicaespinel.com`.
 - Repository setting: Pages source is GitHub Actions.
+- Done on 2026-11-11: the repo was made public, which lifted the Free-plan limits. The Pages source is GitHub Actions (default address `https://monica-espinel.github.io/monica-espinel-site/`). `main` is protected: a PR is required with 0 approvals, force pushes and deletion are blocked, and admins can bypass.
 
 **Done when:** the Actions build passes, and the default `<username>.github.io/monica-espinel-site/` address serves the full site. (Note: because the custom domain is set at the root, check root-relative links work on the project URL. If they don't, the site can be checked on a local server instead.)
 
@@ -131,9 +133,10 @@ If the new site has a serious problem, the owner points the A records back to th
 
 ## Working rules
 
-- Work on a branch and open a pull request for review. Don't push straight to `main` until Phase 5 passes.
+- Work on a branch and open a pull request for review. `main` is protected. Admins can technically push straight to it, but don't.
 - Commit in small steps, one per phase.
 - Never commit secrets. The Formspree endpoint and GA4 ID are public and can be committed.
-- Uploads: the owner will copy `wp-content/uploads/` into `source/wp-content/uploads/`. If that folder is missing, stop and ask.
+- Uploads: `source/wp-content/uploads/` is committed. If that folder is missing, stop and ask.
+- The WordPress export is never committed (see Source material). Before committing, check that `git status` shows no `source/*.xml`.
 - If something in the export is ambiguous, leave a `TODO:` comment in the file and list it in the final report. Don't invent content.
 - Report at the end of each phase: what was done, what the acceptance check showed, and open questions.

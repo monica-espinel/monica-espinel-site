@@ -68,7 +68,7 @@ googleAnalytics = "G-ZR270JS8ZG"
 [[module.mounts]]
   source = "source/wp-content/uploads"
   target = "static/wp-content/uploads"
-  files = ["! aioseo/**", "! aioseo-logs/**", "! wpforms/**"]
+  files = ["! aioseo/**", "! aioseo-logs/**", "! wpforms/**", "! 2026/01/image*"]
 # The same uploads, as assets, so templates can make smaller sizes (srcset) at build time.
 # Defining an assets mount replaces Hugo's default one, so assets/ is mounted again.
 [[module.mounts]]
@@ -77,7 +77,7 @@ googleAnalytics = "G-ZR270JS8ZG"
 [[module.mounts]]
   source = "source/wp-content/uploads"
   target = "assets/wp-content/uploads"
-  files = ["**.jpg", "**.jpeg", "**.png", "**.gif", "! aioseo/**", "! aioseo-logs/**", "! wpforms/**"]
+  files = ["**.jpg", "**.jpeg", "**.png", "**.gif", "! aioseo/**", "! aioseo-logs/**", "! wpforms/**", "! 2026/01/image*"]
 
 [imaging]
   quality = 82
