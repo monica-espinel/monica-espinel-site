@@ -117,7 +117,15 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 - Contact: Formspree form (honeypot `_gotcha`, inline success/error message, works without JavaScript).
 - Search: `/search/` with Pagefind UI; only posts and pages are indexed (`data-pagefind-body`), without
   bylines, categories and tags.
-- `404.html` and an alias template with canonical, meta refresh, visible link and `noindex`.
+- `404.html` (`noindex`, no canonical) and an alias template with canonical, meta refresh, visible link and
+  `noindex`. `make_redirects.py` builds its pages from the same `layouts/alias.html`, and refuses any path
+  Hugo renders itself.
+- RSS (`layouts/rss.xml`): posts only, like the WordPress feed (no About, Contact or Search items).
+- Share images (`og:image`, `twitter:image`): a JPEG copy at most 1200px wide, with width and height
+  (originals go up to 7.5 MB; X/Twitter refuses images over 5 MB). Favicons are PNG.
+- Contact form: if Formspree refuses the background (AJAX) request, for example because reCAPTCHA is on in
+  the form settings, the form is sent the normal way, so messages still arrive. **Owner:** for the inline
+  thank-you message, turn reCAPTCHA off in the Formspree form settings (the honeypot covers spam).
 - Search Console verification: DNS TXT record, in the Phase 6 instructions (no meta tag on the new site).
 
 Acceptance checks:

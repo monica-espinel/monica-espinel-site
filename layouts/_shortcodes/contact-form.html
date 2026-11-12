@@ -2,9 +2,12 @@
   Contact form on Formspree (no email address is published: owner decision).
   - Without JavaScript the form posts normally and Formspree shows its own thank-you page.
   - With JavaScript it posts in the background and shows the success message here.
+    If Formspree refuses the background request (for example when reCAPTCHA is on in the form's
+    settings: Formspree doesn't accept AJAX with reCAPTCHA), the form is sent the normal way instead,
+    so the message still arrives. A network error shows an error message instead (no double send).
   - "_gotcha" is the honeypot: hidden from people, filled in by bots, which Formspree then ignores.
 */ -}}
-<form class="contact-form" action="{{ site.Params.formspree }}" method="POST" accept-charset="UTF-8">
+<form class="contact-form" data-pagefind-ignore action="{{ site.Params.formspree }}" method="POST" accept-charset="UTF-8">
   <p><label for="cf-name">Name <span class="required" aria-hidden="true">*</span></label>
   <input id="cf-name" type="text" name="name" autocomplete="name" required></p>
   <p><label for="cf-email">Email <span class="required" aria-hidden="true">*</span></label>
@@ -30,12 +33,16 @@
     status.textContent = "Sending…";
     fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
       .then(function (r) {
-        if (!r.ok) throw new Error(r.status);
+        if (!r.ok) {
+          // Formspree refused the background request: send the normal way (its own page, captcha if any).
+          status.textContent = "Sending…";
+          HTMLFormElement.prototype.submit.call(form);
+          return;
+        }
         form.reset();
         status.className = "cf-status cf-success";
         status.textContent = "Thank you. Your message has been sent.";
-      })
-      .catch(function () {
+      }, function () {
         status.className = "cf-status cf-error";
         status.textContent = "Sorry, your message could not be sent. Please try again later.";
       })

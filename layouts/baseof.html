@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {{ partial "seo.html" . }}
   {{- with resources.Get site.Params.siteIcon }}
-  <link rel="icon" href="{{ (.Fill "32x32 webp").RelPermalink }}" sizes="32x32">
-  <link rel="icon" href="{{ (.Fill "192x192 webp").RelPermalink }}" sizes="192x192">
+  <link rel="icon" href="{{ (.Fill "32x32 png").RelPermalink }}" sizes="32x32">
+  <link rel="icon" href="{{ (.Fill "192x192 png").RelPermalink }}" sizes="192x192">
   <link rel="apple-touch-icon" href="{{ (.Fill "180x180 png").RelPermalink }}">
   {{- end }}
   <link rel="alternate" type="application/rss+xml" title="{{ site.Title }} &raquo; Feed" href="{{ "index.xml" | absURL }}">
