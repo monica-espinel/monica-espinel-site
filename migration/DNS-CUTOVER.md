@@ -63,7 +63,7 @@ Nothing visible changes in this step. The records are copied with the **same val
 - [x] GoDaddy → monicaespinel.com → **DNS → Nameservers → Change nameservers** → choose **GoDaddy's default nameservers** (`ns##.domaincontrol.com`; GoDaddy fills them in). Save.
 - [x] Go straight on to step 0c. GoDaddy usually only lets you edit the records once its own nameservers are selected, and it starts with a few default records (for example a "Parked" `@` record).
 
-Nameserver changes spread slowly, over up to 24–48 hours. During that time some visitors still get answers from Bluehost's DNS, and some from GoDaddy's. That's fine as long as both have the same records, so **don't delete anything at Bluehost**.
+Nameserver changes spread slowly, over up to 24–48 hours. During that time some visitors still get answers from Bluehost's DNS, and some from GoDaddy's. That's fine as long as both have the same records, so **don't delete anything at Bluehost**. The one exception is cutting over before step 0d is done: then make the same changes in both zones (see "Cutting over before step 0d" under Cutover day).
 
 **Enter the five `MX` records first** in step 0c, straight after switching. Until they exist at GoDaddy, a sender whose DNS lookup reaches GoDaddy's starting zone finds no `MX` record. It then tries the domain's own address, GoDaddy's parking server, which can reject the message, so it may **bounce** instead of being retried. The risk is small, because few lookups reach GoDaddy in the first minutes, but entering `MX` first keeps it to a few minutes.
 
@@ -127,6 +127,8 @@ Wait **a full 48 hours** after the switch in 0b. The `.com` registry's pointer t
 
 Then continue with steps 1–4 and the cutover, all at **GoDaddy**.
 
+To cut over before these 48 hours are up, see "Cutting over before step 0d" under Cutover day.
+
 **If something goes wrong in step 0:** put the nameservers back to `ns1.bluehost.com` and `ns2.bluehost.com` at GoDaddy. Bluehost's zone is still there untouched.
 
 ---
@@ -158,7 +160,7 @@ These are the values to restore if you roll back:
 |---|---|
 | At least 48 hours before | 0. Check DNSSEC, move the DNS from Bluehost to GoDaddy with all records unchanged, wait 48 hours, then check site and email. |
 | At least 24 hours before | 1. Write down the current records. 2. Lower the TTL to 300. 3. Verify the domain in GitHub. 4. Add the Search Console DNS record. |
-| Cutover day, at a quiet time | 5. Set the custom domain in GitHub (before DNS). 6. Point the apex to GitHub. 7. Point `www` to GitHub. 8. Wait for the DNS check and certificate, turn on Enforce HTTPS. 9. Confirm email is untouched. 10. Check both addresses. |
+| Cutover day, at a quiet time (before 0d is done: in both zones, see below) | 5. Set the custom domain in GitHub (before DNS). 6. Point the apex to GitHub. 7. Point `www` to GitHub. 8. Wait for the DNS check and certificate, turn on Enforce HTTPS. 9. Confirm email is untouched. 10. Check both addresses. |
 | Afterwards | Raise the TTL again. Phase 7 checks (Search Console, GA4, contact form). |
 
 **Progress (2026-11-12):**
@@ -175,7 +177,9 @@ These are the values to restore if you roll back:
 - **Step 4 done:** Search Console is verified through DNS ("Domain name provider"), so nothing needed adding.
 - **Step 3 done:** monicaespinel.com is a verified domain for GitHub Pages in the monica-espinel organization (2026-11-12).
 - **Early NS check (2026-11-12):** `dns.google` already returns `ns11/ns12.domaincontrol.com`, answered by GoDaddy's nameservers. This is Google's resolver only; others can cache Bluehost's nameservers until the 48 hours are up.
-- **Next: step 0d, on or after 2026-11-14 at 12:00:** the NS check on `dns.google`, the site still on WordPress, email in both directions. Until then, don't change anything at Bluehost. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
+- **Next, either:**
+  - **Wait:** step 0d on or after 2026-11-14 at 12:00 (the NS check on `dns.google`, the site still on WordPress, email in both directions), then step 2 and steps 6–10 at GoDaddy only. Until then, don't change anything at Bluehost.
+  - **Or cut over now (owner's choice, 2026-11-12):** steps 2 and 6–10 in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
 
 ---
 
@@ -253,6 +257,26 @@ A Domain property covers `http`, `https`, `www` and the apex in one place.
 ## Cutover day
 
 Check first that the latest deploy on GitHub passed: **Actions → Deploy site to GitHub Pages**, the newest run on `main` is green.
+
+### Cutting over before step 0d: make each change in both zones
+
+Until 48 hours after step 0b (2026-11-14, about 12:00 US Eastern), some DNS servers still ask **Bluehost's** nameservers, whose zone points to WordPress. If only GoDaddy's zone changes:
+- **The certificate can be held up.** Let's Encrypt checks the domain from several of its own servers before GitHub gets the certificate. If one of those checks reaches Bluehost's zone, it finds WordPress and issuance fails. GitHub retries, but visitors on `https://` could see "connection not private" for many hours instead of about one.
+- **Some visitors keep seeing WordPress** until their DNS forgets Bluehost. That's only a delay, not an error.
+
+To cut over earlier anyway, make **steps 2, 6 and 7 identically in both zones**, so every DNS server gives the same answer:
+
+| Where | Record | Change |
+|---|---|---|
+| GoDaddy **and** Bluehost | `@` `A` `162.241.252.140` | Delete, and add GitHub's four `A` records (step 6) |
+| GoDaddy **and** Bluehost | `www` `CNAME` `monicaespinel.com` | Change to `monica-espinel.github.io` (step 7) |
+| GoDaddy **and** Bluehost | TTL of `@` and `www` | The lowest each allows (step 2) |
+
+- [ ] **GoDaddy:** steps 2, 6 and 7.
+- [ ] **Bluehost:** Domains → monicaespinel.com → **DNS** (Zone Editor), the same three changes. Change nothing else there: `MX`, `TXT`, DKIM and the other `A` records (`cpanel`, `webmail` and so on) stay as they are.
+- [ ] Then steps 8–10 as usual.
+
+**Rollback also needs both zones** until 2026-11-14: put back `@` `A` `162.241.252.140` and `www` `CNAME` `monicaespinel.com` in each. After that date, Bluehost's zone no longer matters.
 
 ### 5. Set the custom domain in GitHub (before changing DNS)
 
@@ -386,6 +410,8 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 ---
 
 ## Rollback (if something is seriously wrong)
+
+Before 2026-11-14 at about 12:00 (48 hours after step 0b), do steps 1–2 **at Bluehost too**, if the cutover changed both zones.
 
 1. At GoDaddy, delete the GitHub `A` records (and `AAAA` records, if added), and put back **`@` `A` `162.241.252.140`**.
 2. Change the `www` `CNAME` back to **`@`** (`monicaespinel.com`).
