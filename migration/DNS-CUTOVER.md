@@ -48,7 +48,7 @@ Nothing visible changes in this step. The records are copied with the **same val
 
 ### 0a. Before switching: check DNSSEC, and have the records ready
 
-- [ ] **Check DNSSEC first.** GoDaddy → monicaespinel.com → **DNS → DNSSEC** (sometimes under the domain's settings).
+- [x] **Check DNSSEC first.** Done 2026-11-12: a DS lookup on `https://dns.google/query?name=monicaespinel.com&rr_type=DS` returned no Answer; the `.com` registry (`192.12.94.30`) has no DS record, so **DNSSEC is off** and switching is safe. To check another time: GoDaddy → monicaespinel.com → **DNS → DNSSEC** (sometimes under the domain's settings), or the same `dns.google` lookup.
   - **No DS records listed** (DNSSEC off, the usual case with Bluehost): continue.
   - **DS records listed:** don't switch yet. They belong to Bluehost's DNS signing keys, and pointing the domain at GoDaddy with them still in place makes it unreachable for most internet users, website and email alike.
     1. **Remove the DS records** at GoDaddy.
@@ -164,7 +164,8 @@ These are the values to restore if you roll back:
 **Progress (2026-11-12):**
 - **Step 1 is done:** the records are written down (new Bluehost export after turning off Cloudflare: apex `A` `162.241.252.140`). The HSTS check is still open.
 - **Bluehost's Cloudflare integration is off.**
-- **Next: step 0,** moving the DNS to GoDaddy. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
+- **Step 0a: DNSSEC is off** (no DS record at the `.com` registry).
+- **Next: step 0b,** switching the nameservers to GoDaddy, then 0c, entering the records. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
 
 ---
 
