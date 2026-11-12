@@ -113,6 +113,11 @@ Where things are hosted (needed to cancel WordPress safely later):
 - [ ] **Re-check the apex `A` record** in Bluehost's DNS editor now. Turning Cloudflare off can change it: with the integration on, the apex may have pointed at the proxy rather than the WordPress server.
   - If it's no longer `66.235.200.147`, write down the new value. That is the rollback value.
   - Also check the site still loads on WordPress, which it should.
+- [ ] **Confirm Cloudflare is really off.** A copy of the homepage the owner loaded after turning it off still contained Cloudflare's challenge script (`/cdn-cgi/challenge-platform/…`). The change may take up to an hour to apply, or the browser may have shown a cached page. To check:
+  1. Open `https://monicaespinel.com` in a private window, open Developer tools → Network, and reload.
+  2. Click the first request, and look under *Response headers*.
+  3. `server: cloudflare` or a `cf-ray` header means Cloudflare is still active. Wait, then check Bluehost's settings again. Neither header means it's off.
+  4. In the same place, note whether `strict-transport-security` is there (the HSTS item above).
 
 ### 2. Lower the TTL to 300 seconds
 
