@@ -1,0 +1,107 @@
+# Build monicaespinel.com with Hugo, index it with Pagefind, deploy to GitHub Pages.
+# Jobs run in order: build -> pagefind -> deploy.
+# Pull requests run build and pagefind only (a check before merging); deploys happen on main.
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; a newer push to main replaces a queued one.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  HUGO_VERSION: 0.164.0
+  # sha256 of hugo_extended_0.164.0_linux-amd64.deb, from Hugo's published checksums file.
+  HUGO_SHA256: 8325f3653032d0fc536503691f4833dc4eb6c6be02ee62466758f3f37a7f2fcd
+
+jobs:
+  build:
+    name: Build with Hugo
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Install Hugo extended ${{ env.HUGO_VERSION }}
+        run: |
+          deb="hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          curl -sSfL -o "$RUNNER_TEMP/$deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${deb}"
+          echo "${HUGO_SHA256}  $RUNNER_TEMP/$deb" | sha256sum -c -
+          sudo dpkg -i "$RUNNER_TEMP/$deb"
+          hugo version
+
+      - name: Check redirect pages match the URL inventory
+        run: python3 -I scripts/make_redirects.py --check
+
+      # Resized images (srcset sizes, share images, favicons) are slow to make; reuse them between runs.
+      - name: Cache processed images
+        uses: actions/cache@v4
+        with:
+          path: resources/_gen
+          key: hugo-gen-${{ env.HUGO_VERSION }}-${{ hashFiles('layouts/**', 'hugo.toml') }}
+          restore-keys: hugo-gen-${{ env.HUGO_VERSION }}-
+
+      - name: Build
+        env:
+          HUGO_ENVIRONMENT: production
+        run: hugo --minify --gc
+
+      - name: Check every inventory URL returns a page or a redirect page
+        run: python3 -I scripts/check_urls.py --strict public migration/url-inventory.csv
+
+      - name: Keep the built site for the next job
+        uses: actions/upload-artifact@v4
+        with:
+          name: hugo-public
+          path: public
+          retention-days: 1
+          include-hidden-files: true
+
+  pagefind:
+    name: Build the Pagefind index
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Get the built site
+        uses: actions/download-artifact@v4
+        with:
+          name: hugo-public
+          path: public
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build the search index into public/pagefind/
+        run: npx --yes pagefind@latest --site public
+
+      - name: Upload the site for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: pagefind
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
