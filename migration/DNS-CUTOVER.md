@@ -171,6 +171,7 @@ These are the values to restore if you roll back:
   - GoDaddy's export matches it **16/16 records**, with values and TTLs identical and both DKIM keys byte-for-byte equal.
   - GoDaddy's default `_dmarc` record was removed (not in the Bluehost zone), and so was `_domainconnect`.
 - **Early email test (2026-11-12, after 0c):** a message to the domain was received, and the reply went out. Both directions work.
+- **Step 4 done:** Search Console is verified through DNS ("Domain name provider"), so nothing needed adding.
 - **Step 3 done:** monicaespinel.com is a verified domain for GitHub Pages in the monica-espinel organization (2026-11-12).
 - **Next: step 0d, on or after 2026-11-14 at 12:00:** the NS check on `dns.google`, the site still on WordPress, email in both directions. Until then, don't change anything at Bluehost. Then step 2 (the TTL, set at GoDaddy), step 3 and step 4.
 
@@ -234,9 +235,11 @@ This TXT record lives on its own `_github-pages-challenge-…` name, so it doesn
 
 The WordPress site proves ownership to Google with a `google-site-verification` meta tag in its pages. The new site doesn't have that tag, as the brief decided. If you skip this step, Search Console loses verification at cutover.
 
+- [x] **Done, nothing to add (owner, 2026-11-12):** the Search Console property `https://monicaespinel.com/` shows **"You are a verified owner"**. The verification method used is **Domain name provider: Successfully verified**, through the existing DNS `TXT` record, now at GoDaddy. The HTML meta tag isn't a method in use, so removing it at cutover changes nothing. Keep both `google-site-verification` records.
+
 **This may already be done:** the zone already has two `google-site-verification` `TXT` records, `AMn5o…` and `wHV2C…`, the second being the same token as the old site's meta tag. In Search Console, open **Settings → Ownership verification** for the monicaespinel.com property(ies). If **Domain name provider** is listed as a verified method, skip to step 5. Either way, never delete those two records.
 
-- [ ] Otherwise: in Google Search Console, **add a Domain property** for `monicaespinel.com`, or for the existing property open **Settings → Ownership verification → add a method → Domain name provider**. Google shows a value like `google-site-verification=…`.
+- [ ] *(Not needed: already verified.)* Otherwise: in Google Search Console, **add a Domain property** for `monicaespinel.com`, or for the existing property open **Settings → Ownership verification → add a method → Domain name provider**. Google shows a value like `google-site-verification=…`.
 - [ ] At the DNS provider, **add** a `TXT` record on the apex (`@`) with that value.
   - **Add a new record, don't edit an existing one:** the apex may already have an SPF `TXT` record (`v=spf1 …`) for email, and it must stay.
 - [ ] In Search Console, click **Verify**.
