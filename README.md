@@ -91,7 +91,7 @@ python3 -I scripts/check_urls.py --strict public/ migration/url-inventory.csv
 npx --yes pagefind@latest --site public
 ```
 
-CI also checks that Pagefind wrote `pagefind-ui.js` and `pagefind-ui.css` and indexed at least 40 pages.
+CI also checks that Pagefind wrote `pagefind-ui.js` and `pagefind-ui.css`, and that it indexed exactly as many pages as the build marked for search: posts and pages, which carry `data-pagefind-body`. That's 40 today. There's no fixed number, so removing a post doesn't break deploys.
 
 The search page (`/search/`) only works after Pagefind has run. `hugo server` doesn't build the search index.
 
@@ -100,7 +100,7 @@ The search page (`/search/`) only works after Pagefind has run. `hugo server` do
 Every push to `main` runs the workflow and deploys to GitHub Pages. Pull requests run the same build and checks without deploying.
 
 - The workflow's actions are pinned to commit SHAs. Dependabot (`.github/dependabot.yml`) opens a monthly PR when they need updating.
-- GA4 only counts visits on `monicaespinel.com` and `www.monicaespinel.com`. On any other host, such as the github.io project URL or a local preview, the page sets Google's opt-out flag, so analytics stay clean before cutover.
+- GA4 only counts visits on the `baseURL` domain (`monicaespinel.com`) and its subdomains, such as `www.monicaespinel.com`. On any other host, such as the github.io project URL or a local preview, the page sets Google's opt-out flag, so analytics stay clean before cutover. Don't point a subdomain (for example a staging one) at a test build: its visits would be counted.
 
 ## Re-running the migration
 
