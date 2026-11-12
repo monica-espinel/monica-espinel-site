@@ -134,6 +134,26 @@ Acceptance checks:
 - linkinator: 270 internal links, 0 broken.
 - `check_urls.py`: 170 URLs match, 0 mismatches, 235 pending Phase 4 (redirect pages).
 
+## Phase 4 results (redirects)
+
+- Hugo `aliases:` cover the 9 old post slugs (front matter, from `_wp_old_slug`).
+- `scripts/make_redirects.py` (no `--types`: all rows) writes the other 317 redirect pages under `static/`,
+  from `layouts/alias.html` (canonical, meta refresh, visible link, `noindex`):
+  82 feeds (Phase 3), 126 attachment pages, 93 date archives, 11 pagination URLs, 2 author archives,
+  3 empty category/tag pages.
+- Targets, "nearest matching section": home pagination, author and date archives and empty terms → `/`;
+  category pagination → the category; attachment pages → their post (or `/` when it has none).
+- Not servable on GitHub Pages: `/?attachment_id=4491` (query string; the homepage is served instead).
+  WordPress `?p=` shortlinks likewise show the homepage.
+- Redirect pages are not in the sitemap or the search index.
+
+Acceptance checks:
+- `check_urls.py --strict`: 405 of 406 inventory URLs return the page or a redirect page, 0 pending,
+  0 mismatches (the 406th is the query-string URL above).
+- In Chromium, sample redirects land on the right page: `/page/3/` → `/`, `/category/exhibitions/page/2/` →
+  the category, `/author/monica-espinel/` and `/2024/03/13/` → `/`, `/black-milk/1-28/` → `/black-milk/`,
+  `/crackerfarm0/` → `/crackerfarm/`, `/feed/` → `/index.xml`.
+
 ## Open issues
 
 - **5 Brooklyn Rail speaker photos missing** (post `/brooklyn-rail-carmen-herrera/`: Tony Bechara, Odili Donald Odita,
