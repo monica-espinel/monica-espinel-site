@@ -1,0 +1,134 @@
+# Build monicaespinel.com with Hugo, index it with Pagefind, deploy to GitHub Pages.
+# Jobs run in order: build -> pagefind -> deploy.
+# Pull requests run build and pagefind only (a check before merging); deploys happen on main.
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One run per branch at a time. A newer push to a pull request cancels its older run;
+# runs on main are never cancelled midway, so a deploy always completes.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Actions are pinned to full commit SHAs (version in the comment), like the checksum-verified
+# Hugo download below; .github/dependabot.yml proposes updates.
+
+env:
+  HUGO_VERSION: 0.164.0
+  # sha256 of hugo_extended_0.164.0_linux-amd64.deb, from Hugo's published checksums file.
+  HUGO_SHA256: 8325f3653032d0fc536503691f4833dc4eb6c6be02ee62466758f3f37a7f2fcd
+
+jobs:
+  build:
+    name: Build with Hugo
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      # Fails at the start of the run, with a clear message, if Pages isn't set to "GitHub Actions" yet.
+      - name: Check GitHub Pages is set up
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The job runs repository scripts and never needs git credentials after checkout.
+          persist-credentials: false
+
+      - name: Install Hugo extended ${{ env.HUGO_VERSION }}
+        run: |
+          deb="hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          curl -sSfL -o "$RUNNER_TEMP/$deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${deb}"
+          echo "${HUGO_SHA256}  $RUNNER_TEMP/$deb" | sha256sum -c -
+          sudo dpkg -i "$RUNNER_TEMP/$deb"
+          hugo version
+
+      - name: Check redirect pages match the URL inventory
+        run: python3 -I scripts/make_redirects.py --check
+
+      # Resized images (srcset sizes, share images, favicons) are slow to make; reuse them between runs.
+      # The key covers everything that decides which images get made, so new posts or uploads save a
+      # fresh cache; restore-keys start from the previous one, and --gc drops images no longer used.
+      - name: Cache processed images
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: resources/_gen
+          key: hugo-gen-${{ env.HUGO_VERSION }}-${{ hashFiles('layouts/**', 'hugo.toml', 'content/**', 'source/wp-content/uploads/**') }}
+          restore-keys: hugo-gen-${{ env.HUGO_VERSION }}-
+
+      - name: Build
+        run: hugo --minify --gc
+
+      - name: Check every inventory URL returns a page or a redirect page
+        run: python3 -I scripts/check_urls.py --strict public migration/url-inventory.csv
+
+      - name: Keep the built site for the next job
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: hugo-public
+          path: public
+          retention-days: 1
+
+  pagefind:
+    name: Build the Pagefind index
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Get the built site
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: hugo-public
+          path: public
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      - name: Build the search index into public/pagefind/
+        run: npx --yes pagefind@latest --site public
+
+      # pagefind@latest is unpinned (as the brief asks), so check its output is still what
+      # layouts/search.html loads, and that it indexed every page the build marked for search
+      # (posts and pages carry data-pagefind-body), however many there are.
+      - name: Check the search index
+        run: |
+          for f in pagefind-ui.js pagefind-ui.css pagefind-entry.json; do
+            test -s "public/pagefind/$f" || { echo "::error::public/pagefind/$f is missing: the search page would break"; exit 1; }
+          done
+          expected=$(grep -rl --include=index.html data-pagefind-body public | wc -l)
+          pages=$(python3 -I -c "import json; d=json.load(open('public/pagefind/pagefind-entry.json')); print(sum(l['page_count'] for l in d['languages'].values()))")
+          echo "Pagefind indexed $pages of $expected searchable pages"
+          test "$expected" -gt 0 && test "$pages" -eq "$expected" || { echo "::error::Pagefind indexed $pages pages, but the build has $expected searchable pages"; exit 1; }
+
+      - name: Upload the site for GitHub Pages
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: public
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: pagefind
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

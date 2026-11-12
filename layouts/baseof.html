@@ -14,6 +14,13 @@
   {{- $css := resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ block "head" . }}{{ end }}
+  {{- with site.Config.Services.GoogleAnalytics.ID }}
+  {{- /* GA4 counts only the production domain (from baseURL, plus its subdomains such as www):
+         on any other host (the github.io project URL before cutover, previews) gtag's documented
+         opt-out flag stops it from sending pageviews. */}}
+  {{- $domain := strings.TrimPrefix "www." (urls.Parse site.BaseURL).Hostname }}
+  <script>(function (h, d) { if (h !== d && h.slice(-d.length - 1) !== "." + d) { window["ga-disable-{{ . }}"] = true; } })(location.hostname, {{ $domain }});</script>
+  {{- end }}
   {{ template "_internal/google_analytics.html" . }}
 </head>
 <body class="{{ if .IsHome }}home{{ else if .IsPage }}singular{{ else }}archive{{ end }}">
