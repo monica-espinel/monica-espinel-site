@@ -111,20 +111,23 @@ Replace the file name with the name of your new export. Commit the regenerated `
 
 ## Repository settings
 
-The repo is **private**, and the `monica-espinel` organization is on GitHub's **Free** plan. On that plan, a private repo can't use:
+The repo is **public** (since 2026-11-11). It was private at first, but on the organization's Free plan a private repo can't use GitHub Pages or branch protection. The private source files listed above were untracked before the switch. The two earliest commits (`e9d72af`, `59dbe88`) still contain them; that was judged acceptable.
 
-- **GitHub Pages**: Settings → Pages → Source: GitHub Actions returns "Your current plan does not support GitHub Pages for this repository".
-- **Branch protection and rulesets**: these return "Upgrade to GitHub Pro or make this repository public".
+Current settings:
 
-Before Phase 5 (deployment), one of these has to change:
+- **Pages:** Settings → Pages → Build and deployment → Source is **GitHub Actions**. The default address is https://monica-espinel.github.io/monica-espinel-site/. The custom domain is added at cutover (Phase 6 in CLAUDE.md).
+- **Branch protection on `main`:**
+  - Changes need a pull request. 0 approvals are required, so a single maintainer can merge their own PR.
+  - Force pushes and branch deletion are blocked.
+  - Admins can bypass the rules in an emergency.
 
-1. **Make the repo public.** This is free and matches the plan in CLAUDE.md. The private files above are already untracked. Earlier commits (`e9d72af`, `59dbe88`) still contain them, which was judged acceptable.
-2. **Upgrade the organization** to a paid plan and keep the repo private.
+### After pulling a merge that untracks files
 
-Once either is done:
+When a merge stops tracking a file (as `15c72d9` did for the export and plugin folders), `git pull` deletes that file from your disk. Restore it from the commit before the merge, then make sure it's ignored:
 
-- Set Settings → Pages → Build and deployment → Source to **GitHub Actions**.
-- Protect `main`: require a pull request, with 0 approvals so a single maintainer can merge, and block force pushes and deletion.
+```bash
+git show 179095d:source/monicaespinel.WordPress.2026-11-11.xml > source/monicaespinel.WordPress.2026-11-11.xml
+```
 
 ## Working rules
 

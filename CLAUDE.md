@@ -95,7 +95,7 @@ Create `.github/workflows/pages.yml` with three jobs in order: build with Hugo, 
 - Upload `public/` with `actions/upload-pages-artifact`.
 - Add `static/CNAME` containing `monicaespinel.com`.
 - Repository setting: Pages source is GitHub Actions.
-- **Blocker (as of 2026-11-11):** the repo is private and the `monica-espinel` org is on the GitHub Free plan. On that plan, both the Pages source setting and branch protection are rejected (HTTP 422 and HTTP 403). Before this phase, the owner must either make the repo public or upgrade the org's plan. After that, set the Pages source and protect `main`: require a PR with 0 approvals, and block force pushes and deletion. Don't retry these settings until the owner confirms the change.
+- Done on 2026-11-11: the repo was made public, which lifted the Free-plan limits. The Pages source is GitHub Actions (default address `https://monica-espinel.github.io/monica-espinel-site/`). `main` is protected: a PR is required with 0 approvals, force pushes and deletion are blocked, and admins can bypass.
 
 **Done when:** the Actions build passes, and the default `<username>.github.io/monica-espinel-site/` address serves the full site. (Note: because the custom domain is set at the root, check root-relative links work on the project URL. If they don't, the site can be checked on a local server instead.)
 
@@ -133,7 +133,7 @@ If the new site has a serious problem, the owner points the A records back to th
 
 ## Working rules
 
-- Work on a branch and open a pull request for review. Don't push straight to `main` until Phase 5 passes.
+- Work on a branch and open a pull request for review. `main` is protected. Admins can technically push straight to it, but don't.
 - Commit in small steps, one per phase.
 - Never commit secrets. The Formspree endpoint and GA4 ID are public and can be committed.
 - Uploads: `source/wp-content/uploads/` is committed. If that folder is missing, stop and ask.
