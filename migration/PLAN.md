@@ -169,7 +169,13 @@ Acceptance checks:
      `hugo --minify --gc` (production), `check_urls.py --strict`; processed images cached in `resources/_gen`.
   2. **pagefind**: `npx --yes pagefind@latest --site public`, then `actions/upload-pages-artifact`.
   3. **deploy**: `actions/deploy-pages`, on push to `main` (and manual runs) only.
-  Pull requests run jobs 1–2 as a check, without deploying.
+  Pull requests run jobs 1–2 as a check, without deploying; a newer push cancels the older PR run.
+- Actions are on their Node 24 majors (checkout v7, cache v6, upload-artifact v7, download-artifact v8,
+  setup-node v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5).
+- On main, `actions/configure-pages` runs first and fails early if Pages isn't set to GitHub Actions.
+- After Pagefind (`@latest`, unpinned as the brief asks), the job checks that `pagefind-ui.js`/`.css` exist
+  (what `/search/` loads) and that at least 40 pages were indexed.
+- The image cache key covers layouts, config, content and uploads, so new posts save a fresh cache.
 - `static/CNAME`: `monicaespinel.com`. (With Actions deployments GitHub uses the custom domain set in the
   Pages settings; the file documents it and is harmless.)
 - Replayed in a fresh clone: build 12 s (183 images processed from scratch), 405/406 URLs, 40 pages indexed,

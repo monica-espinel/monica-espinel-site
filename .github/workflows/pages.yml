@@ -13,10 +13,11 @@ on:
 permissions:
   contents: read
 
-# One deployment at a time; a newer push to main replaces a queued one.
+# One run per branch at a time. A newer push to a pull request cancels its older run;
+# runs on main are never cancelled midway, so a deploy always completes.
 concurrency:
   group: pages-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   HUGO_VERSION: 0.164.0
@@ -27,9 +28,17 @@ jobs:
   build:
     name: Build with Hugo
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pages: read
     steps:
+      # Fails at the start of the run, with a clear message, if Pages isn't set to "GitHub Actions" yet.
+      - name: Check GitHub Pages is set up
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v6
+
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install Hugo extended ${{ env.HUGO_VERSION }}
         run: |
@@ -43,28 +52,27 @@ jobs:
         run: python3 -I scripts/make_redirects.py --check
 
       # Resized images (srcset sizes, share images, favicons) are slow to make; reuse them between runs.
+      # The key covers everything that decides which images get made, so new posts or uploads save a
+      # fresh cache; restore-keys start from the previous one, and --gc drops images no longer used.
       - name: Cache processed images
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: resources/_gen
-          key: hugo-gen-${{ env.HUGO_VERSION }}-${{ hashFiles('layouts/**', 'hugo.toml') }}
+          key: hugo-gen-${{ env.HUGO_VERSION }}-${{ hashFiles('layouts/**', 'hugo.toml', 'content/**', 'source/wp-content/uploads/**') }}
           restore-keys: hugo-gen-${{ env.HUGO_VERSION }}-
 
       - name: Build
-        env:
-          HUGO_ENVIRONMENT: production
         run: hugo --minify --gc
 
       - name: Check every inventory URL returns a page or a redirect page
         run: python3 -I scripts/check_urls.py --strict public migration/url-inventory.csv
 
       - name: Keep the built site for the next job
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: hugo-public
           path: public
           retention-days: 1
-          include-hidden-files: true
 
   pagefind:
     name: Build the Pagefind index
@@ -72,21 +80,32 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Get the built site
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: hugo-public
           path: public
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
       - name: Build the search index into public/pagefind/
         run: npx --yes pagefind@latest --site public
 
+      # pagefind@latest is unpinned (as the brief asks), so check its output is still what
+      # layouts/search.html loads, and that it indexed the posts and pages.
+      - name: Check the search index
+        run: |
+          for f in pagefind-ui.js pagefind-ui.css pagefind-entry.json; do
+            test -s "public/pagefind/$f" || { echo "::error::public/pagefind/$f is missing: the search page would break"; exit 1; }
+          done
+          pages=$(python3 -I -c "import json; d=json.load(open('public/pagefind/pagefind-entry.json')); print(sum(l['page_count'] for l in d['languages'].values()))")
+          echo "Pagefind indexed $pages pages"
+          test "$pages" -ge 40 || { echo "::error::Pagefind indexed only $pages pages (expected at least 40)"; exit 1; }
+
       - name: Upload the site for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
@@ -104,4 +123,4 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
