@@ -134,6 +134,7 @@ If the new site has a serious problem, the owner points the A records back to th
 ## Working rules
 
 - Work on a branch and open a pull request for review. `main` is protected. Admins can technically push straight to it, but don't.
+- After a PR is merged, clean up: switch to `main`, `git pull`, `git fetch --prune` (drops remote branches deleted on GitHub), then delete local branches whose work is merged. PRs are squash-merged, so `git branch --merged` misses them. Instead, delete a local branch only when `gh pr list --state all --head <branch>` shows a MERGED PR and the branch tip equals that PR's `headRefOid`. A branch with no merged PR, or with commits after the merge, may be unfinished work (possibly from another session): leave it and list it in the report.
 - Commit in small steps, one per phase.
 - Never commit secrets. The Formspree endpoint and GA4 ID are public and can be committed.
 - Uploads: `source/wp-content/uploads/` is committed. If that folder is missing, stop and ask.
