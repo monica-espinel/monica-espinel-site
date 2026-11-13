@@ -71,7 +71,7 @@ What Google's index showed before the live test:
 **Two findings:**
 - **The old WordPress host was refusing Googlebot (HTTP 403) by July 2026.** This probably explains why only 24 pages were indexed. The new site serves Googlebot normally, so the count should rise over the next weeks.
 - **Breadcrumbs rich results are gone.** The old pages had Breadcrumbs structured data from All in One SEO ("1 valid item detected", 14 valid in the property). The new pages' live tests show "URL has no enhancements". This doesn't affect indexing, only the breadcrumb trail Google can show under a result.
-  - TODO: decide whether to add `BreadcrumbList` JSON-LD to the templates. This is a small template change, in its own pull request.
+  - Fixed in pull request #9, which adds `BreadcrumbList` JSON-LD with the same trails as the old site.
 
 **What to expect:**
 - "URL is available to Google".
@@ -114,12 +114,12 @@ The tag only runs on `monicaespinel.com`, so local previews don't count. It also
   - Done by Claude on 2026-11-12, from the live site.
   - Name "Site migration test", email `test@example.com`.
   - The message text starts "Test message from the new monicaespinel.com (GitHub Pages)…".
-- [ ] Check that the page shows the thank-you message, and the message reaches the inbox set up in Formspree. Look in spam too the first time.
+- [x] Check that the page shows the thank-you message, and the message reaches the inbox set up in Formspree. Look in spam too the first time.
   - **The page part passed:** Formspree accepted the message, and the page showed "Thank you. Your message has been sent." inline, with no reCAPTCHA.
   - **Owner checked Formspree (2026-11-12):** the submission arrived in the "Contact me" form, with all fields intact (subject, name, email and message). **But Formspree filed it under Spam**, so it wasn't emailed. The likely cause is the placeholder address `test@example.com`.
-  - [ ] **Still to confirm: a real message reaches the inbox.** Send one more from `/contact/` with a real email address, and check it lands in Formspree's Inbox tab and in the mailbox.
+  - [x] **A real message reaches the inbox.** Confirmed by the owner on 2026-11-12 at 22:59: a message sent from `/contact/` with a real address landed in Formspree's **Inbox** tab, with status **delivered** to the owner's mailbox. The contact form works end to end.
   - [ ] Optional: in Formspree → Submissions → Spam, select the test and mark it as not spam. Then delete it.
-  - If real messages also go to Spam: check Formspree → Settings for spam filtering, and keep the honeypot. Messages flagged as spam can always be read in that tab.
+  - If a later message goes to Spam: check Formspree → Settings for spam filtering, and keep the honeypot. Messages flagged as spam can always be read in that tab.
 - [x] *(Not needed: no reCAPTCHA page appeared.)* If Formspree shows a reCAPTCHA page instead of the inline message, turn reCAPTCHA off in the form's settings: the honeypot covers spam.
 
 ## 7. Search Console coverage, weekly for four weeks (*Owner*)
@@ -152,10 +152,9 @@ Check **Indexing → Pages** once a week. Expect old WordPress URLs to move to "
 - 3 (URL inspection and indexing requests);
 - 4 (Pagefind);
 - 5 (GA4 Realtime);
-- 6, up to Formspree receiving the test message (filed as Spam, because of the placeholder email).
+- 6 (the contact form works end to end: a real message was delivered to the owner's mailbox; the earlier placeholder test was filed as spam).
 
 **Open, for the owner:**
-- send one real message and confirm it reaches the inbox;
 - the four weekly coverage checks, starting 2026-11-19.
 
-**Open, for a decision:** whether to add Breadcrumbs structured data (see 3).
+**Breadcrumbs:** decided 2026-11-12, added in pull request #9 (`BreadcrumbList` JSON-LD). Run Google's Rich Results Test on a post once it's deployed.
