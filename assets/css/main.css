@@ -174,7 +174,7 @@ main { display: block; }
 .archive .post-inner, .home .post-inner { padding-top: 3rem; }
 
 .entry-content { font-family: var(--serif); font-size: 1.8rem; letter-spacing: normal; line-height: 1.5; }
-.entry-content > * { margin-left: auto; margin-right: auto; margin-bottom: 1.25em; max-width: 58rem; }
+.entry-content > * { margin-left: auto; margin-right: auto; margin-bottom: 1.25em; max-width: 58rem; width: calc(100% - 4rem); }
 .entry-content > *:first-child { margin-top: 0; }
 .entry-content > *:last-child { margin-bottom: 0; }
 .entry-content p, .entry-content li { line-height: 1.4; }
