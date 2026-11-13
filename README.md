@@ -85,6 +85,12 @@ hugo --minify --gc
 python3 -I scripts/check_urls.py --strict public/ migration/url-inventory.csv
 ```
 
+The same check against the live site, over the network:
+
+```bash
+python3 -I scripts/check_live.py
+```
+
 4. Build the search index:
 
 ```bash
