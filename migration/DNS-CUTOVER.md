@@ -232,7 +232,11 @@ These are the values to restore if you roll back:
     - A post, `/beats-of-the-sacred-heart/`, loads.
     - `/page/2/` redirects to `/` with a meta refresh, and `/feed/` to `/index.xml`.
     - `/search/` and `/pagefind/pagefind.js` load, as do `/contact/`, `/category/exhibitions/`, `/index.xml`, `/sitemap.xml` and `/robots.txt`. All return 200.
-  - **Still open:** **Enforce HTTPS is not on.** The Pages API reports `https_enforced: false`, and `http://monicaespinel.com/` returns 200 instead of redirecting to `https://`. Tick the box again in Settings → Pages, and check that it stays ticked after a reload.
+  - **Enforce HTTPS on (2026-11-12):**
+    - The owner's tick hadn't saved, so Claude turned it on through the Pages API, with the owner's approval.
+    - Within minutes, all four GitHub IPs answered `http://monicaespinel.com/` with a 301 to `https://`.
+    - `http://www.monicaespinel.com/` ends on `https://monicaespinel.com/`.
+  - **Phase 6 is done:** both addresses load with a valid certificate. Next are the "After cutover" items and the Phase 7 checks.
 - **Next, either:**
   - **Wait:** step 0d on or after 2026-11-14 at 12:00 (the NS check on `dns.google`, the site still on WordPress, email in both directions), then step 2 and steps 6–10 at GoDaddy only. Until then, don't change anything at Bluehost.
   - **Or cut over now (owner's choice, 2026-11-12):** steps 2 and 6–10 in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
