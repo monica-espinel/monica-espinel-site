@@ -3,7 +3,7 @@ title: Xocomil, Vivian Suter's Salute to the Wind
 date: '2023-02-18T12:00:00'
 lastmod: '2023-11-10T07:37:35'
 slug: xocomil-vivian-suters-salute-to-the-wind
-author: Simon Letort
+author: Monica Espinel
 categories:
 - talks
 image: /wp-content/uploads/2023/11/5-Vivian-Suter-Xocomil.png

@@ -12,7 +12,7 @@ Plan derived from `CLAUDE.md` and a first read of the source material (2026-11-1
 | Published pages | 2: `about`, `contact`. Drafts/private (not migrated): `exhibitions`, `curriculum`, 2× `wpforms-preview`, 1 draft post "Homo Rodans". |
 | Categories | exhibitions, publications, reviews, talks, uncategorized (unused) |
 | Tags | 36 |
-| Authors | `monica.espinel` (Monica Espinel), `simon.letort` (Simon Letort, 5 posts) |
+| Authors | `monica.espinel` (Monica Espinel), `simon.letort` (Simon Letort, 5 posts; bylined Monica Espinel since 2026-11-12, owner's decision) |
 | Comments | 0, so nothing to migrate |
 | Attachments | 84 attachment pages (e.g. `/carmen-herrera/carmen-herrera-installation-shot-4/`) |
 | Old slugs | 53 `_wp_old_slug` entries, which become `aliases` |

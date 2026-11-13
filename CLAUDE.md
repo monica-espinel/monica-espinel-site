@@ -42,7 +42,7 @@ Each post keeps its WordPress slug as its URL. Example: `/beats-of-the-sacred-he
 
 Posts known from the homepage (confirm against the export): Beats of the Sacred Heart (2024-03-13), Embodying the Abject (2023-07-01), Xocomil, Vivian Suter's Salute to the Wind (2023-02-18), Juan Francisco Elso: Por América (2023-01-09), Burning with Desire (2022-10-27), Carmen Herrera memorial Whitney Museum (2022-09-28), Obra de la artista Carmen Herrera (2022-06-21), The Brooklyn Rail – 1970s: Carmen Herrera at Lisson (2022-06-07).
 
-Author bylines: Monica Espinel and Simon Letort. Keep both where the original lists them.
+Author bylines: every post is bylined Monica Espinel. WordPress credits 5 posts to Simon Letort, and the owner decided on 2026-11-12 to change those to Monica Espinel. `scripts/wp_to_hugo.py` applies this through `BYLINE_OVERRIDES`. The old `/author/simon-letort/` archive still redirects to `/`.
 
 The site's meta description: "Monica Espinel is a curator and writer specialized in Contemporary Art from Latin America. She is currently a Ph.D. candidate at The Graduate Center, City University of New York." Use it as the homepage description. Copy the description for each page from the WordPress export when it exists.
 

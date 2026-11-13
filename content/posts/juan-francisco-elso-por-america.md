@@ -3,7 +3,7 @@ title: 'Juan Francisco Elso: Por América'
 date: '2023-01-09T07:33:00'
 lastmod: '2023-11-10T07:37:36'
 slug: juan-francisco-elso-por-america
-author: Simon Letort
+author: Monica Espinel
 categories:
 - talks
 image: /wp-content/uploads/2023/11/6-Juan-Francisco-Elso-Por-America-Jose-Marti-1986.jpg

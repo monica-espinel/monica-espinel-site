@@ -3,7 +3,7 @@ title: 'Impending Beauty: Resilience and Resignification in Tatiana Arocha''s Fo
 date: '2021-01-01T07:16:00'
 lastmod: '2023-11-10T07:37:38'
 slug: impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind
-author: Simon Letort
+author: Monica Espinel
 categories:
 - publications
 image: /wp-content/uploads/2023/11/4-Tatiana-Arocha-Impending-Beauty.jpeg
