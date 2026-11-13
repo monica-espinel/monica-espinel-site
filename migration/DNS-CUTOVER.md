@@ -457,7 +457,7 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 ## After cutover
 
 - [ ] Once everything has worked for a day or two, raise the TTL again (for example to 3600).
-- [ ] Phase 7 checks: submit the sitemap, URL inspection, a search on the live site, GA4 Realtime, and a test contact message. Claude will list them.
+- [ ] Phase 7 checks: submit the sitemap, URL inspection, a search on the live site, GA4 Realtime, and a test contact message. See [`POST-LAUNCH.md`](POST-LAUNCH.md).
 - [ ] Keep WordPress running for **at least 30 days** after cutover (brief: Rollback).
   - Its admin is no longer reachable at `monicaespinel.com/wp-admin`, because that now goes to GitHub.
   - If you need it, use the host's own temporary address or control panel.
