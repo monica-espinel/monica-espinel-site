@@ -105,7 +105,7 @@ CI also checks that Pagefind wrote `pagefind-ui.js` and `pagefind-ui.css`, and t
 python3 -I scripts/check_links.py public
 ```
 
-Add `--external` to also fetch every link to other sites. CI doesn't do this, because other sites go down without warning. Run it now and then, from a machine with normal internet access. It lists each external link as broken (an error, or a 4xx/5xx status), moved (it redirects to another site or to a much shorter address, which usually means the page is gone), or blocked (it never reached the site).
+Add `--external` to also fetch every link to other sites. CI doesn't do this, because other sites go down without warning. Run it now and then, from a machine with normal internet access. It lists each external link as broken (an error, or a 4xx/5xx status), moved (it redirects to another site or to a much shorter address, which usually means the page is gone), check (the site refused the script, so open it in a browser), or blocked (it never reached the site). Add `--wayback` to also look up an Internet Archive copy of each broken or moved link. Run it on a production build, not on the output of `hugo server`; the script refuses that one.
 
 Unknown addresses on the live site show `404.html`, which links to the home page and to search.
 

@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Check every link in the built site (public/) for broken targets.
 
-Usage: python3 -I scripts/check_links.py [--external] [public/]
+Usage: python3 -I scripts/check_links.py [--external [--wayback]] [public/]
+
+Run it on a production build (hugo --minify --gc, then Pagefind), not on the output of
+`hugo server`: that one has live-reload code and localhost addresses, so it is refused.
 
 Internal (always): every href, src, srcset, form action and og:/twitter: image on every
   HTML page must point to a file in public/, and a #fragment must match an id on the
@@ -10,26 +13,33 @@ External (--external, needs network): every other http(s) URL is fetched. It is 
   as broken on an error or 4xx/5xx status, and as "moved" when it redirects to a different
   host or to a much shorter path (often a sign the page is gone and the site sends
   visitors to a generic page, as brooklynrail.org/media/files/... -> /contributors/ does).
-  "blocked" means the request never reached the site (network policy, DNS); check those
-  from another machine.
+  Redirects within the same site (a CDN subdomain, http -> https) are fine.
+  "check" means the site refused the checker (401/403/429, dropped connection): many sites
+  block scripts, so open those in a browser. "blocked" means the request never reached the
+  site (network policy, DNS); check those from another machine. Requests send the site as
+  Referer, so a Vimeo video that may only be embedded on monicaespinel.com is tested as there.
+  --wayback looks up the latest Internet Archive copy of each broken or moved link, the
+  usual replacement when the original page is gone.
 
 Run after Pagefind (the search page loads /pagefind/ files). Exits 1 if any internal link
 is broken, or, with --external, if any external link is broken or moved.
 Unknown URLs on the live site get public/404.html, which links to home and search.
 """
+import json
 import sys
 import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import unquote, urljoin, urlparse
+from urllib.parse import quote, unquote, urljoin, urlparse
 
 SITE = "https://monicaespinel.com"
 OWN_HOSTS = {"monicaespinel.com", "www.monicaespinel.com"}
 SKIP_SCHEMES = ("mailto:", "tel:", "javascript:", "data:")
 # Fetched at runtime with a page-specific query; not a link a visitor follows.
-SKIP_EXTERNAL = ("https://www.googletagmanager.com/gtag/js",)
+# The Formspree endpoint only accepts form posts, so a plain request gets 400 even when it works.
+SKIP_EXTERNAL = ("https://www.googletagmanager.com/gtag/js", "https://formspree.io/")
 UA = "Mozilla/5.0 (compatible; monicaespinel-link-check/1.0)"
 
 
@@ -67,7 +77,7 @@ def target_file(public, path):
 def fetch(url):
     """Return (status or None, final URL, error)."""
     for method in ("HEAD", "GET"):
-        req = urllib.request.Request(url, method=method, headers={"User-Agent": UA, "Accept": "*/*"})
+        req = urllib.request.Request(url, method=method, headers={"User-Agent": UA, "Accept": "*/*", "Referer": SITE + "/"})
         try:
             with urllib.request.urlopen(req, timeout=30) as r:
                 return r.status, r.geturl(), None
@@ -83,24 +93,46 @@ def fetch(url):
 def external_verdict(url, status, final, err):
     if status is None:
         blocked = any(s in err for s in ("Tunnel", "403", "Name or service", "ENOTFOUND", "nodename"))
-        return ("blocked" if blocked else "broken"), err
+        if blocked:
+            return "blocked", err
+        refused = any(s in err for s in ("closed connection", "reset", "timed out"))
+        return ("check" if refused else "broken"), err
+    if status in (401, 403, 429):
+        return "check", f"HTTP {status} (refused the checker; open it in a browser)"
     if status >= 400:
         return "broken", f"HTTP {status}"
     a, b = urlparse(url), urlparse(final)
-    host = lambda h: h.lower().removeprefix("www.")  # noqa: E731
-    if host(a.netloc) != host(b.netloc):
+    site = lambda h: ".".join(h.lower().split(":")[0].split(".")[-2:])  # noqa: E731
+    if site(a.netloc) != site(b.netloc):
         return "moved", f"-> {final}"
     if len(b.path.strip("/")) < len(a.path.strip("/")) / 2:
         return "moved", f"-> {final}"
     return "ok", "" if final == url else f"-> {final}"
 
 
+def wayback(url):
+    """Latest Internet Archive snapshot of url, or None."""
+    api = "https://archive.org/wayback/available?url=" + quote(url, safe="")
+    try:
+        with urllib.request.urlopen(urllib.request.Request(api, headers={"User-Agent": UA}), timeout=30) as r:
+            snap = json.load(r).get("archived_snapshots", {}).get("closest") or {}
+        return snap.get("url") if snap.get("available") else None
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def main(argv):
     external = "--external" in argv
+    use_wayback = "--wayback" in argv
     args = [a for a in argv if not a.startswith("--")]
     public = Path(args[0] if args else "public")
     if not (public / "index.html").exists():
-        sys.exit(f"{public}/index.html not found: build the site first (hugo --minify)")
+        sys.exit(f"{public}/index.html not found: build the site first (hugo --minify --gc)")
+    home = (public / "index.html").read_text(encoding="utf-8", errors="replace")
+    if "livereload.js" in home or "localhost:1313" in home:
+        sys.exit(f"{public}/ is a `hugo server` build (live reload, localhost links). Rebuild it with\n"
+                 "  rm -rf public && hugo --minify --gc && npx --yes pagefind@latest --site public\n"
+                 "and run this again.")
 
     pages = {f: parse(f) for f in public.rglob("*.html")}
     ids = {f: p.ids for f, p in pages.items()}
@@ -140,6 +172,8 @@ def main(argv):
             counts[verdict] = counts.get(verdict, 0) + 1
             if verdict != "ok":
                 print(f"  {verdict.upper():8} {url}  {note}  on {', '.join(sorted(ext[url]))}")
+                if use_wayback and verdict in ("broken", "moved"):
+                    print(f"           archive copy: {wayback(url) or 'none found'}")
             failed |= verdict in ("broken", "moved")
         print("external: " + "  ".join(f"{k}: {v}" for k, v in sorted(counts.items())))
     return 1 if failed else 0
