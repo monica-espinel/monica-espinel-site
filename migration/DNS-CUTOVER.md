@@ -164,19 +164,48 @@ These are the values to restore if you roll back:
 | Afterwards | Raise the TTL again. Phase 7 checks (Search Console, GA4, contact form). |
 
 **Progress (2026-11-12):**
-- **Step 1 is done:** the records are written down (new Bluehost export after turning off Cloudflare: apex `A` `162.241.252.140`). The HSTS check is still open.
-- **Bluehost's Cloudflare integration is off.**
+- **Step 1 is done:** the records are written down (new Bluehost export after turning off Cloudflare: apex `A` `162.241.252.140`). HSTS checked by Claude, 2026-11-12 at 22:00: none (see step 1).
+- **Bluehost's Cloudflare integration is off**, confirmed by Claude, 2026-11-12 at 22:00: the homepage answers with `Server: Apache`, without `cf-ray`, and has no `/cdn-cgi/challenge-platform/` script.
 - **Step 0a: DNSSEC is off** (no DS record at the `.com` registry).
 - **Step 0b done** (2026-11-12, about 11:55 US Eastern): the nameservers were switched to GoDaddy's, `ns11.domaincontrol.com` and `ns12.domaincontrol.com`.
 - **Step 0c done** (12:00):
   - The records were imported from a zone file built from the Bluehost export.
-  - GoDaddy's export matches it **16/16 records**, with values and TTLs identical and both DKIM keys byte-for-byte equal.
+  - GoDaddy's export matches it **16/16 records**, with values and TTLs identical.
+  - **Correction (Claude, 2026-11-12 at 22:00): the two DKIM keys are not equal. Fix them before the cutover; see "Fix the two DKIM records" below.** The other records match.
   - GoDaddy's default `_dmarc` record was removed (not in the Bluehost zone), and so was `_domainconnect`.
 - **Early email test (2026-11-12, after 0c):** a message to the domain was received, and the reply went out. Both directions work.
 - **Step 5 done early (2026-11-12):** the custom domain is saved in GitHub. Its DNS check fails until steps 6–7 (`NotServedByPagesError`), as expected.
 - **Step 4 done:** Search Console is verified through DNS ("Domain name provider"), so nothing needed adding.
 - **Step 3 done:** monicaespinel.com is a verified domain for GitHub Pages in the monica-espinel organization (2026-11-12).
 - **Early NS check (2026-11-12):** `dns.google` already returns `ns11/ns12.domaincontrol.com`, answered by GoDaddy's nameservers. This is Google's resolver only; others can cache Bluehost's nameservers until the 48 hours are up.
+- **Checks by Claude (2026-11-12 at 22:00 US Eastern), read-only, nothing changed:**
+  - **The `.com` registry** returns `ns11/ns12.domaincontrol.com`, with a 172800 s (48 h) TTL.
+  - **NS lookups:** Google (`8.8.8.8`), Cloudflare (`1.1.1.1`), Quad9 (`9.9.9.9`) and OpenDNS all return GoDaddy's nameservers. Other resolvers can still cache Bluehost's until about 2026-11-14 at 12:00.
+  - **The GoDaddy zone, queried at `ns11.domaincontrol.com`, matches the step 0c table** for:
+    - `A`: `162.241.252.140`
+    - the 5 `MX`
+    - SPF and both `google-site-verification` records
+    - `www`, `calendar`, `drive` and `zqlnqvtpi7av`
+    - both `_github-…` `TXT` records
+    - no `AAAA`, `CAA` or `_dmarc` record
+    - **Except the two DKIM keys**, see below.
+  - **Step 2 is in place:** `@` `A` and `www` `CNAME` have a **600 s** TTL at GoDaddy. Nothing needs changing.
+  - **The latest deploy on `main` is green** (Deploy site to GitHub Pages, Phase 5 merge).
+  - **GitHub Pages:** custom domain `monicaespinel.com`, build type GitHub Actions, no certificate yet, Enforce HTTPS off. Expected before steps 6–7.
+- **Fix the two DKIM records at GoDaddy (owner, before the cutover).**
+  - **The problem:** in GoDaddy's zone, both keys have the three characters `" "` (quote, space, quote) inside them:
+    - `google._domainkey`: between `…N2C2` and `eyP8g…`
+    - `default._domainkey`: between `…P0vBu` and `68Ft+…`
+
+    That is where the zone file split each long value into two strings, and the import kept the quotes as text. Bluehost's copies are correct.
+  - **Why it matters:** with the key as it is now, Gmail's DKIM signature on Workspace mail fails for anyone whose DNS asks GoDaddy. The SPF record doesn't include Google, so such mail passes neither check, and it's more likely to land in spam. The early email test still worked because delivery doesn't require DKIM.
+  - **To fix:**
+    1. GoDaddy → DNS Records → edit the `TXT` record `google._domainkey`.
+    2. Replace its whole value with the one-line value under step 0c, pasted as is, without quotes. GoDaddy splits long values itself.
+    3. Save. Do the same for `default._domainkey`.
+    4. Tell Claude, who will re-check both keys against Bluehost's.
+    5. Then, in Google Workspace admin (Apps → Gmail → Authenticate email), check that DKIM shows as authenticating.
+  - This only corrects the copy from step 0. It doesn't change the email setup.
 - **Next, either:**
   - **Wait:** step 0d on or after 2026-11-14 at 12:00 (the NS check on `dns.google`, the site still on WordPress, email in both directions), then step 2 and steps 6–10 at GoDaddy only. Until then, don't change anything at Bluehost.
   - **Or cut over now (owner's choice, 2026-11-12):** steps 2 and 6–10 in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
@@ -207,11 +236,11 @@ Where things are hosted (needed to cancel WordPress safely later):
 
 - [x] **The nameservers:** `ns1.bluehost.com` and `ns2.bluehost.com`, so Bluehost hosts the DNS today. Step 0 moves them to GoDaddy.
 - [x] **Who provides email:** **Google Workspace** (`MX` → Google), so the mailboxes don't depend on Bluehost.
-- [ ] **Whether the WordPress site forces HTTPS in browsers (HSTS).** In a browser, open `https://monicaespinel.com`, then open Developer tools → Network, reload, click the first request, and look under *Response headers* for `Strict-Transport-Security`. Note whether it's there. Step 8 explains why it matters.
+- [x] **Checked by Claude, 2026-11-12: no HSTS.** The responses for `https://monicaespinel.com/` and `https://www.monicaespinel.com/` have no `Strict-Transport-Security` header. Returning visitors can still click through the short certificate warning in step 8. How to check this another way: **Whether the WordPress site forces HTTPS in browsers (HSTS).** In a browser, open `https://monicaespinel.com`, then open Developer tools → Network, reload, click the first request, and look under *Response headers* for `Strict-Transport-Security`. Note whether it's there. Step 8 explains why it matters.
 
 **Cloudflare:** Bluehost's Cloudflare integration was on, and the owner turned it off (2026-11-12).
 - [x] **Apex `A` record after turning Cloudflare off:** `162.241.252.140`, from the second zone export. Bluehost replaced the proxy address with the server's own.
-- [ ] **Confirm Cloudflare is really off.** A copy of the homepage the owner loaded after turning it off still contained Cloudflare's challenge script (`/cdn-cgi/challenge-platform/…`). The change may take up to an hour to apply, or the browser may have shown a cached page. To check:
+- [x] **Confirmed by Claude, 2026-11-12 at 22:00: Cloudflare is off.** The site answers with `Server: Apache`, without `cf-ray`, and the page has no challenge script. Earlier note, kept for reference: **Confirm Cloudflare is really off.** A copy of the homepage the owner loaded after turning it off still contained Cloudflare's challenge script (`/cdn-cgi/challenge-platform/…`). The change may take up to an hour to apply, or the browser may have shown a cached page. To check:
   1. Open `https://monicaespinel.com` in a private window, open Developer tools → Network, and reload.
   2. Click the first request, and look under *Response headers*.
   3. `server: cloudflare` or a `cf-ray` header means Cloudflare is still active. Wait, then check Bluehost's settings again. Neither header means it's off.
@@ -220,8 +249,8 @@ Where things are hosted (needed to cancel WordPress safely later):
 ### 2. Lower the TTL to 300 seconds
 
 After step 0, the TTL is set **at GoDaddy**. Bluehost's TTL no longer matters once the nameservers point to GoDaddy.
-- [ ] At GoDaddy, check that the `@` `A` record and the `www` `CNAME` have the **lowest TTL** GoDaddy offers. Step 0c already sets this. Use 300 seconds (the brief's value) if offered, otherwise GoDaddy's minimum (often 600 seconds).
-- [ ] **Only if you changed a TTL just now** (rather than in 0c): wait at least as long as the previous TTL before the cutover, so resolvers drop the old value. The 48-hour wait in step 0 covers anything set in 0c.
+- [x] Checked by Claude, 2026-11-12: both are at **600 s** at GoDaddy. At GoDaddy, check that the `@` `A` record and the `www` `CNAME` have the **lowest TTL** GoDaddy offers. Step 0c already sets this. Use 300 seconds (the brief's value) if offered, otherwise GoDaddy's minimum (often 600 seconds).
+- [x] *(Not needed: the TTL was set in 0c.)* **Only if you changed a TTL just now** (rather than in 0c): wait at least as long as the previous TTL before the cutover, so resolvers drop the old value. The 48-hour wait in step 0 covers anything set in 0c.
 
 The cutover, and any rollback, then takes effect within about that TTL: 5 minutes at 300 seconds, 10 minutes at 600.
 
