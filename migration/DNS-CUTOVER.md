@@ -192,7 +192,12 @@ These are the values to restore if you roll back:
   - **Step 2 is in place:** `@` `A` and `www` `CNAME` have a **600 s** TTL at GoDaddy. Nothing needs changing.
   - **The latest deploy on `main` is green** (Deploy site to GitHub Pages, Phase 5 merge).
   - **GitHub Pages:** custom domain `monicaespinel.com`, build type GitHub Actions, no certificate yet, Enforce HTTPS off. Expected before steps 6–7.
-- **Fix the two DKIM records at GoDaddy (owner, before the cutover).**
+- **DKIM fixed (owner, 2026-11-12), re-checked by Claude:**
+  - Both `google._domainkey` and `default._domainkey` now match the step 0c values character for character, as one record each.
+  - Checked at `ns11` and `ns12.domaincontrol.com`, at Bluehost, and through `8.8.8.8` and `1.1.1.1`.
+  - The `A`, `MX`, SPF/verification `TXT` and `www` records are unchanged.
+  - Still to do: check DKIM in Google Workspace admin (step 5 below).
+- **Fix the two DKIM records at GoDaddy (owner, before the cutover), done, kept for reference:**
   - **The problem:** in GoDaddy's zone, both keys have the three characters `" "` (quote, space, quote) inside them:
     - `google._domainkey`: between `…N2C2` and `eyP8g…`
     - `default._domainkey`: between `…P0vBu` and `68Ft+…`
