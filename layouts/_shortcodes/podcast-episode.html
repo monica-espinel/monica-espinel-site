@@ -1,0 +1,5 @@
+{{/* Jetpack podcast player block: one episode from the show's feed, as a native audio player. */}}
+<figure class="podcast-episode">
+  <audio controls preload="none" src="{{ .Get "src" }}"></audio>
+  <figcaption><a href="{{ .Get "link" }}">{{ .Get "title" }}</a></figcaption>
+</figure>

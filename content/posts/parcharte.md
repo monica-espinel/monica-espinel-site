@@ -20,6 +20,6 @@ Parcharte, which translates to ”hanging out with art”, is an interview progr
 
 Listen on: [Spotify](https://open.spotify.com/show/6BlcjGCZf2R88PXzGIzGuC?si=ME0gFq8cQFGkdI71y3oR2g&nd=1) · [Apple Podcasts](https://podcasts.apple.com/us/podcast/parcharte/id1602470370?i=1000546394552) · [Amazon Music](https://music.amazon.com/podcasts/a66604fe-ef8e-4a7a-925a-60f393214ccf)
 
-{{/* TODO: the WordPress page embedded a Jetpack podcast player for episode parcharte.podbean.com/bbdf0367-ef7f-37d0-afee-a001384a8991. Replace with the episode's own player embed if wanted. */}}
+{{< podcast-episode title="Duet of Displacement" src="https://mcdn.podbean.com/mf/web/3i5wpv/Duet_of_Displacement.mp3" link="https://parcharte.podbean.com/e/duet_of_displacement/" >}}
 
 [Podcast feed](https://feed.podbean.com/parcharte/feed.xml)

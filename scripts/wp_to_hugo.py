@@ -33,6 +33,16 @@ MANIFEST = ROOT / "migration" / "generated-content.txt"
 BLOCK_RE = re.compile(r"<!--\s+(/)?wp:([a-z0-9/-]+)(?:\s+(\{.*?\}))?\s*(/)?-->", re.S)
 # Podcast platforms that no longer exist; links removed (owner decision, Phase 2).
 DROP_PLATFORMS = {"Google-Podcasts"}  # shut down in 2024
+# Episodes picked in Jetpack podcast player blocks, keyed by feed GUID. The export stores only
+# the GUID; title, audio file and page come from https://feed.podbean.com/parcharte/feed.xml
+# (checked 2026-11-12), copied here so the conversion runs offline.
+PODCAST_EPISODES = {
+    "parcharte.podbean.com/bbdf0367-ef7f-37d0-afee-a001384a8991": {
+        "title": "Duet of Displacement",
+        "src": "https://mcdn.podbean.com/mf/web/3i5wpv/Duet_of_Displacement.mp3",
+        "link": "https://parcharte.podbean.com/e/duet_of_displacement/",
+    },
+}
 TODOS = []  # (file, message) for the final report
 
 
@@ -195,9 +205,14 @@ def render_block(name, attrs, children, inner, ctx):
     if name == "jetpack/podcast-player":
         feed = attrs.get("url", "")
         guids = ", ".join(e.get("guid", "") for e in attrs.get("selectedEpisodes", []))
+        eps = [PODCAST_EPISODES.get(e.get("guid", "")) for e in attrs.get("selectedEpisodes", [])]
+        if eps and all(eps):
+            players = ["{{< podcast-episode title=" + sc_attr(e["title"]) + " src=" + sc_attr(e["src"])
+                       + " link=" + sc_attr(e["link"]) + " >}}" for e in eps]
+            return "\n\n".join(players + [f"[Podcast feed]({feed})"])
         ctx.todo(f"Jetpack podcast player (feed {feed}, episode {guids}) replaced by a link to the feed")
         note = (f"TODO: the WordPress page embedded a Jetpack podcast player for episode {guids}. "
-                "Replace with the episode's own player embed if wanted.")
+                "Add the episode to PODCAST_EPISODES in scripts/wp_to_hugo.py.")
         return "{{/* " + note + " */}}\n\n" + f"[Podcast feed]({feed})"
     if name == "secondline-themes/podcast-subscribe-button":
         links = []
