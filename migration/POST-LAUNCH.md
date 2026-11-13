@@ -37,17 +37,41 @@ Run it again any time, for example after a content change.
 - `robots.txt` points to it and blocks nothing.
 
 **To do:**
-- [ ] Search Console → property **monicaespinel.com** → **Sitemaps** → enter `sitemap.xml` → **Submit**. The status should become "Success" within a day.
-- [ ] In the same list, **remove any old WordPress sitemaps**, for example `wp-sitemap.xml`, `sitemap_index.xml` or `post-sitemap.xml`. They now return 404. If `sitemap.xml` was already listed (All in One SEO used that path), just resubmit it.
+- [x] Search Console → property **monicaespinel.com** → **Sitemaps** → enter `sitemap.xml` → **Submit**. The status should become "Success" within a day.
+  - Done by Claude, 2026-11-12: resubmitted `https://monicaespinel.com/sitemap.xml`, where All in One SEO's index had been listed.
+  - Google read it straight away: type "Sitemap", **79 discovered pages**, status **Success**.
+- [x] In the same list, **remove any old WordPress sitemaps**, for example `wp-sitemap.xml`, `sitemap_index.xml` or `post-sitemap.xml`. They now return 404. If `sitemap.xml` was already listed (All in One SEO used that path), just resubmit it.
+  - Done by Claude, 2026-11-12. Removed:
+    - `https://monicaespinel.com/sitemap.rss` (now 404);
+    - `http://monicaespinel.com/sitemap.xml` and `https://www.monicaespinel.com/sitemap.xml`, both from 2020, which now redirect to the same file.
+  - Only the new sitemap is listed now.
 
 ## 3. URL inspection: homepage and three posts (*Owner*)
 
 In Search Console, paste each URL into the search bar at the top, then click **Test live URL**:
 
-- [ ] `https://monicaespinel.com/`
-- [ ] `https://monicaespinel.com/beats-of-the-sacred-heart/`
-- [ ] `https://monicaespinel.com/juan-francisco-elso-por-america/`
-- [ ] `https://monicaespinel.com/xocomil-vivian-suters-salute-to-the-wind/`
+- [x] `https://monicaespinel.com/`
+- [x] `https://monicaespinel.com/beats-of-the-sacred-heart/`
+- [x] `https://monicaespinel.com/juan-francisco-elso-por-america/`
+- [x] `https://monicaespinel.com/xocomil-vivian-suters-salute-to-the-wind/`
+
+**Done by Claude, 2026-11-12, about 22:47–22:51 US Eastern:**
+- All four live tests say **"URL is available to Google / Page can be indexed"**.
+- **Request indexing** was clicked for each. All four are now in Google's priority crawl queue.
+
+What Google's index showed before the live test:
+
+| URL | Google index (old crawl) |
+|---|---|
+| `/` | On Google |
+| `/juan-francisco-elso-por-america/` | On Google |
+| `/beats-of-the-sacred-heart/` | **Not on Google:** "Blocked due to access forbidden (403)", last crawled 2026-07-17 |
+| `/xocomil-vivian-suters-salute-to-the-wind/` | **Not on Google:** same 403, last crawled 2026-07-18 |
+
+**Two findings:**
+- **The old WordPress host was refusing Googlebot (HTTP 403) by July 2026.** This probably explains why only 24 pages were indexed. The new site serves Googlebot normally, so the count should rise over the next weeks.
+- **Breadcrumbs rich results are gone.** The old pages had Breadcrumbs structured data from All in One SEO ("1 valid item detected", 14 valid in the property). The new pages' live tests show "URL has no enhancements". This doesn't affect indexing, only the breadcrumb trail Google can show under a result.
+  - TODO: decide whether to add `BreadcrumbList` JSON-LD to the templates. This is a small template change, in its own pull request.
 
 **What to expect:**
 - "URL is available to Google".
@@ -71,7 +95,11 @@ In Search Console, paste each URL into the search bar at the top, then click **T
 The tag only runs on `monicaespinel.com`, so local previews don't count. It also skips visitors who have Do Not Track turned on.
 
 **To do:**
-- [ ] GA4 → **Reports → Realtime**: open any page of the site in another tab, and check a view appears within a minute. If nothing appears, test from a browser without Do Not Track and without an ad blocker.
+- [x] GA4 → **Reports → Realtime**: open any page of the site in another tab, and check a view appears within a minute. If nothing appears, test from a browser without Do Not Track and without an ad blocker.
+  - **Checked by Claude, 2026-11-12, about 22:55.** The right property is **"monicaespinel.com"** (property ID `320308156`).
+  - Realtime showed 4 active users and 21 views in 30 minutes, with page paths `/`, `/about/`, `/beats-of-the-sacred-heart/`, `/category/exhibitions/`, `/category/talks/`, `/contact/`, `/search/`, and others.
+  - It also showed 4 views of "404 Page not found". **All were `/wp-admin/…`**: someone opening the old WordPress admin, which no longer exists on the domain. That's expected, and no real page is missing.
+  - **Note:** a second GA4 property named after the site, "monicaespinel.com/ GA4 - MonsterInsights" (`363685349`, `G-2SYEGT8QLB`), receives no data. Use property `320308156`.
 
 ## 6. Test message through the contact form (*Owner*)
 
@@ -82,9 +110,14 @@ The tag only runs on `monicaespinel.com`, so local previews don't count. It also
 - There's no `mailto:` link anywhere on the page.
 
 **To do:**
-- [ ] Send one message from `https://monicaespinel.com/contact/`, with a name, your email and a short text.
+- [x] Send one message from `https://monicaespinel.com/contact/`, with a name, your email and a short text.
+  - Done by Claude on 2026-11-12, from the live site.
+  - Name "Site migration test", email `test@example.com`.
+  - The message text starts "Test message from the new monicaespinel.com (GitHub Pages)…".
 - [ ] Check that the page shows the thank-you message, and the message reaches the inbox set up in Formspree. Look in spam too the first time.
-- [ ] If Formspree shows a reCAPTCHA page instead of the inline message, turn reCAPTCHA off in the form's settings: the honeypot covers spam.
+  - **The page part passed:** Formspree accepted the message, and the page showed "Thank you. Your message has been sent." inline, with no reCAPTCHA.
+  - **Owner:** confirm it's in the inbox. The subject is "Message from monicaespinel.com".
+- [x] *(Not needed: no reCAPTCHA page appeared.)* If Formspree shows a reCAPTCHA page instead of the inline message, turn reCAPTCHA off in the form's settings: the honeypot covers spam.
 
 ## 7. Search Console coverage, weekly for four weeks (*Owner*)
 
@@ -92,6 +125,7 @@ Check **Indexing → Pages** once a week. Expect old WordPress URLs to move to "
 
 | Week of | Indexed | Not indexed | New 404s? | Notes |
 |---|---|---|---|---|
+| 2026-11-12 (baseline) | 24 | 53 | n/a | Search Console overview at cutover, still reflecting WordPress, including the 403s to Googlebot |
 | 2026-11-19 | | | | |
 | 2026-11-26 | | | | |
 | 2026-12-03 | | | | |
@@ -109,11 +143,16 @@ Check **Indexing → Pages** once a week. Expect old WordPress URLs to move to "
 
 ## Phase 7 status
 
-**Passed by Claude:** checks 1 and 4, and the technical part of 2, 3, 5 and 6.
+**Done (2026-11-12):**
+- 1 (all URLs);
+- 2 (sitemap submitted, old ones removed);
+- 3 (URL inspection and indexing requests);
+- 4 (Pagefind);
+- 5 (GA4 Realtime);
+- 6, up to Formspree accepting the test message.
 
 **Open, for the owner:**
-- sitemap submission;
-- URL inspection;
-- GA4 Realtime;
-- the test message;
-- four weekly coverage checks.
+- confirm the test message reached the inbox;
+- the four weekly coverage checks, starting 2026-11-19.
+
+**Open, for a decision:** whether to add Breadcrumbs structured data (see 3).
