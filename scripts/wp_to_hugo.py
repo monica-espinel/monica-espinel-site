@@ -261,6 +261,10 @@ def dump(front, body):
     return f"---\n{fm}\n---\n\n{body.strip()}\n"
 
 
+# Owner's decision (2026-11-12): the 5 posts WordPress credits to Simon Letort are bylined Monica Espinel.
+BYLINE_OVERRIDES = {"Simon Letort": "Monica Espinel"}
+
+
 def main(src, out_dir):
     out = Path(out_dir)
     ch = channel(src)
@@ -283,7 +287,7 @@ def main(src, out_dir):
             "date": t(i, "wp:post_date").replace(" ", "T"),
             "lastmod": t(i, "wp:post_modified").replace(" ", "T"),
             "slug": slug,
-            "author": authors.get(t(i, "dc:creator"), t(i, "dc:creator")),
+            "author": BYLINE_OVERRIDES.get(a := authors.get(t(i, "dc:creator"), t(i, "dc:creator")), a),
         }
         if typ == "post":
             cats = [c.get("nicename") for c in i.findall("category") if c.get("domain") == "category"]

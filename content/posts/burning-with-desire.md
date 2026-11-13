@@ -3,7 +3,7 @@ title: Burning with Desire
 date: '2022-10-27T07:35:00'
 lastmod: '2023-11-10T07:37:36'
 slug: burning-with-desire
-author: Simon Letort
+author: Monica Espinel
 categories:
 - talks
 image: /wp-content/uploads/2022/10/7-Vanderlei-Lopes-Coracao-2013.jpeg

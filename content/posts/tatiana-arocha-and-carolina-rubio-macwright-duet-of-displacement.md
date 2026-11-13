@@ -3,7 +3,7 @@ title: Duet of Displacement
 date: '2021-11-11T12:00:00'
 lastmod: '2023-11-10T07:37:37'
 slug: tatiana-arocha-and-carolina-rubio-macwright-duet-of-displacement
-author: Simon Letort
+author: Monica Espinel
 categories:
 - exhibitions
 image: /wp-content/uploads/2023/11/1-Carolina-Rubio-MacWright-Ice-Cream-Truck-of-Rights-scaled.jpeg
