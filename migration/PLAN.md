@@ -197,6 +197,56 @@ Acceptance checks:
   Root-relative links (`/about/`, CSS, images) point outside that folder there, so pages look unstyled and links
   break; the brief allows checking on a local server instead.
 
+## Phase 5 result
+
+- First deploy from `main` (#4 merged): workflow run #7 on 30b1bbf, **all jobs green including Deploy**
+  (https://github.com/monica-espinel/monica-espinel-site/actions/runs/43142894674).
+- The site is on `https://monica-espinel.github.io/monica-espinel-site/`. As expected, root-relative links
+  point outside that folder there; the site was checked on a local server instead (brief note).
+
+## Phase 6 (DNS cutover, owner)
+
+- Instructions: `migration/DNS-CUTOVER.md`, a step-by-step checklist with tables of exact records.
+  On top of the brief's six steps, it adds:
+  - writing down every current record first (rollback values)
+  - verifying the domain in the GitHub organization (protects against domain takeover)
+  - the Search Console DNS TXT record before cutover (new site has no meta tag)
+  - keeping the SPF `TXT` and other email records
+  - removing old `AAAA` records, and GitHub's optional IPv6 `AAAA` records
+  - Cloudflare "DNS only" and `CAA`/Let's Encrypt caveats
+  - checks, and the rollback steps
+  - **order:** the custom domain is saved in GitHub *before* the DNS change (GitHub's recommendation; the brief
+    lists it after), so there's no window where GitHub serves "There isn't a GitHub Pages site here"
+  - a warning to expect certificate errors on `https://` until the certificate is issued (pick a quiet time,
+    don't roll back for that alone)
+  - delete every `www` record before adding the `CNAME`, and any apex `ALIAS`/`ANAME` record
+  - note where the nameservers and email are hosted: if at the WordPress host, move them **before** cancelling it
+  - check for HSTS on the old site: returning visitors can't bypass the certificate warning during the window
+  - troubleshooting for a slow certificate (leftover records, Cloudflare, `CAA`, re-saving the custom domain)
+  - **Registrar GoDaddy, nameservers `ns1.bluehost.com` / `ns2.bluehost.com`** (owner, 2026-11-12): Bluehost hosts the DNS, so every cutover
+    change happens in Bluehost's DNS editor. **Before cancelling Bluehost**, the DNS (and email, if its MX
+    records point to Bluehost) must move to GoDaddy or another provider, or the domain stops resolving.
+    The guide has a step-by-step for that, as a separate step after the cutover is stable.
+  - From the owner's zone export: the apex is `A 66.235.200.147` (TTL 3600 in the export; **15 minutes** in Bluehost's
+    editor on 2026-11-12. If Bluehost's minimum is 15 minutes rather than the brief's 5, rollback takes about 15 minutes) and `www` is a `CNAME` to the apex.
+    There are no `AAAA`/`CAA`/`ALIAS` records. Email is **Google Workspace** (MX to Google), so the mailboxes
+    don't depend on Bluehost. Two `google-site-verification` `TXT` records exist (Search Console may already be
+    DNS-verified). The SPF record (`+a +mx +ip4:162.241.252.140 +include:websitewelcome.com`) doesn't include
+    Google, and `+a` will cover GitHub's IPs after cutover: flagged for the owner, not changed (email records
+    are out of scope). The export file itself is not committed.
+  - The owner turned off Bluehost's Cloudflare integration (2026-11-12), which GitHub needs in order to issue the
+    certificate. A second export confirmed the apex `A` is now `162.241.252.140`, Bluehost's server
+    (`66.235.200.147` was Cloudflare's proxy). That's the rollback value.
+  - **Owner decision (2026-11-12): stop using Bluehost's DNS.** Applied defaults, open to change: move it to
+    **GoDaddy** (the registrar), as **step 0 before the cutover**, with every record copied unchanged, then a
+    1–2 day check, then the cutover at GoDaddy. The guide lists the exact records to enter at GoDaddy, and the
+    Bluehost/cPanel records to leave behind. Bluehost can then be cancelled without affecting DNS.
+  - Step 0 safeguards: check DNSSEC/DS records at GoDaddy before switching (a leftover DS record would make the
+    domain unreachable); enter the MX records first (a zone without MX can bounce mail); wait a full 48 hours and
+    confirm via public DNS (NS lookup) before the cutover; step 2 just confirms the low TTL set in step 0.
+- Claude does not change DNS. **Done when** the owner confirms `https://monicaespinel.com` and
+  `https://www.monicaespinel.com` load with a valid certificate.
+
 ## Open issues
 
 - **5 Brooklyn Rail speaker photos missing** (post `/brooklyn-rail-carmen-herrera/`: Tony Bechara, Odili Donald Odita,
