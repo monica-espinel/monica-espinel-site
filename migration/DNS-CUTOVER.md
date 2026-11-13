@@ -112,7 +112,7 @@ v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyKM7FcQibzJC2gl0g3
 
 The WordPress site keeps working without them. Its own certificate renews over HTTP while the `@` record points to Bluehost.
 
-- [ ] Delete any other default record GoDaddy added that isn't in the table. **Keep `_domainconnect` if GoDaddy created it**: it's harmless.
+- [x] Done 2026-11-12: GoDaddy's export matched the table 16/16, with `_dmarc` and `_domainconnect` removed. A spot-check by Claude at `ns11.domaincontrol.com` found no `_domainconnect`, `_dmarc`, `ftp`, `pay`, `shop`, `email`, `mail` or cPanel names, no `AAAA` and no wildcard. Delete any other default record GoDaddy added that isn't in the table. **Keep `_domainconnect` if GoDaddy created it**: it's harmless.
 
 ### 0d. Check, at least 48 hours later
 
