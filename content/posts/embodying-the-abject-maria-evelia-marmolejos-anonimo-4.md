@@ -7,10 +7,10 @@ author: Monica Espinel
 categories:
 - publications
 image: /wp-content/uploads/2023/11/3-marmolejo_maria_evelia_anonimo-4.jpeg
-summary: '"Embodying the Abject: María Evelia Marmolejo’s Anónimo 4 (1982)." Vistas 8 (July 2023) https://islaa.org/bookshop/vistas-8'
+summary: '"Embodying the Abject: María Evelia Marmolejo’s Anónimo 4 (1982)." Vistas 8 (July 2023) https://islaa.org/publications/vistas-8/'
 wordpress_id: 4438
 ---
 
 "Embodying the Abject: María Evelia Marmolejo’s Anónimo 4 (1982)." *Vistas* *8* (July 2023)
 
-<https://islaa.org/bookshop/vistas-8>
+<https://islaa.org/publications/vistas-8/>
