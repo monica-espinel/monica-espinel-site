@@ -224,10 +224,15 @@ These are the values to restore if you roll back:
     - The Let's Encrypt certificate for `monicaespinel.com` and `www.monicaespinel.com` is issued and served. It expires 2027-02-11 and renews automatically.
     - `https://monicaespinel.com/` returns 200 from GitHub, and `https://www.monicaespinel.com/` returns a 301 to the apex.
     - Bluehost's old records didn't block the certificate.
-  - **Still open:**
-    - tick **Enforce HTTPS** (reload Settings → Pages first);
-    - the same changes at **Bluehost**, which still has `162.241.252.140` and `www` → `monicaespinel.com`, so visitors whose DNS still asks Bluehost see WordPress until about 2026-11-14;
-    - steps 9–10.
+  - **Bluehost done (owner), checked by Claude:** `ns1.bluehost.com` serves GitHub's four `A` records and `www` → `monica-espinel.github.io`. Its `MX` records are unchanged. Both zones now agree. Bluehost has no `AAAA` records, which is fine.
+  - **Step 9, checked by Claude:** `MX`, SPF, DKIM and the verification records are unchanged in both zones.
+  - **Step 10, checked by Claude (2026-11-12):**
+    - `https://monicaespinel.com/` loads the new site with a valid certificate.
+    - `https://www.monicaespinel.com/` redirects to the apex.
+    - A post, `/beats-of-the-sacred-heart/`, loads.
+    - `/page/2/` redirects to `/` with a meta refresh, and `/feed/` to `/index.xml`.
+    - `/search/` and `/pagefind/pagefind.js` load, as do `/contact/`, `/category/exhibitions/`, `/index.xml`, `/sitemap.xml` and `/robots.txt`. All return 200.
+  - **Still open:** **Enforce HTTPS is not on.** The Pages API reports `https_enforced: false`, and `http://monicaespinel.com/` returns 200 instead of redirecting to `https://`. Tick the box again in Settings → Pages, and check that it stays ticked after a reload.
 - **Next, either:**
   - **Wait:** step 0d on or after 2026-11-14 at 12:00 (the NS check on `dns.google`, the site still on WordPress, email in both directions), then step 2 and steps 6–10 at GoDaddy only. Until then, don't change anything at Bluehost.
   - **Or cut over now (owner's choice, 2026-11-12):** steps 2 and 6–10 in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
