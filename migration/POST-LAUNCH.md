@@ -72,6 +72,16 @@ What Google's index showed before the live test:
 - **The old WordPress host was refusing Googlebot (HTTP 403) by July 2026.** This probably explains why only 24 pages were indexed. The new site serves Googlebot normally, so the count should rise over the next weeks.
 - **Breadcrumbs rich results are gone.** The old pages had Breadcrumbs structured data from All in One SEO ("1 valid item detected", 14 valid in the property). The new pages' live tests show "URL has no enhancements". This doesn't affect indexing, only the breadcrumb trail Google can show under a result.
   - Fixed in pull request #9, which adds `BreadcrumbList` JSON-LD with the same trails as the old site.
+  - **Rich Results Test, run by Claude on 2026-11-12 at about 23:05 US Eastern, after #9 deployed.** All three crawled successfully:
+
+    | URL | Result |
+    |---|---|
+    | `/beats-of-the-sacred-heart/` (post) | **Breadcrumbs: 1 valid item**. **Articles: 1 valid item**, with one non-critical issue: the author has no `url` (optional). |
+    | `/about/` (page) | **Breadcrumbs: 1 valid item** |
+    | `/category/exhibitions/` (archive) | **Breadcrumbs: 1 valid item** |
+
+    Search Console's Breadcrumbs report will catch up as Google recrawls.
+  - The optional author `url` warning doesn't affect eligibility. It could be silenced by giving the author a `url` (for example `/about/` for Monica Espinel). Left as is for now.
 
 **What to expect:**
 - "URL is available to Google".
@@ -157,4 +167,4 @@ Check **Indexing → Pages** once a week. Expect old WordPress URLs to move to "
 **Open, for the owner:**
 - the four weekly coverage checks, starting 2026-11-19.
 
-**Breadcrumbs:** decided 2026-11-12, added in pull request #9 (`BreadcrumbList` JSON-LD). Run Google's Rich Results Test on a post once it's deployed.
+**Breadcrumbs:** added in pull request #9. The Rich Results Test passes on a post, a page and an archive (see 3).
