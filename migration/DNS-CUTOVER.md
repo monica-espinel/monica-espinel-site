@@ -219,9 +219,15 @@ These are the values to restore if you roll back:
     - all at 600 s.
   - `MX`, SPF, both verification `TXT` records, both DKIM keys and both `_github-…` records are unchanged.
   - Google, Cloudflare and Quad9 already return GitHub's IPs, and GitHub serves the new site for `monicaespinel.com` over `http://`.
+  - **Step 8, checked by Claude:**
+    - GitHub shows "DNS check successful".
+    - The Let's Encrypt certificate for `monicaespinel.com` and `www.monicaespinel.com` is issued and served. It expires 2027-02-11 and renews automatically.
+    - `https://monicaespinel.com/` returns 200 from GitHub, and `https://www.monicaespinel.com/` returns a 301 to the apex.
+    - Bluehost's old records didn't block the certificate.
   - **Still open:**
-    - the same changes at **Bluehost**, which still has `162.241.252.140` and `www` → `monicaespinel.com`;
-    - then steps 8–10.
+    - tick **Enforce HTTPS** (reload Settings → Pages first);
+    - the same changes at **Bluehost**, which still has `162.241.252.140` and `www` → `monicaespinel.com`, so visitors whose DNS still asks Bluehost see WordPress until about 2026-11-14;
+    - steps 9–10.
 - **Next, either:**
   - **Wait:** step 0d on or after 2026-11-14 at 12:00 (the NS check on `dns.google`, the site still on WordPress, email in both directions), then step 2 and steps 6–10 at GoDaddy only. Until then, don't change anything at Bluehost.
   - **Or cut over now (owner's choice, 2026-11-12):** steps 2 and 6–10 in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
