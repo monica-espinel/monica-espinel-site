@@ -383,7 +383,7 @@ Never leave old `AAAA` records pointing to WordPress next to the new `A` records
 
 A `CNAME` can't share its name with any other record, so clear `www` first.
 
-Today `www` is a `CNAME` to `monicaespinel.com`, and nothing else is on `www`.
+Before the cutover, `www` was a `CNAME` to `monicaespinel.com`, with nothing else on `www`. Since 2026-11-12 it is a `CNAME` to `monica-espinel.github.io`, in both zones.
 
 - [x] *(Done 2026-11-12: the only `www` record was the `CNAME`.)* **Delete every existing record named `www`**: `A`, `AAAA`, `CNAME`, and anything else such as `TXT` or `MX` on `www`. They're all in your step 1 notes, for rollback.
 - [x] *(Done 2026-11-12, in both zones.)* **Add** one `CNAME`, with the same low TTL as step 2:
