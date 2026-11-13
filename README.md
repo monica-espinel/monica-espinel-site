@@ -146,6 +146,8 @@ python3 -I scripts/fetch_external_images.py source/monicaespinel.WordPress.2026-
 python3 -I scripts/make_redirects.py
 ```
 
+`wp_to_hugo.py` also applies `scripts/link_fixes.py`, which replaces or removes links to pages other sites have taken down. Add new dead links there, then run `python3 -I scripts/link_fixes.py content` to fix the committed content too.
+
 Replace the file name with the name of your new export. Commit the regenerated `content/`, `migration/` and `static/` output; never commit the export.
 
 ## Repository settings

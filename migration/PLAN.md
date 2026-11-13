@@ -259,12 +259,18 @@ Acceptance checks:
   and `python3 -I scripts/wp_to_hugo.py source/monicaespinel.WordPress.2026-11-11.xml content`, check the five
   portraits, and commit. Until then the post keeps the original (broken) image addresses.
 - `brooklynrail.org` was allowed in the environment for this and is no longer needed; it can be removed.
-- **Link check (2026-11-13, `scripts/check_links.py`):** 407 built pages, 0 broken internal links, images or
-  anchors; every sitemap and RSS URL exists. Unknown URLs get `404.html` (links to home and search). Of 31
-  external links, 2 load (the Brooklyn Rail event pages, which now redirect from `/events/` to `/event/`),
-  5 are the speaker photos above, and 24 could not be checked because the cloud environment's network blocks
-  their hosts. **To finish:** run `python3 -I scripts/check_links.py --external public` from a normal
-  connection and fix or remove whatever it reports as broken or moved.
+- **Link check (2026-11-13, `scripts/check_links.py --external --wayback`):** 407 built pages, 0 broken
+  internal links, images or anchors; every sitemap and RSS URL exists. Unknown URLs get `404.html` (links to
+  home and search). Dead external links fixed in `scripts/link_fixes.py` (applied to `content/` and by
+  `wp_to_hugo.py`): ISLAA Vistas 8 moved to `islaa.org/publications/vistas-8/`; the frozen Podbean episode page
+  now points to the same episode on Apple Podcasts; the removed Deutsche Bank page link dropped (the catalogue
+  PDF stays); the deleted Vimeo video 468397255 removed from `/spring-2020-international-artists-in-residence-talk/`;
+  4 Brooklyn Rail photos now load from the Internet Archive (interim, until stored locally), and Tony Bechara's
+  photo, with no archive copy, is removed.
+  **Still to check in a browser:** Vimeo 466668429 on `/ana-mercedes-hoyos/` (403, gone from Vimeo's oEmbed,
+  likely private or deleted), Vimeo 761603460 (401 to scripts; its oEmbed works), the UMD symposium page
+  (certificate error from the cloud container), the 4 archive photos (web.archive.org resets connections from
+  the container), and MoMA, El Museo del Barrio and Artpace (they refuse scripts).
 
 ## Open questions for the owner
 1. ~~Contact `mailto:` address~~: resolved, no `mailto:` link; Formspree only (owner decision).
