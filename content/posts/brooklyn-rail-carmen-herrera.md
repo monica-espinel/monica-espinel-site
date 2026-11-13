@@ -51,7 +51,7 @@ Art critic and poet **Raphael Rubinstein** is the author of numerous books inclu
 
 ### Tyhe Cooper
 
-<!-- Photo: The Brooklyn Rail, via the Internet Archive (snapshot 2022-03-02); the original brooklynrail.org/media/files/ link is gone. TODO: store a local copy (web.archive.org was unreachable from the cloud session). -->
-{{< figure src="https://web.archive.org/web/20220302205400im_/https://brooklynrail.org/media/files/tyhe-cooper.jpeg?nf_resize=smartcrop&w=130&h=130" alt="A portrait of Tyhe Cooper" >}}
+<!-- Photo: The Brooklyn Rail, Tyhe Cooper's speaker photo on the event page https://brooklynrail.org/event/2022/09/21/the-poem-writes-itself-a-rail-reading-curated-by-tyhe-cooper/ (downloaded 2026-11-13; the original brooklynrail.org/media/files/ link is gone). -->
+{{< figure src="/images/brooklyn-rail/tyhe-cooper.jpg" alt="A portrait of Tyhe Cooper" >}}
 
 Brooklyn-based writer **Tyhe Cooper** works in experimental prose, poetry, and digitality. They maintain a focus in the treacheries of autonomous hands, outer space, and AI. They graduated from Pratt Institute in 2021 with a BFA in writing, and are currently working on a hybrid novel.
