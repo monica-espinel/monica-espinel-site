@@ -21,8 +21,6 @@ February 12 - May 14, 2018
 
 Central to the artist’s practice is a strong interest in history, the legacy of colonialism and a quest for their roots. Combining both new and historical sources and materials, the artists employ hybridity not only as a conceptual framework but also as a way to blur the boundaries across different media to address questions of identity, invisibility and otherness. Artists like Carlos Castro Arias, William Cordova and María Elvira Escallón bring symbols from the past into the present, collapsing temporalities to signal the cultural hybridity and diversity of Latin America’s people, and a modern vernacular forged by shared co-existence.
 
-More information: [https://www.db.com/us/content/en/1108.html](https://www.db.com/us/content/en/1108.html "https://www.db.com/us/content/en/1108.html")
-
 [Hybrid Topographies Catalogue](/wp-content/uploads/2020/03/DB_2018_HybridTopographies_Catalogue_v17_FINALsm.pdf)
 
 {{< gallery >}}
