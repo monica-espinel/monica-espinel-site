@@ -196,7 +196,7 @@ These are the values to restore if you roll back:
   - Both `google._domainkey` and `default._domainkey` now match the step 0c values character for character, as one record each.
   - Checked at `ns11` and `ns12.domaincontrol.com`, at Bluehost, and through `8.8.8.8` and `1.1.1.1`.
   - The `A`, `MX`, SPF/verification `TXT` and `www` records are unchanged.
-  - Still to do: check DKIM in Google Workspace admin (step 5 below).
+  - **Google Workspace admin confirms it (owner's screenshot, 2026-11-12):** Apps → Gmail → Authenticate email shows "Status: Authenticating email with DKIM" for monicaespinel.com, and the key it shows matches the published `google._domainkey`. Don't click "Generate new record" or "Stop authentication". The "You must update the DNS records" text on that page is Google's standing setup note.
 - **Fix the two DKIM records at GoDaddy (owner, before the cutover), done, kept for reference:**
   - **The problem:** in GoDaddy's zone, both keys have the three characters `" "` (quote, space, quote) inside them:
     - `google._domainkey`: between `…N2C2` and `eyP8g…`
