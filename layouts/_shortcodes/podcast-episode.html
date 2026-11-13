@@ -1,5 +1,8 @@
-{{/* Jetpack podcast player block: one episode from the show's feed, as a native audio player. */}}
+{{/* Jetpack podcast player block: one episode from the show's feed, as a native audio player.
+     The caption links to the episode page only when "link" is given. */}}
 <figure class="podcast-episode">
-  <audio controls preload="none" src="{{ .Get "src" }}"></audio>
-  <figcaption><a href="{{ .Get "link" }}">{{ .Get "title" }}</a></figcaption>
+  <audio controls preload="none" src="{{ .Get "src" }}" aria-label="{{ .Get "title" }}"></audio>
+  {{- with .Get "link" }}
+  <figcaption><a href="{{ . }}">{{ $.Get "title" }}</a></figcaption>
+  {{- end }}
 </figure>

@@ -207,9 +207,10 @@ def render_block(name, attrs, children, inner, ctx):
         guids = ", ".join(e.get("guid", "") for e in attrs.get("selectedEpisodes", []))
         eps = [PODCAST_EPISODES.get(e.get("guid", "")) for e in attrs.get("selectedEpisodes", [])]
         if eps and all(eps):
+            # Episode-page and feed links removed (owner decision, 2026-11-13); only the player stays.
             players = ["{{< podcast-episode title=" + sc_attr(e["title"]) + " src=" + sc_attr(e["src"])
-                       + " link=" + sc_attr(e["link"]) + " >}}" for e in eps]
-            return "\n\n".join(players + [f"[Podcast feed]({feed})"])
+                       + " >}}" for e in eps]
+            return "\n\n".join(players)
         ctx.todo(f"Jetpack podcast player (feed {feed}, episode {guids}) replaced by a link to the feed")
         note = (f"TODO: the WordPress page embedded a Jetpack podcast player for episode {guids}. "
                 "Add the episode to PODCAST_EPISODES in scripts/wp_to_hugo.py.")
