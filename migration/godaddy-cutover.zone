@@ -1,0 +1,25 @@
+; Cutover records for monicaespinel.com -> GitHub Pages (import at GoDaddy)
+; Only the records that change. Everything else (MX, TXT, DKIM, ...) stays as it is.
+;
+; BEFORE importing, delete these two records in GoDaddy's DNS Records:
+;   A      @    162.241.252.140
+;   CNAME  www  monicaespinel.com (shown as @)
+; A CNAME can't coexist with another www record, and the old A would keep
+; sending some visitors to WordPress.
+;
+; Rollback: delete these records and put the two above back.
+
+$ORIGIN monicaespinel.com.
+$TTL 600
+
+@    600  IN  A      185.199.108.153
+@    600  IN  A      185.199.109.153
+@    600  IN  A      185.199.110.153
+@    600  IN  A      185.199.111.153
+
+@    600  IN  AAAA   2606:50c0:8000::153
+@    600  IN  AAAA   2606:50c0:8001::153
+@    600  IN  AAAA   2606:50c0:8002::153
+@    600  IN  AAAA   2606:50c0:8003::153
+
+www  600  IN  CNAME  monica-espinel.github.io.
