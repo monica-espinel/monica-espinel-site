@@ -81,7 +81,8 @@ What Google's index showed before the live test:
     | `/category/exhibitions/` (archive) | **Breadcrumbs: 1 valid item** |
 
     Search Console's Breadcrumbs report will catch up as Google recrawls.
-  - The optional author `url` warning doesn't affect eligibility. It could be silenced by giving the author a `url` (for example `/about/` for Monica Espinel). Left as is for now.
+  - **Author warning fixed in pull request #11:** the author entry now links to `/about/` and to the site's `#person` entry. In the same pull request, the owner decided to byline the 5 posts WordPress credited to Simon Letort as Monica Espinel.
+  - **Retest by Claude, 2026-11-12 at about 23:16, after #11 deployed:** `/beats-of-the-sacred-heart/` and `/burning-with-desire/` (one of the 5 rebylined posts) both show **Articles: 1 valid item** and **Breadcrumbs: 1 valid item**, with **no issues**.
 
 **What to expect:**
 - "URL is available to Google".
