@@ -118,12 +118,12 @@ The WordPress site keeps working without them. Its own certificate renews over H
 
 Wait **a full 48 hours** after the switch in 0b. The `.com` registry's pointer to a domain's nameservers is cached for up to 2 days, so until then some visitors' DNS still asks Bluehost. GoDaddy showing the nameservers as "active" only means the registrar has the change, not that everyone uses it.
 
-- [ ] At least 48 hours have passed since 0b.
-- [ ] Public DNS uses GoDaddy: on `https://dns.google`, look up `monicaespinel.com` with type **NS**. The answer must list `ns##.domaincontrol.com`, not `ns1/ns2.bluehost.com`.
-- [ ] `https://monicaespinel.com` still shows the WordPress site, with a valid padlock.
-- [ ] Email to and from the domain works: send one each way.
-- [ ] In Google Workspace admin (Apps → Gmail → Authenticate email), DKIM still shows as authenticating, if you use it.
-- [ ] Optional: an online "DNS lookup" tool (for example Google's `dns.google`) returns the values above for `monicaespinel.com` (`A`, `MX`, `TXT`) and `www` (`CNAME`).
+- [x] *(Superseded: the cutover was made early, in both zones, on 2026-11-12.)* At least 48 hours have passed since 0b.
+- [x] *(Done: on 2026-11-13 the `.com` registry and Google's resolver return `ns11`/`ns12.domaincontrol.com`.)* Public DNS uses GoDaddy: on `https://dns.google`, look up `monicaespinel.com` with type **NS**. The answer must list `ns##.domaincontrol.com`, not `ns1/ns2.bluehost.com`.
+- [x] *(Superseded: the site was cut over to GitHub on 2026-11-12, before 0d.)* `https://monicaespinel.com` still shows the WordPress site, with a valid padlock.
+- [x] *(Done: email tested both ways on 2026-11-12.)* Email to and from the domain works: send one each way.
+- [x] *(Done: Workspace shows "Authenticating email with DKIM", 2026-11-12.)* In Google Workspace admin (Apps → Gmail → Authenticate email), DKIM still shows as authenticating, if you use it.
+- [x] *(Done: Claude checked both zones record by record on 2026-11-12.)* Optional: an online "DNS lookup" tool (for example Google's `dns.google`) returns the values above for `monicaespinel.com` (`A`, `MX`, `TXT`) and `www` (`CNAME`).
 
 Then continue with steps 1–4 and the cutover, all at **GoDaddy**.
 
@@ -236,10 +236,13 @@ These are the values to restore if you roll back:
     - The owner's tick hadn't saved, so Claude turned it on through the Pages API, with the owner's approval.
     - Within minutes, all four GitHub IPs answered `http://monicaespinel.com/` with a 301 to `https://`.
     - `http://www.monicaespinel.com/` ends on `https://monicaespinel.com/`.
-  - **Phase 6 is done:** both addresses load with a valid certificate. Next are the "After cutover" items and the Phase 7 checks.
-- **Next, either:**
-  - **Wait:** step 0d on or after 2026-11-14 at 12:00 (the NS check on `dns.google`, the site still on WordPress, email in both directions), then step 2 and steps 6–10 at GoDaddy only. Until then, don't change anything at Bluehost.
-  - **Or cut over now (owner's choice, 2026-11-12):** steps 2 and 6–10 in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
+  - **Phase 6 is done:** both addresses load with a valid certificate.
+- **Timing decided (owner, 2026-11-12):** rather than wait for step 0d (2026-11-14), the cutover was made the same evening, in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
+- **Phase 7 done (2026-11-12),** except the weekly coverage checks. See [`POST-LAUNCH.md`](POST-LAUNCH.md).
+- **Status on 2026-11-13: what's left** (the open boxes under "After cutover"):
+  1. **Now:** raise the TTL of `@` (`A` and `AAAA`) and `www` at GoDaddy from 600 to 3600. They were still at 600 on 2026-11-13.
+  2. **Until at least 2026-12-12:** keep WordPress (Bluehost) running.
+  3. **Before cancelling Bluehost:** update SPF and remove `default._domainkey` at GoDaddy (see the SPF note).
 
 ---
 
@@ -303,12 +306,12 @@ The WordPress site proves ownership to Google with a `google-site-verification` 
 
 - [x] **Done, nothing to add (owner, 2026-11-12):** the Search Console property `https://monicaespinel.com/` shows **"You are a verified owner"**. The verification method used is **Domain name provider: Successfully verified**, through the existing DNS `TXT` record, now at GoDaddy. The HTML meta tag isn't a method in use, so removing it at cutover changes nothing. Keep both `google-site-verification` records.
 
-**This may already be done:** the zone already has two `google-site-verification` `TXT` records, `AMn5o…` and `wHV2C…`, the second being the same token as the old site's meta tag. In Search Console, open **Settings → Ownership verification** for the monicaespinel.com property(ies). If **Domain name provider** is listed as a verified method, skip to step 5. Either way, never delete those two records.
+**How it was checked** (kept for reference): the zone already has two `google-site-verification` `TXT` records, `AMn5o…` and `wHV2C…`, the second being the same token as the old site's meta tag. In Search Console, open **Settings → Ownership verification** for the monicaespinel.com property(ies). If **Domain name provider** is listed as a verified method, skip to step 5. Either way, never delete those two records.
 
-- [ ] *(Not needed: already verified.)* Otherwise: in Google Search Console, **add a Domain property** for `monicaespinel.com`, or for the existing property open **Settings → Ownership verification → add a method → Domain name provider**. Google shows a value like `google-site-verification=…`.
-- [ ] At the DNS provider, **add** a `TXT` record on the apex (`@`) with that value.
+- [x] *(Not needed: already verified.)* Otherwise: in Google Search Console, **add a Domain property** for `monicaespinel.com`, or for the existing property open **Settings → Ownership verification → add a method → Domain name provider**. Google shows a value like `google-site-verification=…`.
+- [x] *(Not needed: already verified.)* At the DNS provider, **add** a `TXT` record on the apex (`@`) with that value.
   - **Add a new record, don't edit an existing one:** the apex may already have an SPF `TXT` record (`v=spf1 …`) for email, and it must stay.
-- [ ] In Search Console, click **Verify**.
+- [x] *(Not needed: already verified.)* In Search Console, click **Verify**.
 
 A Domain property covers `http`, `https`, `www` and the apex in one place.
 
@@ -332,9 +335,9 @@ To cut over earlier anyway, make **steps 2, 6 and 7 identically in both zones**,
 | GoDaddy **and** Bluehost | `www` `CNAME` `monicaespinel.com` | Change to `monica-espinel.github.io` (step 7) |
 | GoDaddy **and** Bluehost | TTL of `@` and `www` | The lowest each allows (step 2) |
 
-- [ ] **GoDaddy:** steps 2, 6 and 7.
-- [ ] **Bluehost:** Domains → monicaespinel.com → **DNS** (Zone Editor), the same three changes. Change nothing else there: `MX`, `TXT`, DKIM and the other `A` records (`cpanel`, `webmail` and so on) stay as they are.
-- [ ] Then steps 8–10 as usual.
+- [x] *(Done 2026-11-12, by importing `godaddy-cutover.txt`.)* **GoDaddy:** steps 2, 6 and 7.
+- [x] *(Done 2026-11-12. Claude checked `ns1.bluehost.com` afterwards.)* **Bluehost:** Domains → monicaespinel.com → **DNS** (Zone Editor), the same three changes. Change nothing else there: `MX`, `TXT`, DKIM and the other `A` records (`cpanel`, `webmail` and so on) stay as they are.
+- [x] *(Done 2026-11-12.)* Then steps 8–10 as usual.
 
 **Rollback also needs both zones** until 2026-11-14: put back `@` `A` `162.241.252.140` and `www` `CNAME` `monicaespinel.com` in each. After that date, Bluehost's zone no longer matters.
 
@@ -357,9 +360,9 @@ From now on, the github.io project address redirects to `monicaespinel.com`, whi
 
 ### 6. Point the apex to GitHub Pages
 
-- [ ] **Delete** the apex `A` record(s) that point to the WordPress host.
-- [ ] **Delete** any `ALIAS`, `ANAME` or `CNAME` record on the apex (step 1). It conflicts with the new `A` records: the provider either refuses them, or keeps sending some visitors to WordPress.
-- [ ] **Add four** `A` records for the apex (`@`), with the same low TTL as step 2:
+- [x] *(Done 2026-11-12, in both zones.)* **Delete** the apex `A` record(s) that point to the WordPress host.
+- [x] *(Not needed: there was none.)* **Delete** any `ALIAS`, `ANAME` or `CNAME` record on the apex (step 1). It conflicts with the new `A` records: the provider either refuses them, or keeps sending some visitors to WordPress.
+- [x] *(Done 2026-11-12, in both zones.)* **Add four** `A` records for the apex (`@`), with the same low TTL as step 2:
 
 | Type | Name | Value |
 |---|---|---|
@@ -368,7 +371,7 @@ From now on, the github.io project address redirects to `monicaespinel.com`, whi
 | A | @ | `185.199.110.153` |
 | A | @ | `185.199.111.153` |
 
-- [ ] **If the apex had `AAAA` records** pointing to the WordPress host, delete them. Then either leave IPv6 out, or (recommended by GitHub) add these four `AAAA` records:
+- [x] *(Done: the apex had no `AAAA` records. GitHub's four `AAAA` records were added at GoDaddy.)* **If the apex had `AAAA` records** pointing to the WordPress host, delete them. Then either leave IPv6 out, or (recommended by GitHub) add these four `AAAA` records:
 
 | Type | Name | Value |
 |---|---|---|
@@ -383,10 +386,10 @@ Never leave old `AAAA` records pointing to WordPress next to the new `A` records
 
 A `CNAME` can't share its name with any other record, so clear `www` first.
 
-Today `www` is a `CNAME` to `monicaespinel.com`, and nothing else is on `www`.
+Before the cutover, `www` was a `CNAME` to `monicaespinel.com`, with nothing else on `www`. Since 2026-11-12 it is a `CNAME` to `monica-espinel.github.io`, in both zones.
 
-- [ ] **Delete every existing record named `www`**: `A`, `AAAA`, `CNAME`, and anything else such as `TXT` or `MX` on `www`. They're all in your step 1 notes, for rollback.
-- [ ] **Add** one `CNAME`, with the same low TTL as step 2:
+- [x] *(Done 2026-11-12: the only `www` record was the `CNAME`.)* **Delete every existing record named `www`**: `A`, `AAAA`, `CNAME`, and anything else such as `TXT` or `MX` on `www`. They're all in your step 1 notes, for rollback.
+- [x] *(Done 2026-11-12, in both zones.)* **Add** one `CNAME`, with the same low TTL as step 2:
 
 | Type | Name | Value |
 |---|---|---|
@@ -398,9 +401,9 @@ If the provider refuses the `CNAME` with an error like "conflicts with an existi
 
 ### 8. Wait for the DNS check and the certificate, then turn on HTTPS
 
-- [ ] In **Settings → Pages**, click **Check again** until it shows **"DNS check successful"**. That takes minutes to a few hours after steps 6–7, depending on the old TTL.
-- [ ] Wait until the Pages settings show the certificate as issued. Until then, the **Enforce HTTPS** box is greyed out with a message about the certificate.
-- [ ] Tick **Enforce HTTPS**.
+- [x] *(Done 2026-11-12: "DNS check successful".)* In **Settings → Pages**, click **Check again** until it shows **"DNS check successful"**. That takes minutes to a few hours after steps 6–7, depending on the old TTL.
+- [x] *(Done 2026-11-12: a Let's Encrypt certificate, valid until 2027-02.)* Wait until the Pages settings show the certificate as issued. Until then, the **Enforce HTTPS** box is greyed out with a message about the certificate.
+- [x] *(Done 2026-11-12, set through the Pages API with the owner's approval.)* Tick **Enforce HTTPS**.
 
 **Expect a short window of certificate warnings. This is normal: don't roll back because of it.** From the moment DNS points to GitHub until the certificate for monicaespinel.com is issued (usually under an hour, at most 24 hours), `https://monicaespinel.com` shows a "Your connection is not private" warning, because GitHub briefly serves its generic certificate. Plain `http://` works during that time for most visitors.
 
@@ -432,23 +435,23 @@ Don't just wait the full 24 hours. Go through the usual causes:
 
 ### 9. Confirm email is untouched
 
-- [ ] The `MX` records are exactly as written down in step 1.
-- [ ] The SPF `TXT` record (`v=spf1 …`) and any DKIM records are still there.
-- [ ] Send yourself an email at the domain's address and check it arrives.
+- [x] *(Done: checked by Claude in both zones, 2026-11-12.)* The `MX` records are exactly as written down in step 1.
+- [x] *(Done: SPF unchanged, and both DKIM keys match exactly.)* The SPF `TXT` record (`v=spf1 …`) and any DKIM records are still there.
+- [x] *(Done: on 2026-11-12, after the cutover, a contact-form message was delivered to the domain's mailbox.)* Send yourself an email at the domain's address and check it arrives.
 
 ### 10. Check that it works (Phase 6 is done when both load)
 
 Use a private browser window, and phone data if possible, so no cached WordPress pages show.
 
-- [ ] `https://monicaespinel.com` loads the new site with a valid padlock, without certificate warnings.
-- [ ] `https://www.monicaespinel.com` loads with a valid padlock and ends up on `https://monicaespinel.com`.
-- [ ] `http://monicaespinel.com` redirects to `https://`.
-- [ ] Spot checks:
+- [x] *(Done 2026-11-12.)* `https://monicaespinel.com` loads the new site with a valid padlock, without certificate warnings.
+- [x] *(Done 2026-11-12: 301 to the apex.)* `https://www.monicaespinel.com` loads with a valid padlock and ends up on `https://monicaespinel.com`.
+- [x] *(Done 2026-11-12, once Enforce HTTPS was on.)* `http://monicaespinel.com` redirects to `https://`.
+- [x] *(Done 2026-11-12: all 405 inventory URLs checked with `scripts/check_live.py`.)* Spot checks:
   - a post, for example `https://monicaespinel.com/beats-of-the-sacred-heart/`
   - an old URL, for example `https://monicaespinel.com/page/2/`, which should land on the homepage
   - `https://monicaespinel.com/feed/`, which should land on the RSS feed
   - the search page
-- [ ] **Tell Claude** both addresses load with a valid certificate. That's the brief's acceptance check for this phase.
+- [x] *(Done 2026-11-12: Phase 6 accepted.)* **Tell Claude** both addresses load with a valid certificate. That's the brief's acceptance check for this phase.
 
 How do you tell the new site from WordPress? The new site's footer has "To the top ↑" but no "Powered by WordPress".
 
@@ -457,7 +460,7 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 ## After cutover
 
 - [ ] Once everything has worked for a day or two, raise the TTL again (for example to 3600).
-- [ ] Phase 7 checks: submit the sitemap, URL inspection, a search on the live site, GA4 Realtime, and a test contact message. See [`POST-LAUNCH.md`](POST-LAUNCH.md).
+- [x] *(Done 2026-11-12: everything in `POST-LAUNCH.md` except the weekly coverage checks.)* Phase 7 checks: submit the sitemap, URL inspection, a search on the live site, GA4 Realtime, and a test contact message. See [`POST-LAUNCH.md`](POST-LAUNCH.md).
 - [ ] Keep WordPress running for **at least 30 days** after cutover (brief: Rollback).
   - Its admin is no longer reachable at `monicaespinel.com/wp-admin`, because that now goes to GitHub.
   - If you need it, use the host's own temporary address or control panel.
@@ -465,7 +468,7 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
   1. Check that GoDaddy's nameservers are active and the zone matches step 0c, now with GitHub's `A` and `www` records.
   2. Ideally, have whoever manages the email update SPF to `v=spf1 include:_spf.google.com ~all` and remove `default._domainkey` at GoDaddy (see the SPF note).
   3. Then cancel the Bluehost plan.
-- [ ] **Formspree:** if reCAPTCHA is on in the form settings, turn it off to get the inline thank-you message. The honeypot covers spam. Messages arrive either way.
+- [x] *(Not needed: no reCAPTCHA appeared, and the inline thank-you message shows.)* **Formspree:** if reCAPTCHA is on in the form settings, turn it off to get the inline thank-you message. The honeypot covers spam. Messages arrive either way.
 
 ---
 
