@@ -259,6 +259,12 @@ Acceptance checks:
   and `python3 -I scripts/wp_to_hugo.py source/monicaespinel.WordPress.2026-11-11.xml content`, check the five
   portraits, and commit. Until then the post keeps the original (broken) image addresses.
 - `brooklynrail.org` was allowed in the environment for this and is no longer needed; it can be removed.
+- **Link check (2026-11-13, `scripts/check_links.py`):** 407 built pages, 0 broken internal links, images or
+  anchors; every sitemap and RSS URL exists. Unknown URLs get `404.html` (links to home and search). Of 31
+  external links, 2 load (the Brooklyn Rail event pages, which now redirect from `/events/` to `/event/`),
+  5 are the speaker photos above, and 24 could not be checked because the cloud environment's network blocks
+  their hosts. **To finish:** run `python3 -I scripts/check_links.py --external public` from a normal
+  connection and fix or remove whatever it reports as broken or moved.
 
 ## Open questions for the owner
 1. ~~Contact `mailto:` address~~: resolved, no `mailto:` link; Formspree only (owner decision).

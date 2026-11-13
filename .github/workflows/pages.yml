@@ -112,6 +112,11 @@ jobs:
           echo "Pagefind indexed $pages of $expected searchable pages"
           test "$expected" -gt 0 && test "$pages" -eq "$expected" || { echo "::error::Pagefind indexed $pages pages, but the build has $expected searchable pages"; exit 1; }
 
+      # Every internal link, image and #anchor must exist. Runs here, after Pagefind, because the
+      # search page loads /pagefind/ files. External links are checked by hand (--external).
+      - name: Check for broken internal links
+        run: python3 -I scripts/check_links.py public
+
       - name: Upload the site for GitHub Pages
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:

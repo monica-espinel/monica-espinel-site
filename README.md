@@ -99,6 +99,16 @@ npx --yes pagefind@latest --site public
 
 CI also checks that Pagefind wrote `pagefind-ui.js` and `pagefind-ui.css`, and that it indexed exactly as many pages as the build marked for search: posts and pages, which carry `data-pagefind-body`. That's 40 today. There's no fixed number, so removing a post doesn't break deploys.
 
+5. Check for broken links (every internal link, image and `#anchor`; CI runs this too):
+
+```bash
+python3 -I scripts/check_links.py public
+```
+
+Add `--external` to also fetch every link to other sites. CI doesn't do this, because other sites go down without warning. Run it now and then, from a machine with normal internet access. It lists each external link as broken (an error, or a 4xx/5xx status), moved (it redirects to another site or to a much shorter address, which usually means the page is gone), or blocked (it never reached the site).
+
+Unknown addresses on the live site show `404.html`, which links to the home page and to search.
+
 The search page (`/search/`) only works after Pagefind has run. `hugo server` doesn't build the search index.
 
 ### Deployment
