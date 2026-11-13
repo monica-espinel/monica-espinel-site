@@ -24,8 +24,6 @@ FIXES = [
     # on the next line of the post covers the same exhibition.
     ('More information: [https://www.db.com/us/content/en/1108.html]'
      '(https://www.db.com/us/content/en/1108.html "https://www.db.com/us/content/en/1108.html")\n\n', ""),
-    # The Vimeo video was deleted (player and oEmbed both 404, no archive copy).
-    ('{{< video-embed provider="vimeo" id="468397255" >}}', ""),
 ]
 
 

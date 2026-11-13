@@ -263,17 +263,16 @@ Acceptance checks:
   internal links, images or anchors; every sitemap and RSS URL exists. Unknown URLs get `404.html` (links to
   home and search). Dead external links fixed:
   - ISLAA Vistas 8 moved to `islaa.org/publications/vistas-8/` (#17); the Deutsche Bank exhibition page link
-    removed, the catalogue PDF stays (#18); the deleted Vimeo video 468397255 removed from
-    `/spring-2020-international-artists-in-residence-talk/`. `scripts/link_fixes.py` applies these on every
-    conversion run.
+    removed, the catalogue PDF stays (#18). `scripts/link_fixes.py` applies both on every conversion run.
   - Brooklyn Rail speaker photos: stored in `static/images/brooklyn-rail/` from Brooklyn Rail's event pages and
     mapped in `migration/external-images.json` (#19). Resolves the open issue above.
   - Parcharte: episode-page and feed links removed (owner decision, #15).
   **Still to check in a browser:** Vimeo 466668429 on `/ana-mercedes-hoyos/` (403, unknown to Vimeo's oEmbed,
   likely private or deleted), Vimeo 761603460 (401 to scripts; its oEmbed works), the UMD symposium page
   (certificate error from the cloud container), and MoMA, El Museo del Barrio and Artpace (they refuse scripts).
-  **Open question:** `/spring-2020-international-artists-in-residence-talk/` is now one sentence, because the
-  video was the whole post: keep, link to Artpace instead, or unpublish?
+  **Open, separate draft PR:** the Vimeo video 468397255 on `/spring-2020-international-artists-in-residence-talk/`
+  was deleted (player and oEmbed both 404, no archive copy). It is the whole post apart from one sentence: remove
+  the player and keep the sentence, link to Artpace instead, or unpublish?
 
 ## Open questions for the owner
 1. ~~Contact `mailto:` address~~: resolved, no `mailto:` link; Formspree only (owner decision).
