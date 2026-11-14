@@ -240,7 +240,7 @@ These are the values to restore if you roll back:
 - **Timing decided (owner, 2026-11-12):** rather than wait for step 0d (2026-11-14), the cutover was made the same evening, in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
 - **Phase 7 done (2026-11-12),** except the weekly coverage checks. See [`POST-LAUNCH.md`](POST-LAUNCH.md).
 - **Status on 2026-11-13: what's left** (the open boxes under "After cutover"):
-  1. **Now:** raise the TTL of `@` (`A` and `AAAA`) and `www` at GoDaddy from 600 to 3600. They were still at 600 on 2026-11-13.
+  1. ~~**Now:** raise the TTL of `@` (`A` and `AAAA`) and `www` at GoDaddy from 600 to 3600.~~ Done by the owner on 2026-11-14 (1 hour).
   2. **Until at least 2026-12-12:** keep WordPress (Bluehost) running.
   3. **Before cancelling Bluehost:** update SPF and remove `default._domainkey` at GoDaddy (see the SPF note).
 
@@ -459,7 +459,7 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 
 ## After cutover
 
-- [ ] Once everything has worked for a day or two, raise the TTL again (for example to 3600).
+- [x] *(Done by the owner, 2026-11-14: `@` `A`, `@` `AAAA` and `www` `CNAME` at GoDaddy set to 1 hour.)* Once everything has worked for a day or two, raise the TTL again (for example to 3600).
 - [x] *(Done 2026-11-12: everything in `POST-LAUNCH.md` except the weekly coverage checks.)* Phase 7 checks: submit the sitemap, URL inspection, a search on the live site, GA4 Realtime, and a test contact message. See [`POST-LAUNCH.md`](POST-LAUNCH.md).
 - [ ] Keep WordPress running for **at least 30 days** after cutover (brief: Rollback).
   - Its admin is no longer reachable at `monicaespinel.com/wp-admin`, because that now goes to GitHub.
