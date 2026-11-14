@@ -7,6 +7,6 @@
   </header>
   {{ range $i, $p := .Pages }}
     {{ if $i }}<hr class="post-separator styled-separator is-style-wide section-inner" aria-hidden="true">{{ end }}
-    {{ partial "post-summary.html" $p }}
+    {{ partial "post-summary.html" (dict "page" $p "eager" (eq $i 0)) }}
   {{ end }}
 {{ end }}
