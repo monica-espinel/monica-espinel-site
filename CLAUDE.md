@@ -11,7 +11,7 @@ You are building and deploying a static version of monicaespinel.com, a blog and
 | Domain | `monicaespinel.com` (apex and `www`), `baseURL = "https://monicaespinel.com/"` |
 | Contact form | Formspree. Endpoint: `https://formspree.io/f/xdegodvq` |
 | Search | Pagefind, built after `hugo --minify`, output into `public/pagefind/` |
-| Analytics | GA4, measurement ID `G-ZR270JS8ZG`, via Hugo's built-in Google Analytics partial |
+| Analytics | GA4, measurement ID `G-ZR270JS8ZG`, via `layouts/_partials/analytics.html` (loads gtag.js after the page has loaded) |
 | Hosting | GitHub Pages, deployed by `.github/workflows/pages.yml` |
 
 ## Goals
@@ -66,7 +66,7 @@ The site's meta description: "Monica Espinel is a curator and writer specialized
 ## Phase 3: Templates and SEO
 
 - Base template `<head>` includes: `<title>`, meta description, canonical link, Open Graph and Twitter tags (`summary` card), `robots` meta, favicon, and the GA4 partial.
-- In `hugo.toml`, set `googleAnalytics = "G-ZR270JS8ZG"` and include `{{ template "_internal/google_analytics.html" . }}` in the head.
+- In `hugo.toml`, set `googleAnalytics = "G-ZR270JS8ZG"`. The head includes `layouts/_partials/analytics.html`, not Hugo's `_internal/google_analytics.html`: the owner decided on 2026-11-14 to load gtag.js only after the page has loaded, for page speed. The partial also loads nothing on hosts other than the production domain.
 - Generate `sitemap.xml` (Hugo default) and `robots.txt` that points to it.
 - RSS at `/index.xml`. Add an alias so `/feed/` also works.
 - Contact page (`/contact/`): form posts to `https://formspree.io/f/xdegodvq`, includes a honeypot field, and shows a success message. No `mailto:` link: the owner decided not to publish an email address on the site.
