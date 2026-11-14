@@ -27,4 +27,5 @@ Friday October 9, 2020
 12 pm NYC | 5 pm London
 Held via ZOOM
 
-{{< video-embed provider="vimeo" id="466668429" >}}
+<!-- Recording: Vimeo 466668429 (Henrique Faria), unavailable since at least 2026-11-14. Restore with {{</* video-embed provider="vimeo" id="466668429" */>}} if it plays again. -->
+More information: [Frieze](https://www.frieze.com/event/digital-event-henrique-faria-virtual-conversation-about-ana-mercedes-hoyos-rainbow-series)

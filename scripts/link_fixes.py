@@ -24,6 +24,22 @@ FIXES = [
     # on the next line of the post covers the same exhibition.
     ('More information: [https://www.db.com/us/content/en/1108.html]'
      '(https://www.db.com/us/content/en/1108.html "https://www.db.com/us/content/en/1108.html")\n\n', ""),
+    # Artpace dropped its Spring 2020 IAIR page (it redirects to the generic Exhibitions Archive).
+    # Each artist now has a page; all three say "In Residence: Jan 27 – Mar 23, 2020" (checked 2026-11-14).
+    ('More information: [https://www.artpace.org/exhibitions/iair](https://www.artpace.org/exhibitions/iair/iair_spring_2020 '
+     '"https://www.artpace.org/exhibitions/iair/iair_spring_2020")',
+     "More information: "
+     "[Carlos Castro Arias](https://artpace.org/exhibitions/i-came-to-set-the-world-on-fire-and-i-wish-it-were-already-kindled-luke-1249-2/) · "
+     "[Milagros de la Torre](https://artpace.org/exhibitions/systems-and-constellations/) · "
+     "[Daniel Ramos](https://artpace.org/exhibitions/the-land-of-illustrious-men/)"),
+    # The Vimeo recording of the Ana Mercedes Hoyos talk no longer plays ("This video isn't
+    # available. The owner has been notified.", 2026-11-14; no other copy found). Frieze's listing
+    # of the same event replaces it; the comment keeps the ID in case the video comes back.
+    ('{{< video-embed provider="vimeo" id="466668429" >}}',
+     '<!-- Recording: Vimeo 466668429 (Henrique Faria), unavailable since at least 2026-11-14. '
+     'Restore with {{</* video-embed provider="vimeo" id="466668429" */>}} if it plays again. -->\n'
+     "More information: [Frieze](https://www.frieze.com/event/"
+     "digital-event-henrique-faria-virtual-conversation-about-ana-mercedes-hoyos-rainbow-series)"),
 ]
 
 
