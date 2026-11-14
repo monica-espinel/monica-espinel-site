@@ -41,4 +41,4 @@ Daniel Ramos exhibited *The Land of Illustrious Men* at Filter Space, Chicago in
 
 Ramos graduated from Columbia College Chicago with a B.F.A. in Photography in 2003 and studied for an M.F.A. at California College of the Arts in 2007.
 
-More information: [https://www.artpace.org/exhibitions/iair](https://www.artpace.org/exhibitions/iair/iair_spring_2020 "https://www.artpace.org/exhibitions/iair/iair_spring_2020")
+More information: [Carlos Castro Arias](https://artpace.org/exhibitions/i-came-to-set-the-world-on-fire-and-i-wish-it-were-already-kindled-luke-1249-2/) · [Milagros de la Torre](https://artpace.org/exhibitions/systems-and-constellations/) · [Daniel Ramos](https://artpace.org/exhibitions/the-land-of-illustrious-men/)
