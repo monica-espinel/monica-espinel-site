@@ -198,6 +198,20 @@ python3 -I scripts/check_links.py public
 
 Add `--external` to also fetch every link to other sites. CI doesn't do this, because other sites go down without warning. Run it now and then from a normal internet connection. It lists each external link as broken (an error, or a 4xx/5xx status), moved (it redirects to another site or to a much shorter address, which usually means the page is gone), check (the site refused the script, so open it in a browser), or blocked (it never reached the site). Add `--wayback` to also look up an Internet Archive copy of each broken or moved link. Run it on a production build, not on the output of `hugo server`; the script refuses that one.
 
+### Linked videos, audio and pages on other sites
+
+[`data/media.json`](data/media.json) lists every video, audio file and page on another site that a post links to or embeds (plan: [`migration/MEDIA-BACKUP.md`](migration/MEDIA-BACKUP.md)). After adding or changing a post with such a link, update the list, then check every item still exists (needs the network, not run in CI):
+
+```bash
+python3 -I scripts/check_media.py sync
+```
+
+```bash
+python3 -I scripts/check_media.py check
+```
+
+`check` prints ok, check (the site refused the script; open it in a browser), unavailable (a video that exists but no longer plays) or gone, for each item.
+
 Unknown addresses on the live site show `404.html`, which links to the home page and to search.
 
 To run the same address check against the live site, over the network:

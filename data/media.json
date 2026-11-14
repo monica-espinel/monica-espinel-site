@@ -1,0 +1,162 @@
+{
+  "https://arthistory.umd.edu/events/symposium-recastrefundiciones-presences-and-processes-latin-american-sculpture": {
+    "kind": "page",
+    "posts": [
+      "burning-with-desire"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://artpace.org/spring-2020-international-artist-in-residence-talk-2/": {
+    "kind": "page",
+    "posts": [
+      "spring-2020-international-artists-in-residence-talk"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://brooklynrail.org/events/2022/06/07/the-1970s-part-1-carmen-herrera-at-lisson": {
+    "kind": "page",
+    "posts": [
+      "brooklyn-rail-carmen-herrera"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://brooklynrail.org/events/2023/01/09/juan-francisco-elso-por-america/": {
+    "kind": "page",
+    "posts": [
+      "juan-francisco-elso-por-america"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://islaa.org/publications/vistas-8/": {
+    "kind": "page",
+    "posts": [
+      "embodying-the-abject-maria-evelia-marmolejos-anonimo-4"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://mcdn.podbean.com/mf/web/3i5wpv/Duet_of_Displacement.mp3": {
+    "kind": "audio",
+    "posts": [
+      "parcharte"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://music.amazon.com/podcasts/a66604fe-ef8e-4a7a-925a-60f393214ccf": {
+    "kind": "page",
+    "posts": [
+      "parcharte"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://open.spotify.com/show/6BlcjGCZf2R88PXzGIzGuC?si=ME0gFq8cQFGkdI71y3oR2g&nd=1": {
+    "kind": "page",
+    "posts": [
+      "parcharte"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://podcasts.apple.com/us/podcast/parcharte/id1602470370?i=1000546394552": {
+    "kind": "page",
+    "posts": [
+      "parcharte"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://vimeo.com/466668429": {
+    "kind": "video",
+    "posts": [
+      "ana-mercedes-hoyos"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://vimeo.com/761603460": {
+    "kind": "video",
+    "posts": [
+      "remembering-carmen-herrera-whitney-museum"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.artforum.com/picks/rosemberg-sandoval-48147": {
+    "kind": "page",
+    "posts": [
+      "rosemberg-sandoval-artforum"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.artpace.org/exhibitions/iair/iair_spring_2020": {
+    "kind": "page",
+    "posts": [
+      "artpace-international-artist-in-residence-program"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.breadandsaltsandiego.com/": {
+    "kind": "page",
+    "posts": [
+      "carlos-castro-arias-remorses-and-other-maladies"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.collegeart.org/pdf/conference/111th-CAA-Annual-Conference-Program-Schedule.pdf": {
+    "kind": "pdf",
+    "posts": [
+      "xocomil-vivian-suters-salute-to-the-wind"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.elmuseo.org/event/ah-herrera/": {
+    "kind": "page",
+    "posts": [
+      "el-museo-del-barrio-celebrates-carmen-herrera-105-birthday"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.moma.org/magazine/articles/1041": {
+    "kind": "page",
+    "posts": [
+      "beats-of-the-sacred-heart"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.tatianaarocha.com/belleza-inminente": {
+    "kind": "page",
+    "posts": [
+      "impending-beauty-resilience-and-resignification-in-tatiana-arochas-forests-of-the-mind"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.youtube.com/watch?v=q4gg6U4ug6M": {
+    "kind": "video",
+    "posts": [
+      "brooklyn-rail-carmen-herrera"
+    ],
+    "status": "live",
+    "serve_copy": false
+  },
+  "https://www.youtube.com/watch?v=wyCdwsBQdao": {
+    "kind": "video",
+    "posts": [
+      "el-museo-del-barrio-celebrates-carmen-herrera-105-birthday"
+    ],
+    "status": "live",
+    "serve_copy": false
+  }
+}

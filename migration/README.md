@@ -89,6 +89,7 @@ Replace the file name with the name of your export. Review the diff of `content/
 | `scripts/check_live.py` | The same check against the live site, over the network |
 | `scripts/link_fixes.py` | Replaces or removes links to pages other sites have taken down; `wp_to_hugo.py` applies it |
 | `scripts/check_links.py` | Checks every link in a build (`public/`); `--external` also checks links to other sites. Run in CI. |
+| `scripts/check_media.py` | Keeps `data/media.json`, the list of videos, audio and pages on other sites that posts link to (`sync`), and checks they still exist (`check`). See `MEDIA-BACKUP.md`. |
 
 ## Repository history
 
