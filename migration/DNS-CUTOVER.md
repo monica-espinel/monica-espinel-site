@@ -243,6 +243,7 @@ These are the values to restore if you roll back:
   1. ~~**Now:** raise the TTL of `@` (`A` and `AAAA`) and `www` at GoDaddy from 600 to 3600.~~ Done by the owner on 2026-11-14 (1 hour).
   2. **Until at least 2026-12-12:** keep WordPress (Bluehost) running.
   3. **Before cancelling Bluehost:** update SPF and remove `default._domainkey` at GoDaddy (see the SPF note).
+- **GoDaddy zone export, 2026-11-14 (checked by Claude):** every record at TTL 3600, GitHub's `A`/`AAAA` and `www`, Google `MX` unchanged, both `google-site-verification`, `google._domainkey` and both GitHub challenge records present. The only Bluehost leftovers are the SPF value (`+a +mx +ip4:162.241.252.140 +include:websitewelcome.com`) and `default._domainkey`: change those two before cancelling Bluehost.
 
 ---
 
