@@ -23,6 +23,7 @@ from markdownify import markdownify
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # -I leaves the script dir off sys.path
 from wxr import NS, ROOT, channel, description, is_published, meta, raw, t  # noqa: E402
+from link_fixes import apply as fix_dead_links  # noqa: E402
 
 # WordPress builds automatic excerpts from these blocks only (images, galleries, embeds are
 # dropped), cut at 55 words + " […]" (wp_trim_excerpt). The archive pages show that excerpt.
@@ -337,7 +338,9 @@ def main(src, out_dir):
         front["wordpress_id"] = int(t(i, "wp:post_id"))
 
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(dump(front, body), encoding="utf-8")
+        # Links to pages other sites have removed: replaced or dropped (scripts/link_fixes.py).
+        text, _ = fix_dead_links(dump(front, body))
+        path.write_text(text, encoding="utf-8")
         written.append(path)
 
     # Term pages: keep WordPress slugs as URL keys, names as titles.

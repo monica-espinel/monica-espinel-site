@@ -249,7 +249,7 @@ Acceptance checks:
 
 ## Open issues
 
-- **5 Brooklyn Rail speaker photos missing** (post `/brooklyn-rail-carmen-herrera/`: Tony Bechara, Odili Donald Odita,
+- ~~**5 Brooklyn Rail speaker photos missing**~~ Resolved 2026-11-13 (#19), see the link check below. (post `/brooklyn-rail-carmen-herrera/`: Tony Bechara, Odili Donald Odita,
   Monica Espinel, Raphael Rubinstein, Tyhe Cooper). The post loads them from `brooklynrail.org/media/files/…`,
   which now redirects to the Brooklyn Rail Contributors page, so they are already broken on the live WordPress site.
   **Owner decision:** recover the Wayback Machine copies and store them in the repo.
@@ -259,6 +259,20 @@ Acceptance checks:
   and `python3 -I scripts/wp_to_hugo.py source/monicaespinel.WordPress.2026-11-11.xml content`, check the five
   portraits, and commit. Until then the post keeps the original (broken) image addresses.
 - `brooklynrail.org` was allowed in the environment for this and is no longer needed; it can be removed.
+- **Link check (2026-11-13, `scripts/check_links.py --external --wayback`):** 407 built pages, 0 broken
+  internal links, images or anchors; every sitemap and RSS URL exists. Unknown URLs get `404.html` (links to
+  home and search). Dead external links fixed:
+  - ISLAA Vistas 8 moved to `islaa.org/publications/vistas-8/` (#17); the Deutsche Bank exhibition page link
+    removed, the catalogue PDF stays (#18). `scripts/link_fixes.py` applies both on every conversion run.
+  - Brooklyn Rail speaker photos: stored in `static/images/brooklyn-rail/` from Brooklyn Rail's event pages and
+    mapped in `migration/external-images.json` (#19). Resolves the open issue above.
+  - Parcharte: episode-page and feed links removed (owner decision, #15).
+  **Still to check in a browser:** Vimeo 466668429 on `/ana-mercedes-hoyos/` (403, unknown to Vimeo's oEmbed,
+  likely private or deleted), Vimeo 761603460 (401 to scripts; its oEmbed works), the UMD symposium page
+  (certificate error from the cloud container), and MoMA, El Museo del Barrio and Artpace (they refuse scripts).
+  **Open, separate draft PR:** the Vimeo video 468397255 on `/spring-2020-international-artists-in-residence-talk/`
+  was deleted (player and oEmbed both 404, no archive copy). It is the whole post apart from one sentence: remove
+  the player and keep the sentence, link to Artpace instead, or unpublish?
 
 ## Open questions for the owner
 1. ~~Contact `mailto:` address~~: resolved, no `mailto:` link; Formspree only (owner decision).
