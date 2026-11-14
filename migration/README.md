@@ -71,6 +71,8 @@ python3 -I scripts/fetch_external_images.py source/monicaespinel.WordPress.2026-
 python3 -I scripts/make_redirects.py
 ```
 
+`wp_to_hugo.py` also applies `scripts/link_fixes.py`, which replaces or removes links to pages other sites have taken down. Add new dead links there, then run `python3 -I scripts/link_fixes.py content` to fix the committed content too.
+
 Replace the file name with the name of your export. Review the diff of `content/` carefully, then commit the regenerated `content/`, `migration/` and `static/` output.
 
 ### The scripts
@@ -85,6 +87,8 @@ Replace the file name with the name of your export. Review the diff of `content/
 | `scripts/make_redirects.py` | Writes the redirect pages under `static/` for old URLs with no matching page. Run with `--check` in CI. |
 | `scripts/check_urls.py` | Checks that a build (`public/`) has a page or redirect for every inventory URL. Run in CI. |
 | `scripts/check_live.py` | The same check against the live site, over the network |
+| `scripts/link_fixes.py` | Replaces or removes links to pages other sites have taken down; `wp_to_hugo.py` applies it |
+| `scripts/check_links.py` | Checks every link in a build (`public/`); `--external` also checks links to other sites. Run in CI. |
 
 ## Repository history
 

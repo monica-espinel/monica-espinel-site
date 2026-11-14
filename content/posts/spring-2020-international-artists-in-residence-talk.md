@@ -17,5 +17,3 @@ wordpress_id: 4300
 ---
 
 [Conversation with Carlos Castro Arias, Daniel Ramos, and Milagros de la Torre](https://artpace.org/spring-2020-international-artist-in-residence-talk-2/), Artpace, San Antonio, TX
-
-{{< video-embed provider="vimeo" id="468397255" >}}
