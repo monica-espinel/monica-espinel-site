@@ -139,7 +139,7 @@ Check **Indexing → Pages** once a week. Expect old WordPress URLs to move to "
 
 | Week of | Indexed | Not indexed | New 404s? | Notes |
 |---|---|---|---|---|
-| 2026-11-12 (baseline) | 24 | 53 | n/a | Search Console overview at cutover, still reflecting WordPress, including the 403s to Googlebot |
+| 2026-11-12 (baseline) | 24 | 53 | n/a | Data dated 2026-11-08, still WordPress. Not indexed: 403 forbidden 32, discovered not indexed 9, crawled not indexed 6, noindex 3, page with redirect 3 |
 | 2026-11-19 | | | | |
 | 2026-11-26 | | | | |
 | 2026-12-03 | | | | |
