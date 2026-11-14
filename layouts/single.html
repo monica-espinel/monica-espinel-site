@@ -9,7 +9,7 @@
   </header>
   {{ with .Params.image }}
   <figure class="featured-media"><div class="featured-media-inner section-inner medium">
-    {{ partial "img.html" (dict "src" . "alt" ($.Params.image_alt | default "") "eager" true "sizes" "(max-width: 1040px) 100vw, 1000px" "maxWidth" 1000) }}
+    {{ partial "img.html" (dict "src" . "alt" ($.Params.image_alt | default "") "eager" true "sizes" "(max-width: 699px) calc(100vw - 40px), (max-width: 1080px) calc(100vw - 80px), 1000px" "maxWidth" 1000) }}
     {{ with $.Params.image_caption }}<figcaption class="wp-caption-text">{{ . | markdownify }}</figcaption>{{ end }}
   </div></figure>
   {{ end }}

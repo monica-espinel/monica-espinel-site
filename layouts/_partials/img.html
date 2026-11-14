@@ -1,6 +1,6 @@
 {{- /*
   Responsive image for a site-relative upload path.
-  Params: src, alt, sizes, class, eager (bool), maxWidth (default 1200).
+  Params: src, alt, sizes, class, eager (bool: the likely LCP image, loaded eagerly at high priority), maxWidth (default 1200).
   Uploads (mounted as assets) get WebP sizes in a srcset; other images are output as they are.
   Animated GIFs are left untouched.
 */ -}}
@@ -8,7 +8,8 @@
 {{- $alt := .alt | default "" -}}
 {{- $sizes := .sizes | default "(max-width: 1240px) 100vw, 1200px" -}}
 {{- $max := .maxWidth | default 1200 -}}
-{{- $loading := cond (.eager | default false) "eager" "lazy" -}}
+{{- $eager := .eager | default false -}}
+{{- $loading := cond $eager "eager" "lazy" -}}
 {{- $res := "" -}}
 {{- if and (hasPrefix $src "/wp-content/uploads/") (not (hasSuffix (lower $src) ".gif")) -}}
   {{- $res = resources.Get (strings.TrimPrefix "/" $src) -}}
@@ -16,15 +17,16 @@
 {{- if $res -}}
   {{- $set := slice -}}
   {{- $fallback := $res -}}
-  {{- range slice 400 800 1200 1600 2000 -}}
+  {{- /* Widths chosen for the usual slots: a phone at 2x needs about 650-700px (720), a desktop post image 1000px (1040). */ -}}
+  {{- range slice 400 720 1040 1400 2000 -}}
     {{- if and (le . $res.Width) (le . (mul $max 2)) -}}
-      {{- $r := $res.Resize (printf "%dx webp" .) -}}
+      {{- $r := $res.Resize (printf "%dx webp q75" .) -}}
       {{- $set = $set | append (printf "%s %dw" $r.RelPermalink .) -}}
       {{- if le . $max }}{{ $fallback = $r }}{{ end -}}
     {{- end -}}
   {{- end -}}
-  {{- if not $set }}{{ $fallback = $res.Resize (printf "%dx webp" $res.Width) }}{{ $set = slice (printf "%s %dw" $fallback.RelPermalink $res.Width) }}{{ end -}}
-<img src="{{ $fallback.RelPermalink }}" srcset="{{ delimit $set ", " }}" sizes="{{ $sizes }}" width="{{ $fallback.Width }}" height="{{ $fallback.Height }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"{{ with .class }} class="{{ . }}"{{ end }}>
+  {{- if not $set }}{{ $fallback = $res.Resize (printf "%dx webp q75" $res.Width) }}{{ $set = slice (printf "%s %dw" $fallback.RelPermalink $res.Width) }}{{ end -}}
+<img src="{{ $fallback.RelPermalink }}" srcset="{{ delimit $set ", " }}" sizes="{{ $sizes }}" width="{{ $fallback.Width }}" height="{{ $fallback.Height }}" alt="{{ $alt }}" loading="{{ $loading }}"{{ if $eager }} fetchpriority="high"{{ end }} decoding="async"{{ with .class }} class="{{ . }}"{{ end }}>
 {{- else -}}
-<img src="{{ $src | relURL }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"{{ with .class }} class="{{ . }}"{{ end }}>
+<img src="{{ $src | relURL }}" alt="{{ $alt }}" loading="{{ $loading }}"{{ if $eager }} fetchpriority="high"{{ end }} decoding="async"{{ with .class }} class="{{ . }}"{{ end }}>
 {{- end -}}

@@ -1,0 +1,31 @@
+{{- /*
+  GA4, in place of Hugo's embedded google_analytics.html (owner's decision, 2026-11-14): the embedded
+  template loads gtag.js (about 160 KB) during page load, where it competes with the first image.
+  Here the pageview is queued at once and gtag.js is fetched after the load event, when the browser is idle.
+  The ID still comes from googleAnalytics in hugo.toml.
+
+  GA4 counts only the production domain (from baseURL, plus its subdomains such as www): on any
+  other host (the github.io project URL, previews, hugo server) nothing is loaded.
+*/ -}}
+{{- with site.Config.Services.GoogleAnalytics.ID }}
+{{- $domain := strings.TrimPrefix "www." (urls.Parse site.BaseURL).Hostname }}
+<script>
+(function (h, d, id) {
+  if (h !== d && h.slice(-d.length - 1) !== "." + d) return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  gtag("js", new Date());
+  gtag("config", id);
+  function load() {
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+    document.head.appendChild(s);
+  }
+  function whenIdle() {
+    if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 3000 }); else setTimeout(load, 1);
+  }
+  if (document.readyState === "complete") whenIdle(); else window.addEventListener("load", whenIdle);
+})(location.hostname, {{ $domain }}, {{ . }});
+</script>
+{{- end }}

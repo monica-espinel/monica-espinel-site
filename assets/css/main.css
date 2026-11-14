@@ -131,6 +131,9 @@ h6 { font-size: 1.6rem; letter-spacing: 0.03125em; text-transform: uppercase; }
 main { display: block; }
 .post { padding-top: 4rem; }
 .singular .post { padding-top: 0; }
+/* Post lists are long (every post on one page): the browser skips layout and paint of posts
+   that are off screen. The placeholder height is replaced by the real one once a post has been rendered. */
+.home .post ~ .post, .archive .post ~ .post { content-visibility: auto; contain-intrinsic-size: auto 90rem; }
 .entry-header { text-align: center; position: relative; }
 .singular .entry-header { background: var(--header-footer); padding: 4rem 0; }
 .entry-title { margin: 0; }
