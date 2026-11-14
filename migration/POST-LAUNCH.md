@@ -145,6 +145,8 @@ Check **Indexing → Pages** once a week. Expect old WordPress URLs to move to "
 | 2026-12-03 | | | | |
 | 2026-12-10 | | | | |
 
+**403 validation:** started by the owner on 2026-11-14 for the 32 "Blocked due to access forbidden (403)" URLs (last crawled in July, on WordPress). Claude checked the 7 visible examples on the live site the same day, with a Googlebot user agent: all return 200, including the Carmen Herrera chronology PDF.
+
 **If a 404 shows up for a URL that matters:** send Claude the URL. It can be added as an alias in the matching page's front matter, or as a redirect page, in a small pull request.
 
 ---
