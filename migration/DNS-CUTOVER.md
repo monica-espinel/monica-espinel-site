@@ -240,9 +240,11 @@ These are the values to restore if you roll back:
 - **Timing decided (owner, 2026-11-12):** rather than wait for step 0d (2026-11-14), the cutover was made the same evening, in **both** zones, GoDaddy's and Bluehost's. See "Cutting over before step 0d" under Cutover day.
 - **Phase 7 done (2026-11-12),** except the weekly coverage checks. See [`POST-LAUNCH.md`](POST-LAUNCH.md).
 - **Status on 2026-11-13: what's left** (the open boxes under "After cutover"):
-  1. **Now:** raise the TTL of `@` (`A` and `AAAA`) and `www` at GoDaddy from 600 to 3600. They were still at 600 on 2026-11-13.
+  1. ~~**Now:** raise the TTL of `@` (`A` and `AAAA`) and `www` at GoDaddy from 600 to 3600.~~ Done by the owner on 2026-11-14 (1 hour).
   2. **Until at least 2026-12-12:** keep WordPress (Bluehost) running.
-  3. **Before cancelling Bluehost:** update SPF and remove `default._domainkey` at GoDaddy (see the SPF note).
+  3. ~~**Before cancelling Bluehost:** update SPF and remove `default._domainkey` at GoDaddy (see the SPF note).~~ Done by the owner on 2026-11-14 (see below).
+- **GoDaddy zone export, 2026-11-14 (checked by Claude):** every record at TTL 3600, GitHub's `A`/`AAAA` and `www`, Google `MX` unchanged, both `google-site-verification`, `google._domainkey` and both GitHub challenge records present. The only Bluehost leftovers are the SPF value (`+a +mx +ip4:162.241.252.140 +include:websitewelcome.com`) and `default._domainkey`: change those two before cancelling Bluehost.
+- **SPF and DKIM cleaned up (owner, 2026-11-14, checked by Claude from a second zone export):** SPF is now `v=spf1 include:_spf.google.com ~all` and `default._domainkey` is deleted. Nothing else changed (diff of the two exports: only these two records and the SOA serial). Still to do: send a test email and check SPF/DKIM PASS in Gmail's "Show original"; then cancel Bluehost, no earlier than the owner's chosen date (rollback window: at least 2026-12-12).
 
 ---
 
@@ -459,14 +461,14 @@ How do you tell the new site from WordPress? The new site's footer has "To the t
 
 ## After cutover
 
-- [ ] Once everything has worked for a day or two, raise the TTL again (for example to 3600).
+- [x] *(Done by the owner, 2026-11-14: `@` `A`, `@` `AAAA` and `www` `CNAME` at GoDaddy set to 1 hour.)* Once everything has worked for a day or two, raise the TTL again (for example to 3600).
 - [x] *(Done 2026-11-12: everything in `POST-LAUNCH.md` except the weekly coverage checks.)* Phase 7 checks: submit the sitemap, URL inspection, a search on the live site, GA4 Realtime, and a test contact message. See [`POST-LAUNCH.md`](POST-LAUNCH.md).
 - [ ] Keep WordPress running for **at least 30 days** after cutover (brief: Rollback).
   - Its admin is no longer reachable at `monicaespinel.com/wp-admin`, because that now goes to GitHub.
   - If you need it, use the host's own temporary address or control panel.
 - [ ] **Before cancelling WordPress (Bluehost):** the DNS already moved to GoDaddy in step 0, so cancelling Bluehost can't take the domain down, and email is Google Workspace. Before cancelling:
   1. Check that GoDaddy's nameservers are active and the zone matches step 0c, now with GitHub's `A` and `www` records.
-  2. Ideally, have whoever manages the email update SPF to `v=spf1 include:_spf.google.com ~all` and remove `default._domainkey` at GoDaddy (see the SPF note).
+  2. *(Done 2026-11-14.)* Ideally, have whoever manages the email update SPF to `v=spf1 include:_spf.google.com ~all` and remove `default._domainkey` at GoDaddy (see the SPF note).
   3. Then cancel the Bluehost plan.
 - [x] *(Not needed: no reCAPTCHA appeared, and the inline thank-you message shows.)* **Formspree:** if reCAPTCHA is on in the form settings, turn it off to get the inline thank-you message. The honeypot covers spam. Messages arrive either way.
 

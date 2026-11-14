@@ -139,11 +139,13 @@ Check **Indexing → Pages** once a week. Expect old WordPress URLs to move to "
 
 | Week of | Indexed | Not indexed | New 404s? | Notes |
 |---|---|---|---|---|
-| 2026-11-12 (baseline) | 24 | 53 | n/a | Search Console overview at cutover, still reflecting WordPress, including the 403s to Googlebot |
+| 2026-11-12 (baseline) | 24 | 53 | n/a | Data dated 2026-11-08, still WordPress. Not indexed: 403 forbidden 32, discovered not indexed 9, crawled not indexed 6, noindex 3, page with redirect 3 |
 | 2026-11-19 | | | | |
 | 2026-11-26 | | | | |
 | 2026-12-03 | | | | |
 | 2026-12-10 | | | | |
+
+**403 validation:** started by the owner on 2026-11-14 for the 32 "Blocked due to access forbidden (403)" URLs (last crawled in July, on WordPress). Claude checked the 7 visible examples on the live site the same day, with a Googlebot user agent: all return 200, including the Carmen Herrera chronology PDF.
 
 **If a 404 shows up for a URL that matters:** send Claude the URL. It can be added as an alias in the matching page's front matter, or as a redirect page, in a small pull request.
 
